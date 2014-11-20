@@ -2,8 +2,8 @@
 
 .. _languages:
 
-Language specific remarks/examples voor s_tom
-=============================================
+Language specific remarks/examples
+==================================
 
 .. topic:: Help wanted
 
