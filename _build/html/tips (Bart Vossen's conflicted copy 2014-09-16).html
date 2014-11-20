@@ -1,0 +1,728 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FAQ and tips &mdash; Cluster manual  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Cluster manual  documentation" href="index.html" />
+
+<link rel="stylesheet" type="text/css" href="_static/custom.css" />
+<link rel="stylesheet" type="text/css" href="_static/colorbox/colorbox.css" />
+
+<script type="text/javascript" src="_static/colorbox/jquery.colorbox-min.js"></script>
+
+<script type="text/javascript">
+	function endsWith(str, suffix) {
+	    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+
+    $(document).ready(function() {
+    	var im, imsrc;
+    	$('img').each(function() {
+    		im = $(this);
+    		imsrc = im.attr('src');
+    		imalt = im.attr('alt');
+    		if (endsWith(imsrc, 'svg')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('svglink'));
+    		}
+        if (endsWith(imsrc, 'png')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('pnglink'));
+    		}
+    	});
+
+    	$('a.svglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+      $('a.pnglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+
+    });
+
+</script>
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/MateLogo.png">
+          Cluster manual</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="mate.html">MaTe clusters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queuing.html">The queuing system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etiquette.html">Monitoring and etiquette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips.html">FAQ and tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html#the-bash-shell">The BASH-shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="languages.html">Language specific remarks/examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="people.html">Cluster users</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">FAQ and tips</a><ul>
+<li><a class="reference internal" href="#frequently-asked-questions-faq">Frequently asked questions (FAQ)</a></li>
+<li><a class="reference internal" href="#cheat-sheet">Cheat-sheet</a></li>
+<li><a class="reference internal" href="#advanced-job-submit">Advanced job submit</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
+<li><a class="reference internal" href="#downloads">Downloads</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/tips (Bart Vossen&#39;s conflicted copy 2014-09-16).txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">FAQ and tips</a><ul>
+<li><a class="reference internal" href="#frequently-asked-questions-faq">Frequently asked questions (FAQ)</a></li>
+<li><a class="reference internal" href="#cheat-sheet">Cheat-sheet</a></li>
+<li><a class="reference internal" href="#advanced-job-submit">Advanced job submit</a></li>
+<li><a class="reference internal" href="#further-reading">Further reading</a></li>
+<li><a class="reference internal" href="#downloads">Downloads</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="sourcelink">
+  <a href="_sources/tips (Bart Vossen&#39;s conflicted copy 2014-09-16).txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="faq-and-tips">
+<h1>FAQ and tips<a class="headerlink" href="#faq-and-tips" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="outline">
+<p class="topic-title first"><strong>Outline</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="#frequently-asked-questions-faq" id="id1">Frequently asked questions (FAQ)</a></li>
+<li><a class="reference internal" href="#cheat-sheet" id="id2">Cheat-sheet</a></li>
+<li><a class="reference internal" href="#advanced-job-submit" id="id3">Advanced job submit</a></li>
+<li><a class="reference internal" href="#further-reading" id="id4">Further reading</a></li>
+<li><a class="reference internal" href="#downloads" id="id5">Downloads</a></li>
+</ul>
+</div>
+<div class="section" id="frequently-asked-questions-faq">
+<h2><a class="toc-backref" href="#outline">Frequently asked questions (FAQ)</a><a class="headerlink" href="#frequently-asked-questions-faq" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="faq">
+<p class="topic-title first"><strong>FAQ</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="#i-want-to-stop-my-job-what-should-i-do" id="id6">I want to stop my job, what should I do?</a></li>
+<li><a class="reference internal" href="#what-happens-if-a-node-runs-out-of-memory" id="id7">What happens if a node runs out of memory?</a></li>
+<li><a class="reference internal" href="#what-happens-if-a-node-runs-out-of-disk-space" id="id8">What happens if a node runs out of disk space?</a></li>
+<li><a class="reference internal" href="#do-i-only-use-the-cpus-i-claim" id="id9">Do I only use the CPUs I claim?</a></li>
+</ul>
+</div>
+<div class="section" id="i-want-to-stop-my-job-what-should-i-do">
+<h3><a class="toc-backref" href="#faq">I want to stop my job, what should I do?</a><a class="headerlink" href="#i-want-to-stop-my-job-what-should-i-do" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">Obtain the job-id using the <tt class="docutils literal"><span class="pre">myqstat</span></tt> (or <tt class="docutils literal"><span class="pre">qstat</span></tt>) command. For example:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span>myqstat
+
+jid    , owner     , jobname       , host , cpus   , mem  , S , <span class="nb">time</span> , score
+------ , --------- , ------------- , ---- , ------ , ---- , — , ---- , -----
+202169 , username  , myjob.pbs     ,   11 ,  1:1:i ,  1mb , R ,  10s ,  1.00
+</pre></div>
+</div>
+<p>The job to be cancelled has job-id <tt class="docutils literal"><span class="pre">202169</span></tt>.</p>
+</li>
+<li><p class="first">Delete the job</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span>qdel 202169
+</pre></div>
+</div>
+</li>
+<li><p class="first">Are you using a temporary folder on the compute-node (e.g. <a class="reference internal" href="queuing.html#page-queuing-heavyio"><em>Heavy file-IO job</em></a>)? Be sure to delete all files on the compute node.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># login to the compute-node</span>
+<span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span>ssh compute-0-11
+
+<span class="c"># go the the user&#39;s directory on the hard-disk of the compute-node</span>
+<span class="o">[</span>username@compute-0-11 ~<span class="o">]</span><span class="nv">$ </span><span class="nb">cd</span> /state/partition1/username
+
+<span class="c"># list all files/directories: shows the temporary directory</span>
+<span class="o">[</span>username@compute-0-11 /state/partition1/username<span class="o">]</span><span class="nv">$ </span>ls
+
+  202169
+
+<span class="c"># remove the temporary directory</span>
+<span class="o">[</span>username@compute-0-11 /state/partition1/username<span class="o">]</span><span class="nv">$ </span>rm -r 202169
+
+<span class="c"># logout of the compute-node</span>
+<span class="o">[</span>username@compute-0-11 /state/partition1/username<span class="o">]</span><span class="nv">$ </span><span class="nb">exit</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To verify what is left behind on the hard-disks of each of the compute-nodes, from the head-node run</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span> <span class="nv">$ </span>rocks run host <span class="s2">&quot;ls /state/partition1/`whoami`&quot;</span>
+</pre></div>
+</div>
+<p class="last">This scans all the nodes. See also: <a class="reference internal" href="etiquette.html#etiquette-monitor-resources-rocks"><em>User-data on compute-nodes</em></a></p>
+</div>
+</div>
+<div class="section" id="what-happens-if-a-node-runs-out-of-memory">
+<h3><a class="toc-backref" href="#faq">What happens if a node runs out of memory?</a><a class="headerlink" href="#what-happens-if-a-node-runs-out-of-memory" title="Permalink to this headline">¶</a></h3>
+<p>The node will use the hard-disk as additional memory (<cite>swap</cite>). This is such a slow process that it effectively kills the node. A manual reset by the system administrator is needed.</p>
+</div>
+<div class="section" id="what-happens-if-a-node-runs-out-of-disk-space">
+<h3><a class="toc-backref" href="#faq">What happens if a node runs out of disk space?</a><a class="headerlink" href="#what-happens-if-a-node-runs-out-of-disk-space" title="Permalink to this headline">¶</a></h3>
+<p>The node cannot write any files (even temporary). The node will shut-down immediately, killing all jobs currently running on it.</p>
+</div>
+<div class="section" id="do-i-only-use-the-cpus-i-claim">
+<h3><a class="toc-backref" href="#faq">Do I only use the CPUs I claim?</a><a class="headerlink" href="#do-i-only-use-the-cpus-i-claim" title="Permalink to this headline">¶</a></h3>
+<p>The PBS-directive reserving nodes, for example:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#PBS -l nodes=1:ppn=4:intel</span>
+</pre></div>
+</div>
+<p>helps the scheduler to assign jobs to nodes such that there are enough resources available (in this example 4 CPUs on on Intel-node). However:</p>
+<ol class="arabic">
+<li><p class="first">These CPUs are not neccessarily used.</p>
+<ul>
+<li><p class="first">Parallelization is not trivial, and highly problem dependent. Some hints:</p>
+<ul class="simple">
+<li>Matlab: <tt class="docutils literal"><span class="pre">parfor</span></tt>-loop (see also: <a class="reference internal" href="languages.html#languages-matlab-par"><em>Matlab parallelization</em></a>).</li>
+<li>C/C++ or Fortran: openmpi-library.</li>
+</ul>
+</li>
+<li><p class="first">Verify that the job is parallelized correctly.</p>
+<ul>
+<li><p class="first">Check the speed-up as a function of the number of CPUs.</p>
+</li>
+<li><p class="first">Use <a class="reference internal" href="etiquette.html#etiquette-monitor-jobs-myqstat"><em>myqstat</em></a>, verify that the <tt class="docutils literal"><span class="pre">score</span></tt> is approximately 1:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span>myqstat
+</pre></div>
+</div>
+</li>
+<li><p class="first">Login to the compute-node, and use <tt class="docutils literal"><span class="pre">top</span></tt> to monitor the CPU-usage of each process:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span>ssh compute-0-11
+<span class="o">[</span>username@compute-0-11 ~<span class="o">]</span><span class="nv">$ </span>top
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p class="first">There is no guarantee that not more than these CPUs are used.</p>
+<ul class="simple">
+<li>Several software-packages by default use the total amount of CPUs available. These are not limited to the amount of CPUs claimed, but correspond to the total number of CPUs in the node. Some hints:<ul>
+<li><a class="reference internal" href="languages.html#languages-matlab"><em>MATLAB</em></a>: use the <tt class="docutils literal"><span class="pre">singleCompThread</span></tt> option</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Parallellization is accompanied with overhead. If not parallellized properly the computational costs of this additional overhead can out-weigh the benefit of the additional computational power: in the worst case your job can even slow down.</p>
+</div>
+</div>
+</div>
+<div class="section" id="cheat-sheet">
+<h2><a class="toc-backref" href="#outline">Cheat-sheet</a><a class="headerlink" href="#cheat-sheet" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="categories">
+<p class="topic-title first"><strong>Categories</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="#queuing-system" id="id10">Queuing system</a></li>
+<li><a class="reference internal" href="#monitor-processes-and-resources" id="id11">Monitor processes and resources</a></li>
+<li><a class="reference internal" href="#directory-operations" id="id12">Directory operations</a></li>
+<li><a class="reference internal" href="#file-operations" id="id13">File-operations</a></li>
+<li><a class="reference internal" href="#bash-commands" id="id14">Bash commands</a></li>
+<li><a class="reference internal" href="#search-files" id="id15">Search files</a></li>
+<li><a class="reference internal" href="#keyboard-shortcuts" id="id16">Keyboard shortcuts</a></li>
+</ul>
+</div>
+<div class="section" id="queuing-system">
+<h3><a class="toc-backref" href="#categories">Queuing system</a><a class="headerlink" href="#queuing-system" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">qsub</span> <span class="pre">&quot;PBS-file&quot;</span></tt></td>
+<td>submit a job, controlled using the PBS-file <tt class="docutils literal"><span class="pre">&quot;PBS-file&quot;</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">qdel</span> <span class="pre">&quot;job-id&quot;</span></tt></td>
+<td>delete the job with identifier <tt class="docutils literal"><span class="pre">&quot;job-id&quot;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">qpeek</span> <span class="pre">&quot;job-id&quot;</span></tt></td>
+<td>live-monitor of the PBS-out-file, for the job with identifier <tt class="docutils literal"><span class="pre">&quot;job-id&quot;</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">qstat</span></tt></td>
+<td>list basic information of all jobs</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">qstat</span> <span class="pre">-f</span></tt></td>
+<td>list detailed information of all jobs</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">qstat</span> <span class="pre">-f</span> <span class="pre">&quot;job-id&quot;</span></tt></td>
+<td>list detailed information of the job with identifier <tt class="docutils literal"><span class="pre">&quot;job-id&quot;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pbsnodes</span></tt></td>
+<td>list detailed information of all compute-nodes</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">myqstat</span></tt></td>
+<td>list the most important information for the <tt class="docutils literal"><span class="pre">qstat</span> <span class="pre">-f</span></tt> command</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">myqstat</span> <span class="pre">-N</span></tt></td>
+<td>list the most important information for the <tt class="docutils literal"><span class="pre">pbsnodes</span></tt> command</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="monitor-processes-and-resources">
+<h3><a class="toc-backref" href="#categories">Monitor processes and resources</a><a class="headerlink" href="#monitor-processes-and-resources" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">top</span></tt></td>
+<td>live-monitor of current running processes</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">ps</span></tt></td>
+<td>show snap-shot of processes</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">ps</span> <span class="pre">-aux</span></tt></td>
+<td>show snap-shot of all processes</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">du</span> <span class="pre">-h</span></tt></td>
+<td>size of directories</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">df</span> <span class="pre">-h</span></tt></td>
+<td>total, used, and available disk-space</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="directory-operations">
+<h3><a class="toc-backref" href="#categories">Directory operations</a><a class="headerlink" href="#directory-operations" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pwd</span></tt></td>
+<td>print working (current) directory</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">mkdir</span> <span class="pre">&quot;dir&quot;</span></tt></td>
+<td>make new directory <tt class="docutils literal"><span class="pre">&quot;dir&quot;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">cd</span> <span class="pre">&quot;dir&quot;</span></tt></td>
+<td>go to directory <tt class="docutils literal"><span class="pre">&quot;dir&quot;</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">cd</span> <span class="pre">..</span></tt></td>
+<td>go up one directory</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">ls</span></tt></td>
+<td>list files</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">ls</span> <span class="pre">-lh</span></tt></td>
+<td>detailed file information</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="file-operations">
+<h3><a class="toc-backref" href="#categories">File-operations</a><a class="headerlink" href="#file-operations" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">cat</span> <span class="pre">&quot;file&quot;</span></tt></td>
+<td>print file content to the screen</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">head</span> <span class="pre">&quot;file&quot;</span></tt></td>
+<td>show first 10 line of the file content</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">tail</span> <span class="pre">&quot;file&quot;</span></tt></td>
+<td>show last 10 line of the file content</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">cp</span> <span class="pre">&quot;file1&quot;</span> <span class="pre">&quot;file2&quot;</span></tt></td>
+<td>copy <tt class="docutils literal"><span class="pre">&quot;file1&quot;</span></tt> to <tt class="docutils literal"><span class="pre">&quot;file2&quot;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mv</span> <span class="pre">&quot;file1&quot;</span> <span class="pre">&quot;file2&quot;</span></tt></td>
+<td>move (rename) <tt class="docutils literal"><span class="pre">&quot;file1&quot;</span></tt> to <tt class="docutils literal"><span class="pre">&quot;file2&quot;</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">rm</span> <span class="pre">&quot;file&quot;</span></tt></td>
+<td>remove <tt class="docutils literal"><span class="pre">&quot;file&quot;</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">rm</span> <span class="pre">-r</span> <span class="pre">&quot;dir&quot;</span></tt></td>
+<td>remove <tt class="docutils literal"><span class="pre">&quot;dir&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="bash-commands">
+<h3><a class="toc-backref" href="#categories">Bash commands</a><a class="headerlink" href="#bash-commands" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">whoami</span></tt></td>
+<td>show your username</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">man</span> <span class="pre">command</span></tt></td>
+<td>show manual of a <tt class="docutils literal"><span class="pre">command</span></tt> (sometimes: <tt class="docutils literal"><span class="pre">command</span> <span class="pre">-h</span></tt> or <tt class="docutils literal"><span class="pre">command</span> <span class="pre">--help</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="search-files">
+<h3><a class="toc-backref" href="#categories">Search files</a><a class="headerlink" href="#search-files" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">find</span></tt></td>
+<td>find files</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">grep</span></tt></td>
+<td>show matched pattern in file content</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="keyboard-shortcuts">
+<h3><a class="toc-backref" href="#categories">Keyboard shortcuts</a><a class="headerlink" href="#keyboard-shortcuts" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="kbd docutils literal"><span class="pre">Ctrl+c</span></tt></td>
+<td>abort command</td>
+</tr>
+<tr class="row-odd"><td><tt class="kbd docutils literal"><span class="pre">Ctrl+r</span></tt></td>
+<td>search command history (use <tt class="kbd docutils literal"><span class="pre">Ctrl+r</span></tt> to proceed to next match, and arrows to modify the command)</td>
+</tr>
+<tr class="row-even"><td><tt class="kbd docutils literal"><span class="pre">Ctrl+d</span></tt></td>
+<td>exit terminal</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="advanced-job-submit">
+<h2><a class="toc-backref" href="#outline">Advanced job submit</a><a class="headerlink" href="#advanced-job-submit" title="Permalink to this headline">¶</a></h2>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#submit-a-batch-job" id="id17">Submit a batch job</a></li>
+<li><a class="reference internal" href="#submit-part-of-a-batch-job" id="id18">Submit part of a batch job</a></li>
+</ul>
+</div>
+<div class="section" id="submit-a-batch-job">
+<h3><a class="toc-backref" href="#contents">Submit a batch job</a><a class="headerlink" href="#submit-a-batch-job" title="Permalink to this headline">¶</a></h3>
+<p>Consider the following example:</p>
+<ul class="simple">
+<li>Each job is a sub-directory of the current path, in this example <tt class="docutils literal"><span class="pre">sim0</span></tt>, <tt class="docutils literal"><span class="pre">sim1</span></tt>, and <tt class="docutils literal"><span class="pre">sim2</span></tt>.</li>
+<li>The job has the <tt class="docutils literal"><span class="pre">job.pbs</span></tt> file to control the job.</li>
+</ul>
+<p>To submit all the jobs:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># store the current directory</span>
+<span class="nv">froot</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>;
+<span class="c"># loop over all files &quot;job.pbs&quot;</span>
+<span class="k">for </span>name in <span class="sb">`</span>find . -iname <span class="s1">&#39;job.pbs&#39;</span><span class="sb">`</span>;
+<span class="k">do</span>
+  <span class="c"># separate the name of the PBS-file &quot;p&quot; and the directory &quot;f&quot;</span>
+  <span class="nv">f</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$name</span> | rev | cut -d<span class="s2">&quot;/&quot;</span> f2- | rev<span class="sb">`</span>
+  <span class="nv">p</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$name</span> | rev | cut -d<span class="s2">&quot;/&quot;</span> f1  | rev<span class="sb">`</span>
+  <span class="c"># go the the proper directory, submit, and go back to current directory</span>
+  <span class="nb">cd</span> <span class="nv">$f</span>;
+  qsub job.pbs;
+  <span class="nb">cd</span> <span class="nv">$froot</span>;
+<span class="k">done</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">The Bash-<tt class="docutils literal"><span class="pre">for</span></tt>-loop is used to loop over space separated list of names:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="k">for </span>name in <span class="s2">&quot;sim0&quot;</span> <span class="s2">&quot;sim1&quot;</span> <span class="s2">&quot;sim2&quot;</span>;
+<span class="k">do</span>
+<span class="k">  </span><span class="nb">echo</span> <span class="nv">$name</span>;
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>would display:</p>
+<div class="highlight-bash"><div class="highlight"><pre>sim0
+sim1
+sim2
+</pre></div>
+</div>
+</li>
+<li><p class="first">The list of jobs to submit is generate using the <tt class="docutils literal"><span class="pre">find</span></tt>-command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>find . -iname <span class="s1">&#39;job.pbs&#39;</span>
+</pre></div>
+</div>
+<p>lists</p>
+<div class="highlight-bash"><div class="highlight"><pre>sim0/job.pbs
+sim1/job.pbs
+sim2/job.pbs
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">cut</span></tt>-command is used to split the output of the <tt class="docutils literal"><span class="pre">find</span></tt>-command in the name of the directory</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">echo</span> <span class="nv">$name</span> | rev | cut -d<span class="s2">&quot;/&quot;</span> f2- | rev
+</pre></div>
+</div>
+<p>by reversing the string, including everything from the first <tt class="docutils literal"><span class="pre">/</span></tt> onward, and reversing the resulting string to it&#8217;s original order. This corresponds to including everything up to the last <tt class="docutils literal"><span class="pre">/</span></tt>. In the same way the name of the PBS-file is extracted from the output of the <tt class="docutils literal"><span class="pre">find</span></tt>-command.</p>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">cd</span></tt>-command is used to proceed to the simulation sub-directory, after which the simulation is submitted. Then <tt class="docutils literal"><span class="pre">cd</span></tt> is used again to go back to the original directory.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="submit-part-of-a-batch-job">
+<h3><a class="toc-backref" href="#contents">Submit part of a batch job</a><a class="headerlink" href="#submit-part-of-a-batch-job" title="Permalink to this headline">¶</a></h3>
+<p>Consider the following example (similar to above):</p>
+<ul class="simple">
+<li>Each job is a sub-directory of the current path.</li>
+<li>The job has the <tt class="docutils literal"><span class="pre">job.pbs</span></tt> file to control the job.</li>
+<li>A completed job has the file <tt class="docutils literal"><span class="pre">pbs.out</span></tt>, a job not submitted yet does not contain this file.</li>
+</ul>
+<p>To submit all jobs that have not yet been submitted:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="k">for </span>f in <span class="sb">`</span>find . -mindepth 1 -maxdepth 1 -type d -exec <span class="nb">test</span> ! -e <span class="s1">&#39;{}/pbs.out&#39;</span> <span class="se">\;</span> -printf <span class="s1">&#39;%p &#39;</span><span class="sb">`</span>;
+<span class="k">do</span>
+<span class="k">  </span><span class="nb">cd</span> <span class="nv">$f</span>;
+  qsub job.pbs;
+  <span class="nb">cd</span> ..;
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>Let us study the command that lists all folders <strong>not</strong> containing a specific file &#8220;pbs.out&#8221;:</p>
+<div class="highlight-bash"><div class="highlight"><pre>find . -mindepth 1 -type d -exec <span class="nb">test</span> ! -e <span class="s1">&#39;{}/pbs.out&#39;</span> <span class="se">\;</span> -print
+</pre></div>
+</div>
+<ul>
+<li><p class="first">List the directory names, using the <tt class="docutils literal"><span class="pre">find</span></tt>-command:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">find</span> <span class="pre">.</span></tt></dt>
+<dd><p class="first last">find files/directories from the current directory downwards.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">-mindepth</span> <span class="pre">1</span></tt></dt>
+<dd><p class="first last">limit the search to at least one directory downwards (at least a sub-directory). To list only sub-directories (and not sub-sub-directories, etc) extend with <tt class="docutils literal"><span class="pre">-maxdepth</span> <span class="pre">1</span></tt>.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">-type</span> <span class="pre">d</span></tt></dt>
+<dd><p class="first last">limit the result to directories.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">-exec</span></tt></dt>
+<dd><p class="first last">execute a command on the search result.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">List only those directories not containing the file <tt class="docutils literal"><span class="pre">pbs.out</span></tt>, using the <tt class="docutils literal"><span class="pre">test</span></tt>-command:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">test</span></tt></dt>
+<dd><p class="first last">check file types and compare values.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">!</span></tt></dt>
+<dd><p class="first last">list the result for which the expression is false.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">-e</span> <span class="pre">'{}/pbs.out'</span></tt></dt>
+<dd><p class="first last">check if the file <tt class="docutils literal"><span class="pre">pbs.out</span></tt> exists. The <tt class="docutils literal"><span class="pre">-e</span></tt> option comes from the <tt class="docutils literal"><span class="pre">test</span></tt>-command. The <tt class="docutils literal"><span class="pre">{}</span></tt> is the way to include the search result from the <tt class="docutils literal"><span class="pre">find</span></tt>-command (in this case the sub-directories.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">List the result:</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">\;</span></tt></dt>
+<dd><p class="first last">terminates the <tt class="docutils literal"><span class="pre">find</span></tt>-command.</p>
+</dd>
+<dt><tt class="docutils literal"><span class="pre">-print</span></tt></dt>
+<dd><p class="first last">print the full file name on the standard output, followed by a newline.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="further-reading">
+<h2><a class="toc-backref" href="#outline">Further reading</a><a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<p>The following MaTe-TU/e websites provide more information regarding the clusters, the queuing system, or Linux in general:</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://faq.wfw.wtb.tue.nl/phpmyfaq.1.5.2">http://faq.wfw.wtb.tue.nl/phpmyfaq.1.5.2</a></li>
+<li><a class="reference external" href="http://www.mate.tue.nl/mate/local/software/unix">http://www.mate.tue.nl/mate/local/software/unix</a></li>
+<li><a class="reference external" href="http://www.mate.tue.nl/mate/local/topic.php/57">http://www.mate.tue.nl/mate/local/topic.php/57</a></li>
+</ol>
+<p>Other references:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://overapi.com/linux/">Linux cheat sheet</a></li>
+</ul>
+</div>
+<div class="section" id="downloads">
+<span id="tips-downloads"></span><h2><a class="toc-backref" href="#outline">Downloads</a><a class="headerlink" href="#downloads" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference download internal" href="_downloads/cluster-user1.pdf"><tt class="xref download docutils literal"><span class="pre">Cluster-user</span> <span class="pre">presentation,</span> <span class="pre">13</span> <span class="pre">May</span> <span class="pre">2014,</span> <span class="pre">general</span> <span class="pre">introduction</span></tt></a></li>
+<li><a class="reference download internal" href="_downloads/myqstat1"><tt class="xref download docutils literal"><span class="pre">myqstat</span></tt></a> + <a class="reference download internal" href="_downloads/gpbs1.py"><tt class="xref download docutils literal"><span class="pre">gpbs.py</span></tt></a></li>
+</ul>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Tom de Geus.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

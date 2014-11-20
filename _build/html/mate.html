@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MaTe clusters &mdash; Cluster manual  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Cluster manual  documentation" href="index.html" />
+    <link rel="next" title="The queuing system" href="queuing.html" />
+    <link rel="prev" title="Contents" href="index.html" />
+
+<link rel="stylesheet" type="text/css" href="_static/custom.css" />
+<link rel="stylesheet" type="text/css" href="_static/colorbox/colorbox.css" />
+
+<script type="text/javascript" src="_static/colorbox/jquery.colorbox-min.js"></script>
+
+<script type="text/javascript">
+	function endsWith(str, suffix) {
+	    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+
+    $(document).ready(function() {
+    	var im, imsrc;
+    	$('img').each(function() {
+    		im = $(this);
+    		imsrc = im.attr('src');
+    		imalt = im.attr('alt');
+    		if (endsWith(imsrc, 'svg')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('svglink'));
+    		}
+        if (endsWith(imsrc, 'png')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('pnglink'));
+    		}
+    	});
+
+    	$('a.svglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+      $('a.pnglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+
+    });
+
+</script>
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/MateLogo.png">
+          Cluster manual</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">MaTe clusters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queuing.html">The queuing system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etiquette.html">Monitoring and etiquette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips.html">FAQ and tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html#the-bash-shell">The BASH-shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="languages.html">Language specific remarks/examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="people.html">Cluster users</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">MaTe clusters</a><ul>
+<li><a class="reference internal" href="#basic-cluster-layout">Basic cluster layout</a></li>
+<li><a class="reference internal" href="#connecting-file-transfer-and-editing">Connecting, File Transfer and Editing</a><ul>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-windows">Connecting and File Transfer from Windows</a></li>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-linux-mac">Connecting and File Transfer from Linux/Mac</a></li>
+<li><a class="reference internal" href="#editing-scripts">Editing Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Contents"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Contents</span>
+    </a>
+  </li>
+  <li>
+    <a href="queuing.html" title="Next Chapter: The queuing system"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">The queuing syst... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/mate.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">MaTe clusters</a><ul>
+<li><a class="reference internal" href="#basic-cluster-layout">Basic cluster layout</a></li>
+<li><a class="reference internal" href="#connecting-file-transfer-and-editing">Connecting, File Transfer and Editing</a><ul>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-windows">Connecting and File Transfer from Windows</a></li>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-linux-mac">Connecting and File Transfer from Linux/Mac</a></li>
+<li><a class="reference internal" href="#editing-scripts">Editing Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div id="sourcelink">
+  <a href="_sources/mate.txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="mate-clusters">
+<h1>MaTe clusters<a class="headerlink" href="#mate-clusters" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="outline">
+<p class="topic-title first"><strong>Outline</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="#basic-cluster-layout" id="id4">Basic cluster layout</a></li>
+<li><a class="reference internal" href="#connecting-file-transfer-and-editing" id="id5">Connecting, File Transfer and Editing</a><ul>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-windows" id="id6">Connecting and File Transfer from Windows</a></li>
+<li><a class="reference internal" href="#connecting-and-file-transfer-from-linux-mac" id="id7">Connecting and File Transfer from Linux/Mac</a></li>
+<li><a class="reference internal" href="#editing-scripts" id="id8">Editing Scripts</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="topic">
+<p class="topic-title first">Practicalities</p>
+<ul class="simple">
+<li>An account on (one of) the clusters can be obtained from <a class="reference external" href="mailto:L&#46;H&#46;G&#46;Wouters&#37;&#52;&#48;tue&#46;nl">Leo Wouters</a> (GEM-Z 4.17).</li>
+<li>Questions can be directed to:<ul>
+<li><a class="reference external" href="mailto:L&#46;H&#46;G&#46;Wouters&#37;&#52;&#48;tue&#46;nl">Leo Wouters</a></li>
+<li><a class="reference external" href="mailto:MaTeCluster&#37;&#52;&#48;tue&#46;nl">MaTeCluster<span>&#64;</span>tue<span>&#46;</span>nl</a></li>
+</ul>
+</li>
+<li>For questions concerning a specific programming language, other <a class="reference internal" href="people.html#page-people"><em>Cluster users</em></a> can be consulted.</li>
+</ul>
+</div>
+<p>There are several clusters available in the MaTe group, and many more will come at some point after writing this document. Therefore, this manual uses the <tt class="docutils literal"><span class="pre">furnace</span></tt> cluster as an example. The <tt class="docutils literal"><span class="pre">furnace</span></tt> cluster consists of the following resources:</p>
+<ul class="simple">
+<li>1 head node with 2 quad core Opteron processors, 16 GB RAM and 4.5 TB RAID5 storage.</li>
+<li>11 AMD Opteron nodes, each with 4 Opteron 8431 hexa-core processors (i.e. 24 cores per node) 2.4 GHz with 128 GB RAM and 250 GB disk.</li>
+<li>22 Intel Xeon X5550 nodes, each with 2 Nehalem quad-core processors (i.e. 8 cores per node, presenting itself as 16 cores due to hyperthreading) 2.6 GHz with 48 GB RAM and 250 GB disk.</li>
+<li>The Intel cores are faster than the AMD cores and are therefore the best choice for single core jobs.</li>
+<li>The AMD nodes have more cores and memory on one node making them ideal for parallellization.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">&#8220;Processor&#8221; refers to the physical piece of chip, i.e, to the object you buy. However, most processors have more computation units referred to as &#8220;cores&#8221;.</p>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">furnace</span></tt> cluster has the following host-name:</p>
+<div class="highlight-bash"><div class="highlight"><pre>furnace.wfw.wtb.tue.nl
+</pre></div>
+</div>
+<p>It, and all the other clusters, can be reached from within the TU/e network (including VPN). Within the MaTe network, the host-name may be abbreviated by removing <tt class="docutils literal"><span class="pre">.wfw.wtb.tue.nl</span></tt>. In the following examples we only use the abbreviated form. The clusters host a website (which can only be reached from within the MaTe network) where they present statistics about currently running jobs. For <tt class="docutils literal"><span class="pre">furnace</span></tt>:</p>
+<p><a class="reference external" href="http://furnace.wfw.wtb.tue.nl/ganglia">http://furnace.wfw.wtb.tue.nl/ganglia</a></p>
+<div class="section" id="basic-cluster-layout">
+<h2><a class="toc-backref" href="#outline">Basic cluster layout</a><a class="headerlink" href="#basic-cluster-layout" title="Permalink to this headline">¶</a></h2>
+<p>The basic layout of a cluster is shown in the image below. The cluster consists of a <em>head-node</em> and several <em>compute-nodes</em>. The head-node is the &#8220;computer&#8221; you log in to from your own PC. From the head-node, jobs are distributed to the compute-nodes by a scheduler: the <em>queuing system</em>. The scheduler sends the job to a compute-node when a free spot with the requested resources is available. Running a job thus corresponds to submitting a special (Bash-)script to the scheduler. You don&#8217;t know a-priori when, or on which compute-node, your job will be handled.</p>
+<div class="figure align-center">
+<img alt="cluster architecture: head-node and compute-nodes" src="_images/cluster.svg" width="500px" /></div>
+</div>
+<div class="section" id="connecting-file-transfer-and-editing">
+<h2><a class="toc-backref" href="#outline">Connecting, File Transfer and Editing</a><a class="headerlink" href="#connecting-file-transfer-and-editing" title="Permalink to this headline">¶</a></h2>
+<p>The clusters run a service called &#8220;ssh&#8221;, which is short for Secure SHell. This service can present a remote Command Line Interface (CLI) over a network. In Layman&#8217;s terms, <em>it allows you to type commands from your own computer which are executed on the cluster</em>. An ssh-client is therefore needed, which can be obtained for any operating system.</p>
+<p>Additionally, before and after running a job, the relevant files have to be transferred to and from the cluster respectively. Below we discuss several interfaces for either Linux/Mac or Windows users. It is remarked that generally copying actions/commands run on the users&#8217; computer, not on the cluster.</p>
+<p>For each user a personal &#8220;home&#8221; folder is created on the head-node at <tt class="docutils literal"><span class="pre">/home/username</span></tt>. This folder sits on a 4.5 TB Raid-6 disk-cluster, which seems like a lot, but this space is shared by all users. The same &#8220;home&#8221; folder is mounted on each compute-node on the same location, i.e. <tt class="docutils literal"><span class="pre">/home/username</span></tt> over network. As a result, the files you have in your home folder on the head-node will automatically be available on each compute-node, although the read/write speed is limited by the network connection.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Your personal disk usage can be checked by issuing <tt class="docutils literal"><span class="pre">du</span> <span class="pre">-sh</span></tt> in your home folder, the total disk usage can be checked with <tt class="docutils literal"><span class="pre">df</span> <span class="pre">-h</span></tt> (i.e. the line starting with <tt class="docutils literal"><span class="pre">/dev/sdb1</span></tt>). Further reference:</p>
+<ul class="last simple">
+<li><a class="reference internal" href="linux_bash.html#sec-bash"><em>The BASH-shell</em></a></li>
+<li><a class="reference internal" href="etiquette.html#etiquette"><em>Monitoring and etiquette</em></a></li>
+</ul>
+</div>
+<div class="section" id="connecting-and-file-transfer-from-windows">
+<h3><a class="toc-backref" href="#outline">Connecting and File Transfer from Windows</a><a class="headerlink" href="#connecting-and-file-transfer-from-windows" title="Permalink to this headline">¶</a></h3>
+<p>To connect to the cluster from Windows, first a ssh-client is required. Several options exist, for example:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://w3.tue.nl/nl/diensten/dienst_ict/services/services_wins/campussoftware/ssh_secure_shell/">Licensed client (free for TU/e-employees)</a> (usually pre-installed by the university&#8217;s ICT services, and therefore used as an example on this page).</li>
+<li><a class="reference external" href="http://www.putty.org/">Open-source client (free)</a>.</li>
+</ul>
+<div class="section" id="connecting">
+<h4>Connecting<a class="headerlink" href="#connecting" title="Permalink to this headline">¶</a></h4>
+<p>To log-in to the cluster, open the software (either the SSH Secure Shell Client or the SSH Secure File Transfer Client) and hit the <em>Quick Connect</em> button.</p>
+<img alt="_images/cm1.png" src="_images/cm1.png" style="width: 500px;" />
+<p>In the pop-up menu the <em>Host Name</em> and the <em>User Name</em> should be set, then press <em>Connect</em>.</p>
+<img alt="_images/cm2.png" src="_images/cm2.png" style="width: 500px;" />
+<p>The first time, the software asks to confirm that this computer you are connecting to is the one you expect, confirm the question with <em>Yes</em>.</p>
+<img alt="_images/cm3.png" src="_images/cm3.png" style="width: 500px;" />
+<p>Finally enter your password</p>
+<img alt="_images/cm4.png" src="_images/cm4.png" style="width: 500px;" />
+</div>
+<div class="section" id="file-transfer">
+<h4>File transfer<a class="headerlink" href="#file-transfer" title="Permalink to this headline">¶</a></h4>
+<p>The SSH-Client comes with two window types the SSH Secure Shell Client or the SSH Secure File Transfer Client. The Shell Client is useful for running commands on the cluster, i.e. as a Command Line Interface. The Transfer Client is useful to copy files between your computer and the cluster. Moreover, these two windows can be quickly accessed from the two buttons in the toolbar:</p>
+<img alt="_images/cm5.png" src="_images/cm5.png" style="width: 500px;" />
+</div>
+<div class="section" id="disconnecting">
+<h4>Disconnecting<a class="headerlink" href="#disconnecting" title="Permalink to this headline">¶</a></h4>
+<p>Note the <em>disconnect</em> button in the toolbar.</p>
+<img alt="_images/cm6.png" src="_images/cm6.png" style="width: 500px;" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be sure to use this before closing the program, otherwise an instance of ssh will keep running on the cluster for every time you exit without disconnecting.</p>
+</div>
+</div>
+</div>
+<div class="section" id="connecting-and-file-transfer-from-linux-mac">
+<h3><a class="toc-backref" href="#outline">Connecting and File Transfer from Linux/Mac</a><a class="headerlink" href="#connecting-and-file-transfer-from-linux-mac" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h4>Connecting<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Almost all Linux/Mac distributions have a ssh-client installed. To login to the <tt class="docutils literal"><span class="pre">furnace</span></tt> cluster, open a terminal window on your own computer, and execute:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@mypc ~<span class="o">]</span><span class="nv">$ </span> ssh myclusteraccount@furnace
+</pre></div>
+</div>
+<p>If this is the first time, ssh will ask you to confirm the identity of the computer you are connecting to. Confirm the question, and enter your password to log-in on the furnace.</p>
+<p>To avoid the need to provide the user&#8217;s password on each login, a key can be generated on the host computer and provided to the cluster. If still logged-in on the furnace, hit <tt class="docutils literal"><span class="pre">Ctrl-D</span></tt> or type <tt class="docutils literal"><span class="pre">exit</span></tt> to log-out and return to your own computer. Then follow these steps:</p>
+<ol class="arabic">
+<li><p class="first">Generate a key on your own computer:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@mypc ~<span class="o">]</span><span class="nv">$ </span> ssh-keygen -t dsa
+</pre></div>
+</div>
+<p>confirm each question with <tt class="docutils literal"><span class="pre">Return</span></tt>.</p>
+</li>
+<li><p class="first">Copy the key to the cluster with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@mypc ~<span class="o">]</span><span class="nv">$ </span> ssh-copy-id myclusteraccount@furnace
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If done right, from now on logging in will be password-less.</p>
+</div>
+<div class="section" id="id3">
+<h4>File transfer<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>There are several file transfer options, partially depending on the Linux/Mac distribution used:</p>
+<ul>
+<li><p class="first">Using a file browser (e.g. Nautilus for Gnome, or Dolphin for KDE). Open the browser and type <tt class="docutils literal"><span class="pre">sftp://myclusteraccount&#64;furnace</span></tt> in the address bar (or location bar).</p>
+</li>
+<li><p class="first">Using <tt class="docutils literal"><span class="pre">scp</span></tt> from the command line. This command is completely analogous to the <tt class="docutils literal"><span class="pre">cp</span></tt> command (see <a class="reference internal" href="linux_bash.html#sec-bash"><em>The BASH-shell</em></a>). To copy files to the cluster (e.g. <tt class="docutils literal"><span class="pre">furnace</span></tt>) type in your local prompt:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@mypc ~<span class="o">]</span><span class="nv">$ </span> scp somepath myclusteraccount@furnace:somefurnacepath
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">somepath</span></tt> should be replaced. To copy files from the cluster back to the users&#8217; computer, the source and the destination should be reversed:</p>
+<ul>
+<li><p class="first">if not logged in via ssh on furnace:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@mypc ~<span class="o">]</span><span class="nv">$ </span> scp myclusteraccount@furnace:someclusterpath somepath
+</pre></div>
+</div>
+</li>
+<li><p class="first">if logged in on furnace via ssh:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>myclusteraccount@furnace ~<span class="o">]</span><span class="nv">$ </span>scp someclusterpath mypcusername@mypc:somepath
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Note that to copy folders <tt class="docutils literal"><span class="pre">-r</span></tt> should be added after <tt class="docutils literal"><span class="pre">scp</span></tt>.</p>
+</li>
+<li><p class="first">The more advanced user may want to take a look at the <tt class="docutils literal"><span class="pre">rsync</span></tt> command, which can perform fast transfer/synchronization.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="editing-scripts">
+<h3><a class="toc-backref" href="#outline">Editing Scripts</a><a class="headerlink" href="#editing-scripts" title="Permalink to this headline">¶</a></h3>
+<p>Here, some basic examples are given to edit files/scripts, often located on the cluster. There are three ways of doing this</p>
+<ol class="arabic">
+<li><p class="first">Copy the file to your own computer (sometimes called local), and then edit it with your favorite text/script editor (e.g. with code highlighting), and finally copy the file back to the cluster. This option is recommended for large modifications to a script.</p>
+</li>
+<li><p class="first">Edit the file directly on the cluster with a local editor which can directly open the file on the cluster, this can typically only be done from a Linux computer, and is considered outside the scope of this document.</p>
+</li>
+<li><p class="first">Edit the file on the cluster with an editor which runs in the command line from a shell on the cluster. This option is recommended for small script modifications.</p>
+<p>There are several command line based, text editors available on the clusters (and on most other <a class="reference internal" href="linux_bash.html#sec-linux"><em>Linux</em></a> machines) named <tt class="docutils literal"><span class="pre">vi</span></tt>, <tt class="docutils literal"><span class="pre">emacs</span></tt>, and <tt class="docutils literal"><span class="pre">nano</span></tt>. The first two are advanced and powerful, but are extremely beginner unfriendly. Luckily, <tt class="docutils literal"><span class="pre">nano</span></tt> behaves a bit more intuitive, you can start editing a file with <tt class="docutils literal"><span class="pre">nano</span></tt> by executing:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span> nano myfile.txt
+</pre></div>
+</div>
+<img alt="_images/cm7.png" src="_images/cm7.png" style="width: 500px;" />
+<p>When done, press <tt class="docutils literal"><span class="pre">Ctrl-X</span></tt> to exit, upon which the program ask to save the changes (<tt class="docutils literal"><span class="pre">Y</span></tt>) or not (<tt class="docutils literal"><span class="pre">N</span></tt>)</p>
+<img alt="_images/cm8.png" src="_images/cm8.png" style="width: 500px;" />
+<img alt="_images/cm9.png" src="_images/cm9.png" style="width: 500px;" />
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Tom de Geus.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

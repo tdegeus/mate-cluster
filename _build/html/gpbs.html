@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>myqstat &mdash; Cluster manual  documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="Cluster manual  documentation" href="index.html" />
+
+<link rel="stylesheet" type="text/css" href="_static/custom.css" />
+<link rel="stylesheet" type="text/css" href="_static/colorbox/colorbox.css" />
+
+<script type="text/javascript" src="_static/colorbox/jquery.colorbox-min.js"></script>
+
+<script type="text/javascript">
+	function endsWith(str, suffix) {
+	    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+
+    $(document).ready(function() {
+    	var im, imsrc;
+    	$('img').each(function() {
+    		im = $(this);
+    		imsrc = im.attr('src');
+    		imalt = im.attr('alt');
+    		if (endsWith(imsrc, 'svg')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('svglink'));
+    		}
+        if (endsWith(imsrc, 'png')) {
+    			im.wrap($('<a>').attr({'href': imsrc, 'title': imalt}).addClass('pnglink'));
+    		}
+    	});
+
+    	$('a.svglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+      $('a.pnglink').colorbox({
+    		'width': '85%',
+    		'height': '85%',
+    		'photo': true});
+
+
+    });
+
+</script>
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/MateLogo.png">
+          Cluster manual</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="mate.html">MaTe clusters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queuing.html">The queuing system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="etiquette.html">Monitoring and etiquette</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips.html">FAQ and tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linux_bash.html#the-bash-shell">The BASH-shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="languages.html">Language specific remarks/examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="people.html">Cluster users</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">myqstat</a><ul>
+<li><a class="reference internal" href="#detailed-usage-information">Detailed usage information</a></li>
+<li><a class="reference internal" href="#download-and-install">Download and install</a></li>
+<li><a class="reference internal" href="#implementation-details">Implementation details</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/gpbs.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">myqstat</a><ul>
+<li><a class="reference internal" href="#detailed-usage-information">Detailed usage information</a></li>
+<li><a class="reference internal" href="#download-and-install">Download and install</a></li>
+<li><a class="reference internal" href="#implementation-details">Implementation details</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="sourcelink">
+  <a href="_sources/gpbs.txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="myqstat">
+<span id="gpbs"></span><h1><a class="toc-backref" href="#outline">myqstat</a><a class="headerlink" href="#myqstat" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="outline">
+<p class="topic-title first"><strong>Outline</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="#myqstat" id="id1">myqstat</a><ul>
+<li><a class="reference internal" href="#detailed-usage-information" id="id2">Detailed usage information</a></li>
+<li><a class="reference internal" href="#download-and-install" id="id3">Download and install</a></li>
+<li><a class="reference internal" href="#implementation-details" id="id4">Implementation details</a><ul>
+<li><a class="reference internal" href="#myqstat-user-frontend" id="id5">myqstat: user frontend</a></li>
+<li><a class="reference internal" href="#gpbs-python-module" id="id6">gpbs - Python module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="detailed-usage-information">
+<h2><a class="toc-backref" href="#outline">Detailed usage information</a><a class="headerlink" href="#detailed-usage-information" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="download-and-install">
+<h2><a class="toc-backref" href="#outline">Download and install</a><a class="headerlink" href="#download-and-install" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="implementation-details">
+<h2><a class="toc-backref" href="#outline">Implementation details</a><a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You are more than welcome to contribute to the implementation of <tt class="docutils literal"><span class="pre">myqstat</span></tt> and/or <tt class="docutils literal"><span class="pre">gpbs</span></tt>. Please contact <a class="reference external" href="mailto:t&#46;w&#46;j&#46;d&#46;geus&#37;&#52;&#48;tue&#46;nl">Tom de Geus</a></p>
+</div>
+<div class="section" id="myqstat-user-frontend">
+<h3><a class="toc-backref" href="#outline">myqstat: user frontend</a><a class="headerlink" href="#myqstat-user-frontend" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="gpbs-python-module">
+<h3><a class="toc-backref" href="#outline">gpbs - Python module</a><a class="headerlink" href="#gpbs-python-module" title="Permalink to this headline">¶</a></h3>
+<img alt="_images/under_construction.png" class="align-center" src="_images/under_construction.png" style="width: 30%;" />
+<div class="section" id="main-usage">
+<h4>Main usage<a class="headerlink" href="#main-usage" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic">
+<li><p class="first">Read individual job information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gpbs</span>
+
+<span class="n">jobs</span> <span class="o">=</span> <span class="n">gpbs</span><span class="o">.</span><span class="n">qstatRead</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This command reads the information from the <tt class="docutils literal"><span class="pre">qstat</span> <span class="pre">-f</span></tt> command and stores
+it as a list of individual jobs (of the <tt class="docutils literal"><span class="pre">Job</span></tt>-class).</p>
+</li>
+<li><p class="first">Read basic compute-node information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gpbs</span>
+
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">gpbs</span><span class="o">.</span><span class="n">pbsRead</span><span class="p">(</span><span class="n">ganglia</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This commands read the information from the <tt class="docutils literal"><span class="pre">pbsnodes</span></tt> command and stores
+it as a list of individual compute-nodes (of the <tt class="docutils literal"><span class="pre">Node</span></tt>-class).</p>
+</li>
+<li><p class="first">Read detailed compute-node information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">gpbs</span>
+
+<span class="n">nodes</span> <span class="o">=</span> <span class="n">gpbs</span><span class="o">.</span><span class="n">pbsRead</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This commands read the information from the <tt class="docutils literal"><span class="pre">pbsnodes</span></tt>, and the
+<tt class="docutils literal"><span class="pre">ganglia</span> <span class="pre">...</span></tt> command and stores it as a list of individual compute-nodes
+(of the <tt class="docutils literal"><span class="pre">Node</span></tt>-class). Notice: the ganglia command is slow, as it needs
+to connect to each of the individual nodes.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="class-overview">
+<h4>Class overview<a class="headerlink" href="#class-overview" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="job-class">
+<h5>Job-class<a class="headerlink" href="#job-class" title="Permalink to this headline">¶</a></h5>
+<p>Job information. The class has the following key-fields.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">field</th>
+<th class="head">type</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>&lt;int&gt;</td>
+<td>id</td>
+</tr>
+<tr class="row-odd"><td>name</td>
+<td>&lt;str&gt;</td>
+<td>name</td>
+</tr>
+<tr class="row-even"><td>owner</td>
+<td>&lt;str&gt;</td>
+<td>owner</td>
+</tr>
+<tr class="row-odd"><td>state</td>
+<td>&lt;str&gt;</td>
+<td>state (Q,R)</td>
+</tr>
+<tr class="row-even"><td>host</td>
+<td>&lt;Host&gt;</td>
+<td>host(s) (compute-node(s))</td>
+</tr>
+<tr class="row-odd"><td>resnode</td>
+<td>&lt;ResNode&gt;</td>
+<td>reserved resources (CPUs) (e.g. &#8220;2:4:i&#8221;)</td>
+</tr>
+<tr class="row-even"><td>memused</td>
+<td>&lt;Data&gt;</td>
+<td>memory usage</td>
+</tr>
+<tr class="row-odd"><td>cputime</td>
+<td>&lt;Time&gt;</td>
+<td>CPU time used</td>
+</tr>
+<tr class="row-even"><td>walltime</td>
+<td>&lt;Time&gt;</td>
+<td>actual runtime</td>
+</tr>
+<tr class="row-odd"><td>score</td>
+<td>&lt;float&gt;</td>
+<td>score (CPU time over walltime)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="node-class">
+<h5>Node-class<a class="headerlink" href="#node-class" title="Permalink to this headline">¶</a></h5>
+<p>Compute node information. The class has the following key-fields.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="72%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">field</th>
+<th class="head">type</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>name</td>
+<td>&lt;str&gt;</td>
+<td>name of the compute-node</td>
+</tr>
+<tr class="row-odd"><td>node</td>
+<td>&lt;int&gt;</td>
+<td>node number (compute-0-X -&gt; int(X))</td>
+</tr>
+<tr class="row-even"><td>state</td>
+<td>&lt;str&gt;</td>
+<td>status (free,job-exclusive,down,offline)</td>
+</tr>
+<tr class="row-odd"><td>ncpu</td>
+<td>&lt;int&gt;</td>
+<td>number of CPUs</td>
+</tr>
+<tr class="row-even"><td>ctype</td>
+<td>&lt;str&gt;</td>
+<td>type of node (intel,amd)</td>
+</tr>
+<tr class="row-odd"><td>jobs</td>
+<td>&lt;lst&gt;</td>
+<td>list of job numbers &lt;int&gt;</td>
+</tr>
+<tr class="row-even"><td>memt</td>
+<td>&lt;Data&gt;</td>
+<td>total memory</td>
+</tr>
+<tr class="row-odd"><td>mema</td>
+<td>&lt;Data&gt;</td>
+<td>available memory</td>
+</tr>
+<tr class="row-even"><td>memu</td>
+<td>&lt;Data&gt;</td>
+<td>memory in use</td>
+</tr>
+<tr class="row-odd"><td>memp</td>
+<td>&lt;Data&gt;</td>
+<td>physical memory</td>
+</tr>
+<tr class="row-even"><td>disk_total</td>
+<td>&lt;Data&gt;</td>
+<td>total disk space</td>
+</tr>
+<tr class="row-odd"><td>disk_free</td>
+<td>&lt;Data&gt;</td>
+<td>free disk space</td>
+</tr>
+<tr class="row-even"><td>bytes_in</td>
+<td>&lt;Data&gt;</td>
+<td>network traffic in-bound</td>
+</tr>
+<tr class="row-odd"><td>bytes_out</td>
+<td>&lt;Data&gt;</td>
+<td>network traffic out-bound</td>
+</tr>
+<tr class="row-even"><td>cpu_idle</td>
+<td>&lt;float&gt;</td>
+<td>CPU idle (waiting) percentage</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, Tom de Geus.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

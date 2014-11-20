@@ -1,0 +1,16 @@
+#!/bin/bash
+#PBS -S /bin/bash
+#PBS -j oe
+#PBS -o pbs.out
+#PBS -l nodes=1:ppn=1:intel
+
+
+# compile with GNU compiler (only installed on compute-nodes, where this script runs)
+# uncomment code below:
+#gfortran -o myprogram mycode.f
+
+# compile with Intel compiler
+ifort -o myprogram mycode.f
+
+# run compiled code
+./myprogram
