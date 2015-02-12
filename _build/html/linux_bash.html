@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 
@@ -10,12 +9,12 @@
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/bootswatch-3.1.0/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.2.0/united/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -27,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="Cluster manual  documentation" href="index.html" />
     <link rel="next" title="Language specific remarks/examples" href="languages.html" />
@@ -91,7 +90,6 @@
 
         <div class="collapse navbar-collapse nav-collapse">
           <ul class="nav navbar-nav">
-            <li class="divider-vertical"></li>
             
             
               <li class="dropdown globaltoc-container">
@@ -147,11 +145,11 @@
               
                 
   <li>
-    <a href="tips.html" title="Previous Chapter: FAQ and tips"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; FAQ and tips</span>
+    <a href="tips.html" title="Previous Chapter: FAQ and tips"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; FAQ and tips</span>
     </a>
   </li>
   <li>
-    <a href="languages.html" title="Next Chapter: Language specific remarks/examples"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Language specifi... &raquo;</span>
+    <a href="languages.html" title="Next Chapter: Language specific remarks/examples"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Language specifi... &raquo;</span>
     </a>
   </li>
               
@@ -256,7 +254,8 @@
 <p>Before introducing several features of the Bash-shell it is useful to discuss the basic controls. In principle the only form of control is through the keyboard. The exception is copying and pasting (parts) of commands, which is <strong>exclusively</strong> done using the mouse. <tt class="docutils literal"><span class="pre">Crtl+c</span></tt>, <tt class="docutils literal"><span class="pre">Crtl+v</span></tt>, etc. have a different meaning (see below). Specifically, highlighted text is automatically copied to the clipboard. It is pasted using the middle mouse-button. Alternatively, the <tt class="docutils literal"><span class="pre">copy</span></tt> and <tt class="docutils literal"><span class="pre">paste</span></tt> command can be reached through the right mouse-button. Several other basic controls are listed below.</p>
 <ul>
 <li><p class="first">Each command follows a prompt that is displayed by the terminal. For example:</p>
-<div class="highlight-bash"><pre>[username@furnace ~]$</pre>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace ~]$
+</pre></div>
 </div>
 </li>
 <li><p class="first">A command is followed by <tt class="docutils literal"><span class="pre">return</span></tt> to execute the command.</p>
@@ -265,9 +264,9 @@
 </li>
 <li><p class="first">To stop a command <tt class="docutils literal"><span class="pre">Ctrl+c</span></tt> is used. It is adviced <strong>not</strong> to use <tt class="docutils literal"><span class="pre">Ctrl+z</span></tt> or <tt class="docutils literal"><span class="pre">Ctrl+s</span></tt> which, respectively, sleeps or freezes a command.</p>
 </li>
-<li><p class="first">To move the location of the cursor (by definition only possible inside the current command) the keys <img class="math" src="_images/math/d5f9d8910bf9b877d37f48c842c045883c51300b.png" alt="\leftarrow"/>, <img class="math" src="_images/math/e12b6767375342ed57d27678e3ea1cdb97f47e15.png" alt="\rightarrow"/>, <tt class="docutils literal"><span class="pre">Home</span></tt>, and <tt class="docutils literal"><span class="pre">End</span></tt>  can be used.</p>
+<li><p class="first">To move the location of the cursor (by definition only possible inside the current command) the keys <img class="math" src="_images/math/a8b331bbe09b16006ff0b90ff73cd6bcc38ed555.png" alt="\leftarrow"/>, <img class="math" src="_images/math/a9c4c6156d25f42923975ce449aadad9848ed7dc.png" alt="\rightarrow"/>, <tt class="docutils literal"><span class="pre">Home</span></tt>, and <tt class="docutils literal"><span class="pre">End</span></tt>  can be used.</p>
 </li>
-<li><p class="first">To move through the history the keys <img class="math" src="_images/math/d39cad522ccbe5a31209793365754665a4d65556.png" alt="\uparrow"/> and <img class="math" src="_images/math/d95bdb4067e8005d19d15bfbd4e83d8980336c65.png" alt="\downarrow"/> are used. Alternatively, the history can be searched using <tt class="docutils literal"><span class="pre">Crtl+r</span></tt> followed by keywords. To progress through the selection, use <tt class="docutils literal"><span class="pre">Crtl+r</span></tt>. It is noticed that when pressing <tt class="docutils literal"><span class="pre">return</span></tt> the selected command is directly executed. Use the <img class="math" src="_images/math/e12b6767375342ed57d27678e3ea1cdb97f47e15.png" alt="\rightarrow"/> to edit the selected command in stead.</p>
+<li><p class="first">To move through the history the keys <img class="math" src="_images/math/3b66cc9b01eb0217fbb4a8bfe001f76cfbaab94b.png" alt="\uparrow"/> and <img class="math" src="_images/math/9e4a8fbf84c5f0484f5874542962a893b22ce712.png" alt="\downarrow"/> are used. Alternatively, the history can be searched using <tt class="docutils literal"><span class="pre">Crtl+r</span></tt> followed by keywords. To progress through the selection, use <tt class="docutils literal"><span class="pre">Crtl+r</span></tt>. It is noticed that when pressing <tt class="docutils literal"><span class="pre">return</span></tt> the selected command is directly executed. Use the <img class="math" src="_images/math/a9c4c6156d25f42923975ce449aadad9848ed7dc.png" alt="\rightarrow"/> to edit the selected command in stead.</p>
 </li>
 <li><p class="first">To log-out <tt class="docutils literal"><span class="pre">Crtl+d</span></tt> is used, this is equivalent of typing <tt class="docutils literal"><span class="pre">exit</span></tt>.</p>
 </li>
@@ -308,7 +307,7 @@
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span> man commandname
 </pre></div>
 </div>
-<p>This opens a simple text-viewer. Using the <img class="math" src="_images/math/d95bdb4067e8005d19d15bfbd4e83d8980336c65.png" alt="\downarrow"/> / <img class="math" src="_images/math/d39cad522ccbe5a31209793365754665a4d65556.png" alt="\uparrow"/>, <tt class="docutils literal"><span class="pre">PageUp</span></tt> / <tt class="docutils literal"><span class="pre">PageDown</span></tt>, and the scroll wheel on the mouse one can scroll through the manual page. To close the editor type <tt class="docutils literal"><span class="pre">q</span></tt>. The <tt class="docutils literal"><span class="pre">man</span></tt> command prompts accepts the same commands as the <tt class="docutils literal"><span class="pre">less</span></tt>-viewer.</p>
+<p>This opens a simple text-viewer. Using the <img class="math" src="_images/math/9e4a8fbf84c5f0484f5874542962a893b22ce712.png" alt="\downarrow"/> / <img class="math" src="_images/math/3b66cc9b01eb0217fbb4a8bfe001f76cfbaab94b.png" alt="\uparrow"/>, <tt class="docutils literal"><span class="pre">PageUp</span></tt> / <tt class="docutils literal"><span class="pre">PageDown</span></tt>, and the scroll wheel on the mouse one can scroll through the manual page. To close the editor type <tt class="docutils literal"><span class="pre">q</span></tt>. The <tt class="docutils literal"><span class="pre">man</span></tt> command prompts accepts the same commands as the <tt class="docutils literal"><span class="pre">less</span></tt>-viewer.</p>
 <p>Alternatively, a short manual page can often be printed to the screen. This is provided by the command itself, i.e.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span> commandname -h
 <span class="o">[</span>username@furnace ~<span class="o">]</span><span class="nv">$ </span> commandname --help
@@ -386,12 +385,15 @@ use this for simple output filtering</td>
 </div>
 <div class="section" id="cd-change-directory">
 <h3><a class="toc-backref" href="#contents"><strong class="command">cd</strong> &#8211; change directory</a><a class="headerlink" href="#cd-change-directory" title="Permalink to this headline">¶</a></h3>
-<img src="_images/file-structure.svg" width="300px" /><p>The change directory (<strong class="command">cd</strong>) command can be used to navigate through the file-tree by changing the current directory. Let us use an example of a file-tree such as displayed above. Typically the terminal will start in the user&#8217;s home folder, i.e.</p>
-<div class="highlight-bash"><pre>[username@furnace ~]$</pre>
+<a class="reference internal image-reference" href="_images/file-structure.svg"><img src="_images/file-structure.svg" width="300px" /></a>
+<p>The change directory (<strong class="command">cd</strong>) command can be used to navigate through the file-tree by changing the current directory. Let us use an example of a file-tree such as displayed above. Typically the terminal will start in the user&#8217;s home folder, i.e.</p>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace ~]$
+</pre></div>
 </div>
 <p>where the current directory is indicated between brackets: <tt class="docutils literal"><span class="pre">[</span> <span class="pre">...</span> <span class="pre">]</span></tt>. Notice that <tt class="docutils literal"><span class="pre">[</span> <span class="pre">~</span> <span class="pre">]</span></tt> is the abbreviation of <tt class="docutils literal"><span class="pre">[</span> <span class="pre">/home/username</span> <span class="pre">]</span></tt>. We can now change directory by typing</p>
-<div class="highlight-bash"><pre>[username@furnace ~]$ cd ~/sim/sub1
-[username@furnace sub1]$</pre>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace ~]$ cd ~/sim/sub1
+[username@furnace sub1]$
+</pre></div>
 </div>
 <p>where the change of directory is specified in absolute sense. Alternatively, we can use a relative file-path to do the same. In a relative file-path definition use</p>
 <ul class="simple">
@@ -400,16 +402,19 @@ use this for simple output filtering</td>
 <li><tt class="docutils literal"><span class="pre">../../</span></tt> to denote the two directories up</li>
 </ul>
 <p>The previous command could therefore also be specified as follows</p>
-<div class="highlight-bash"><pre>[username@furnace ~]$ cd ./sim/sub1
-[username@furnace sub1]$</pre>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace ~]$ cd ./sim/sub1
+[username@furnace sub1]$
+</pre></div>
 </div>
 <p>where <tt class="docutils literal"><span class="pre">./</span></tt> is not strictly necessary, i.e.</p>
-<div class="highlight-bash"><pre>[username@furnace ~]$ cd sim/sub1
-[username@furnace sub1]$</pre>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace ~]$ cd sim/sub1
+[username@furnace sub1]$
+</pre></div>
 </div>
 <p>is equivalent. If we would now like to change the directory to <tt class="file docutils literal"><span class="pre">~/sim/sub2</span></tt> we could use a relative path definition:</p>
-<div class="highlight-bash"><pre>[username@furnace sub1]$ cd ../sub2
-[username@furnace sub2]$</pre>
+<div class="highlight-bash"><div class="highlight"><pre>[username@furnace sub1]$ cd ../sub2
+[username@furnace sub2]$
+</pre></div>
 </div>
 <p>Notice that it is convenient to use relative file definitions inside code, as it is not dependent on the file structure. For example if <tt class="file docutils literal"><span class="pre">../sub2/</span></tt> would have been included in a code, the code is not influenced by changing <tt class="docutils literal"><span class="pre">sim</span></tt> to <tt class="docutils literal"><span class="pre">test</span></tt>. In contrast, if we would have used an absolute path, the code would fail.</p>
 </div>
@@ -631,7 +636,7 @@ the command</p>
     </p>
     <p>
         &copy; Copyright 2014, Tom de Geus.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2.<br/>
     </p>
   </div>
 </footer>

@@ -49,10 +49,11 @@ for user in users:
     users[user]['username'] = '``'+user+'``'
 
 # programs dictionary
-programs = {'MATLAB':('Matlab','MATLAB','MATlab','matlab'),
-            'MSC.Marc':('Marc','Mentat','MSC Marc','MarcMentat','Marc+subroutines','marc+subroutines','MarcMentat+subroutines','MSC.Marc+subroutines'),
-            'Abaqus':('Abaqus','abaqus','Abaqus+subroutines','abaqus+subroutines'),
+programs = {'MATLAB':('matlab'),
+            'MSC.Marc':('marc','mentat','msc marc','msc.marc','marcmentat','marc+subroutines','marcmentat+subroutines','msc.marc+subroutines'),
+            'Abaqus':('abaqus','abaqus+subroutines','abaqus+subroutines'),
             'Python':('Python','python','Python (limited)','python (limited)'),
+            'DAWN':('Dawn'),
             'Linux/Bash':('Linux/Bash','linux','Bash','bash','Linux'),
             'TFEM':('TFEM','tfem','Tfem'),
             'C':('C','c'),
@@ -61,7 +62,7 @@ programs = {'MATLAB':('Matlab','MATLAB','MATlab','matlab'),
             'SEPRAN':('SEPRAN','sepran'),
             'Mathematica':('Mathematica','mathematica')}
 
-progsort = ['Linux/Bash','Python','MATLAB','Mathematica','C','C++','Fortran','MSC.Marc','Abaqus','TFEM','SEPRAN']
+progsort = ['Linux/Bash','Python','MATLAB','Mathematica','C','C++','Fortran','Abaqus','MSC.Marc','TFEM','DAWN','SEPRAN']
 
 # find programs by the programs dictionary (unknown alternatives are not listed)
 # empty software dictionary for each software program
@@ -70,7 +71,7 @@ software = {program:[] for program in programs}
 for user in users:
     softwarelist = users[user]['software'].split('; ')
     for softwarename in softwarelist:
-        program = [prog for prog in programs.keys() if softwarename in programs[prog]]
+        program = [prog for prog in programs.keys() if softwarename.lower() in programs[prog]]
         if len(program)>0:
             software[program[0]].append(user)
 

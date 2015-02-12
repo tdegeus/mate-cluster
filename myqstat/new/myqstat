@@ -1,0 +1,627 @@
+#!/usr/bin/env python
+
+import gpbs
+
+# ==============================================================================
+# support function: read the terminal size
+# ==============================================================================
+
+def getTerminalSize():
+  """
+Description
+-----------
+
+Read the size of the terminal that executes the command, in number of
+characters.
+
+Returns
+-------
+
+**lines** = ``<int>``
+
+  Number of lines in the terminal.
+
+**columns** = ``<int>``
+
+  Number of columns in the terminal.
+
+Source
+------
+
+http://www.codingtiger.com/questions/linux/How-to-get-console-window-width-in-python.html
+    """
+  import os, struct
+  def ioctl_GWINSZ(fd):
+    import fcntl, termios
+    return struct.unpack("hh", fcntl.ioctl(fd, termios.TIOCGWINSZ, "1234"))
+  # try stdin, stdout, stderr
+  for fd in (0, 1, 2):
+    try:
+      return ioctl_GWINSZ(fd)
+    except:
+      pass
+  # try os.ctermid()
+  try:
+    fd = os.open(os.ctermid(), os.O_RDONLY)
+    try:
+      return ioctl_GWINSZ(fd)
+    finally:
+      os.close(fd)
+  except:
+    pass
+  # try `stty size`
+  try:
+    return tuple(int(x) for x in os.popen("stty size", "r").read().split())
+  except:
+    pass
+  # try environment variables
+  try:
+    return tuple(int(os.getenv(var)) for var in ("LINES", "COLUMNS"))
+  except:
+    pass
+  # i give up. return default.
+  return (25, 80)
+
+# ==============================================================================
+# format print columns
+# ==============================================================================
+
+def print_column(data,output,header=True,mode='short',sep=', ',trunc=' ...'):
+  '''
+Description
+-----------
+
+Formatted print to the screen.
+
+Input arguments
+---------------
+
+**data** = ``<list>``
+
+  List of "Job"/"Node" containing the actual data that is printed to the screen.
+
+**output** = ``<dict>``
+
+  Dictionary with print settings:
+  - head : header name
+  - wmin : minimum width of the column (otherwise exclude)
+  - col  : column number
+  - rel  : importance ranking of the column, columns are exclude from the
+           highest to the lowest number
+
+Input options
+-------------
+
+**header** = [``True``] | ``False``
+
+  Print a header with column descriptions.
+
+**mode** = ["short"] | "long" | "computer"
+
+  In the "short" and "long" mode the columns are vertically aligned, whereby the
+  size and number of columns is modified to the terminal size in the "short"
+  mode. In the "computer" all unnecessary spaces are removed.
+
+**sep** = ", "
+
+  Column separator.
+
+**trunc** = " ..."
+
+  String to denote the truncation of columns.
+  '''
+
+  # set default: all columns included
+  # if set to "False" the "trunc" string is added right of the columns
+  columns = True
+
+  # calculate column width
+  # ----------------------
+
+  # calculate the (maximum) width of the header and the body for each column
+  for field in output:
+    # header
+    output[field]['whead'] = len(output[field]['head'])
+    # body (the rows with data)
+    wmax = 0
+    for dat in data:
+      wmax = max(wmax,len(getattr(dat,field)))
+    # set column with as maximum of the header/body
+    output[field]['wcol'] = max(wmax,output[field]['whead'])
+    output[field]['wmax'] = max(wmax,output[field]['whead'])
+
+  # remove columns / truncate columns
+  # ---------------------------------
+
+  # determine whether to truncate columns
+  if mode.lower() in ['s','short']:
+
+    # get the width needed to print all columns
+    wtot = sum([output[i]['wcol'] for i in output])+(len(output)-1)*len(sep)
+    # get the width of the current window
+    wwin = getTerminalSize()[1]
+    # if no truncation is needed: skip truncation (equiv. to long output)
+    if ( wtot < wwin ):
+      mode = 'long'
+
+  # proceed with truncation
+  if mode.lower() in ['s','short']:
+
+    ### remove columns if needed
+
+    # set columns in order of importance
+    fields = sorted(output, key=lambda key: output[key]['rel'])
+    # leave room for truncation
+    wmax = wwin-len(trunc)
+    # continue adding columns with the minimum width until the screen is filled
+    wtot    = 0
+    include = []
+    for field in fields:
+      if ( output[field]['wmin'] < (wmax-wtot-len(sep)) ):
+        output[field]['wcol'] = output[field]['wmin']
+        include.append(field)
+        wtot += output[field]['wcol']+len(sep)
+    # delete fields that are no longer included, and update the list of fields
+    # in order of importance
+    if len(include)!=len(fields):
+      output  = {k:v for (k,v) in output.items() if k in include}
+      wwin   -= len(trunc)
+      columns = False
+
+    ### extend each of the columns as far as needed, but at maximum to the
+    ### screen width
+
+    # extend to columns to fill the view
+    for field in sorted(output, key=lambda key: output[key]['rel']):
+      # check the total length
+      wtot = sum([output[i]['wcol'] for i in output])+(len(output)-1)*len(sep)
+      if wtot>=wwin:
+        break
+      # extend the column
+      output[field]['wcol'] = min(output[field]['wmax'],(output[field]['wcol']+wwin-wtot))
+
+  # apply print format
+  # ------------------
+
+  # apply the column width to the print format
+  if mode.lower() not in ['c','computer']:
+    for field in output:
+      for dat in data:
+        getattr(dat,field).len2fmt(output[field]['wcol'])
+  else:
+    # reset the seperator to exclude spaces
+    sep = sep.replace(' ','')
+    # reset fields
+    for field in output:
+      # reset the size to print the header without spaces
+      output[field]['wcol'] = output[field]['whead']
+      # remove colors
+      for dat in data:
+        getattr(dat,field).color = None
+
+  # print to screen
+  # ---------------
+
+  # set the columns in the order such as specified
+  fields = sorted(output, key=lambda key: output[key]['col'])
+
+  # print the header
+  if header:
+    # set print format
+    fmt = sep.join(['%-'+str(output[i]['wcol'])+'s' for i in fields])
+    # add truncation symbol
+    if not columns:
+      fmt += trunc
+    # print
+    print fmt % tuple([output[i]['head']     for i in fields])
+    print fmt % tuple(['-'*output[i]['wcol'] for i in fields])
+
+  # print the data
+  for dat in data:
+    print sep.join([str(getattr(dat,i)) for i in fields])
+
+# ==============================================================================
+# command-line interaction
+# ==============================================================================
+
+class Main(object):
+  '''
+Description
+-----------
+
+Class to run the command-line argument parser and print the output as set by
+the defaults/options.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # main program
+  # ----------------------------------------------------------------------------
+
+  def __init__(self):
+
+    import argparse
+    import os,pwd,sys,re
+
+    # set options/arguments
+    # ---------------------
+
+    opts = [\
+      (('-h','--help'        ),dict(action='store_true'              )),\
+      (('-v','--version'     ),dict(action='store_true'              )),\
+      (('-u','--user'        ),dict(nargs='*',type=str               )),\
+      (('-j','--jobname'     ),dict(nargs='+',type=str               )),\
+      (('-n','--node'        ),dict(nargs='+',type=str               )),\
+      (('-i','--id'          ),dict(nargs='+',type=str               )),\
+      (('-t','--time'        ),dict(nargs='+',type=str               )),\
+      (('-m','--memory'      ),dict(nargs='+',type=str               )),\
+      (('-s','--sort'        ),dict(nargs='+',type=str               )),\
+      ((     '--order'       ),dict(nargs=1  ,type=str,default='a'   )),\
+      (('-o','--output'      ),dict(nargs=1  ,type=str,default='s'   )),\
+      (('-c','--columns'     ),dict(nargs=1  ,type=str               )),\
+      ((     '--noheader'    ),dict(action='store_true'              )),\
+      (('-U','--user-summary'),dict(action='store_true'              )),\
+      (('-N','--node-summary'),dict(action='store_true'              )),\
+      ((     '--long'        ),dict(action='store_true'              )),\
+      ((     '--debug'       ),dict(action='store_true'              )),\
+      (('qstatf'             ),dict(nargs='?',type=str,metavar='ID'  )),\
+    ]
+
+    # parse command-line arguments
+    # ----------------------------
+
+    # create argument parser
+    parser = argparse.ArgumentParser(add_help=False)
+    for (arg,opt) in opts:
+      if type(arg)==tuple:
+        parser.add_argument(*arg,**opt)
+      else:
+        parser.add_argument(arg,**opt)
+    # read arguments from command-line, convert to "<dict>"
+    args = vars(parser.parse_args())
+
+    # print help and exit
+    if args['help']:
+      self.help()
+    # print output of "qstat -f" command
+    if args['qstatf'] is not None:
+      print os.system('qstat -f %s'%args['qstatf'])
+      sys.exit(0)
+
+    # additional checking and defaults
+    # --------------------------------
+
+    # change format: list -> str
+    for key in ['columns','order','output']:
+      if args[key] is not None:
+        args[key] = args[key][0]
+    # change format: str -> list (e.g. "io" -> ["i","o"]
+    if args['sort'] is not None:
+      if len(args['sort'])==1:
+        args['sort'] = list(args['sort'][0])
+
+    # set exclusive options
+    excl = [\
+      ('user_summary','node_summary'),\
+    ]
+    # check exclusive options
+    msg = '"--%s" and "--%s" options are exclusive, consult "myqstat --help"'
+    for opt in excl:
+      if len([True for i in opt if args[i]])>1:
+        raise parser.error(msg%tuple([i.replace('_','-') for i in opt]))
+
+    # set defaults, other than assigned by parser
+    if args['user'] is not None:
+      if len(args['user'])==0:
+        args['user'] = [pwd.getpwuid(os.getuid())[0]]
+
+    # for filters that are specified but not as regular expressions: convert
+    for field in ['user','jobname','id']:
+      if args[field] is not None:
+        args[field] = [re.compile(i) for i in args[field]]
+
+    # store the command-line arguments
+    for key in args:
+      setattr(self,key,args[key])
+
+    # read the job/node information
+    if self.debug:
+      (self.jobs,self.nodes) = gpbs.stat(
+        qstat    = open('qstat.log'   ,'r').read(),
+        pbsnodes = open('pbsnodes.log','r').read(),
+        ganglia  = open('ganglia.log' ,'r').read(),
+      )
+    else:
+      (self.jobs,self.nodes) = gpbs.stat(qstat=None,pbsnodes=None,ganglia=self.long)
+
+    # select the mode in which to print the output
+    mode = 'qstat'
+    if args['user_summary']: mode = 'user'
+    if args['node_summary']: mode = 'node'
+    # print the output in one of the differnt modes
+    if mode=='qstat':
+      self.qstat()
+    elif mode=='user':
+      self.user_summary()
+    elif mode=='node':
+      self.pbsnodes()
+
+  # ----------------------------------------------------------------------------
+  # print help and exit
+  # ----------------------------------------------------------------------------
+
+  def help(self):
+
+    import sys
+
+    print '''
+NAME
+
+  myqstat - display the formatted output of the 'qstat -f'
+
+USAGE
+
+  $ myqstat [options]
+
+DESCRIPTION
+
+  Display the essential information from the 'qstat -f' command, compactly
+  formatted (similar to the default 'qstat' output). The number of columns and
+  their width are adapted to the screen size (see output options below).
+
+  The following color coding is used:
+
+    %sSelection%s
+
+    %sWarning: please provide a better resource claim%s
+    - Memory: use "-l pmem=... -l pvmem=..." as the job is using a lot of mem.
+    - Score : one or more processors is idle, check parallelization.
+
+    %sWarning: too much resources are used, direct action required%s
+    - Memory: use "-l pmem=... -l pvmem=..." or claim the full node
+    - Score : the job is using more CPUs than claimed, slows down everthing
+
+OPTIONS
+
+  General options
+   -h --help          print help
+   -v --version       print program version number
+
+  Filter options
+   -u --user    [opt] user filter (default `whoami`)
+   -j --jobname [arg] job-name filter
+   -i --id      [arg] job-id filter
+   -t --time    [arg] walltime filter, e.g. ">10d"
+   -m --memory  [arg] memory filter, e.g. ">100mb"
+   -n --node    [arg] host filter, e.g. "10"
+
+  Ouput options
+   -c --columns [arg] specify output columns explicitly (see below)
+   -s --sort    [arg] sort the output along a certain column (see below)
+      --order   [arg] sort the output (a)scending or (d)escending
+   -o --output  [arg] output style: (s)hort, (l)ong, (c)omputer readable
+      --noheader      do not display header
+
+ Summary options
+   -U --user-summary  summary per user
+   -N --node-summary  summary per node (wrapper around pbsnodes)
+      --long          additional node information (slow, as it scans nodes)
+
+  Output columns
+   i   id             -
+   o   owner          -
+   n   job name       -
+   h   host           compute-node number
+   c   cpus           CPU resources claimed
+   m   mem            memory currently used by the job
+   p   pmem           requested memory
+   s   S              state (Q=queued, R=running, E=quiting)
+   t   time           walltime (elapsed time since the job has started)
+   r   score          score: CPU-time / ( walltime * #CPUs )
+
+  Output columns [--node-summary]
+   n   node           compute-node number
+   s   state          status (free,job-exclusive,offline,down)
+   t   type           CPU-type (amd,intel)
+   c   Ctot           #CPUs
+   u   Cused          #CPUs in use by jobs
+   f   Cfree          #CPUs free
+   l   score          load (~job score)
+   m   Mtot           physical memory present in the node
+   w   Mused          memory currently used by jobs
+   r   Mrel           ratio of memory used by jobs (>1: swapping, avoid!)
+
+  Output columns [--node-summary --long]
+   h   HDtot          total amount of disk-space in the node
+   e   HDused         amount of disk-space currently used
+   x   HDratio        ratio of disk-space used by jobs (>1 jobs get killed)
+   b   Network        total network traffic
+
+  Output columns [--user-summary]
+   o   owner          -
+   c   cpus           total number of CPUs in use by the owner
+   a   amd            total number of AMDs in use by the owner
+   i   intel          total number of Intels in use by the owner
+   m   mem            total memory used by the owner
+   t   time           total walltime of all owner's jobs
+   s   score          average score of all owner's jobs
+
+RELEASE
+
+  Version 3.0.1, Januari 2015
+
+COPYRIGHT
+
+  T.W.J. de Geus
+
+ACKNOWLEDGEMENT
+
+  J. Neggers
+    ''' % (
+      gpbs.Color.selection   , gpbs.Color.end ,
+      gpbs.Color.softwarning , gpbs.Color.end ,
+      gpbs.Color.warning     , gpbs.Color.end ,
+    )
+
+    sys.exit(0)
+
+  # ----------------------------------------------------------------------------
+  # qstat
+  # ----------------------------------------------------------------------------
+
+  def pbsnodes(self):
+    '''
+Description
+-----------
+
+Show the status of the running jobs. The output contains information from the
+`qstat -f` and `pbsnodes` commands, and has a format similar to `qstat`.
+    '''
+
+    # set command-line aliases [options: -s/-c]
+    alias = {}
+    alias['n'] = 'node'
+    alias['s'] = 'state'
+    alias['t'] = 'ctype'
+    alias['c'] = 'ncpu'
+    alias['u'] = 'njobs'
+    alias['f'] = 'cpufree'
+    alias['l'] = 'load'
+    alias['m'] = 'memp'
+    alias['w'] = 'memu'
+    alias['r'] = 'memr'
+    alias['h'] = 'disk_total'
+    alias['e'] = 'disk_used'
+    alias['x'] = 'disk_rel'
+    alias['b'] = 'bytes_tot'
+
+    # apply sort to the (remaining) list of nodes
+    if self.sort is None:
+      self.sort = ['n']
+    for s in self.sort:
+      self.nodes = sorted(self.nodes,key=lambda node: node[alias[s]])
+
+    # output settings
+    output = {}
+    output['node'   ] = dict(head='Node' ,wmin=4,col=0,rel=0)
+    output['state'  ] = dict(head='State',wmin=6,col=1,rel=1)
+    output['ctype'  ] = dict(head='Type' ,wmin=5,col=2,rel=2)
+    output['ncpu'   ] = dict(head='Ctot' ,wmin=4,col=3,rel=3)
+    #output['njobs'  ] = dict(head='Cused',wmin=5,col=4,rel=4)
+    output['cpufree'] = dict(head='Cfree',wmin=5,col=5,rel=5)
+    output['memp'   ] = dict(head='Mtot' ,wmin=5,col=7,rel=7)
+    output['memu'   ] = dict(head='Mused',wmin=6,col=8,rel=8)
+    #output['memr'   ] = dict(head='Mem%' ,wmin=5,col=9,rel=9)
+    if self.long:
+      output['disk_total'] = dict(head='HDtot'  ,wmin=6,col=10,rel=10)
+      output['disk_used' ] = dict(head='HDused' ,wmin=6,col=11,rel=11)
+      output['disk_rel'  ] = dict(head='HD%'    ,wmin=5,col=12,rel=12)
+      output['bytes_tot' ] = dict(head='Network',wmin=7,col=13,rel=13)
+
+    # remove columns based on selection
+    if self.columns:
+      # list columns to select
+      col = [alias[c] for c in self.columns]
+      # update output
+      output = {key:val for key,val in output.iteritems() if key in col}
+
+    # print to screen using the data above and the CL-options
+    print_column(
+      data   = self.nodes        ,
+      output = output            ,
+      header = not self.noheader ,
+      mode   = self.output       ,
+    )
+
+  # ----------------------------------------------------------------------------
+  # pbsnodes
+  # ----------------------------------------------------------------------------
+
+  def qstat(self):
+    '''
+Description
+-----------
+
+Show the status of the running jobs. The output contains information from the
+`qstat -f` and `pbsnodes` commands, and has a format similar to `qstat`.
+    '''
+
+    # set list with command-line argument aliases [options: -u/-j/-i/-n/-t]
+    alias = {}
+    alias['user'   ] = 'owner'
+    alias['jobname'] = 'name'
+    alias['id'     ] = 'id'
+    alias['node'   ] = 'host'
+    alias['time'   ] = 'walltime'
+    alias['memory' ] = 'memused'
+    # reduce the list of jobs by applying the different filters
+    for name in ['user','jobname','id','time','node','memory']:
+      # proceed with filter only if the filter is specified
+      if getattr(self,name) is not None:
+        # initiate to include or not
+        incl = [False for i in self.jobs]
+        # loop over jobs
+        for (ijob,job) in enumerate(self.jobs):
+          if name in ['user','jobname','id']:
+            incl[ijob] = any([i.match(job[alias[name]]) for i in getattr(self,name)])
+          else:
+            incl[ijob] = any([job[alias[name]]==i       for i in getattr(self,name)])
+        # select jobs
+        self.jobs = [job for job,i in zip(self.jobs,incl) if i]
+        # set filter colors
+        for job in self.jobs:
+          getattr(job,alias[name]).color = 'selection'
+
+    # set command-line aliases [options: -s/-c]
+    alias = {}
+    alias['i'] = 'id'
+    alias['o'] = 'owner'
+    alias['n'] = 'name'
+    alias['h'] = 'host'
+    alias['c'] = 'resnode'
+    alias['p'] = 'pmem'
+    alias['m'] = 'memused'
+    alias['s'] = 'state'
+    alias['t'] = 'walltime'
+    alias['r'] = 'score'
+
+    # apply sort to the (remaining) list of jobs
+    if self.sort:
+      for s in self.sort:
+        self.jobs = sorted(self.jobs,key=lambda job: job[alias[s]])
+
+    # output settings
+    output = {}
+    output['id'      ] = dict(head='id'      ,wmin=6,col=0,rel=0)
+    output['owner'   ] = dict(head='owner'   ,wmin=7,col=1,rel=2)
+    output['name'    ] = dict(head='job name',wmin=5,col=2,rel=9)
+    output['host'    ] = dict(head='host'    ,wmin=2,col=3,rel=3)
+    output['resnode' ] = dict(head='cpus'    ,wmin=5,col=4,rel=5)
+    output['memused' ] = dict(head='mem'     ,wmin=5,col=5,rel=4)
+    output['pmem'    ] = dict(head='pmem'    ,wmin=4,col=6,rel=8)
+    output['state'   ] = dict(head='S'       ,wmin=1,col=7,rel=1)
+    output['walltime'] = dict(head='time'    ,wmin=5,col=8,rel=6)
+    output['score'   ] = dict(head='score'   ,wmin=5,col=9,rel=7)
+
+    # remove columns based on selection
+    if self.columns:
+      # list columns to select
+      col = [alias[c] for c in self.columns]
+      # update output
+      output = {key:val for key,val in output.iteritems() if key in col}
+
+    # print to screen using the data above and the CL-options
+    print_column(
+      data   = self.jobs         ,
+      output = output            ,
+      header = not self.noheader ,
+      mode   = self.output       ,
+    )
+
+
+# ==============================================================================
+# main program
+# ==============================================================================
+
+if __name__=='__main__':
+
+  Main()

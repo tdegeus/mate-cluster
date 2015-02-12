@@ -1,0 +1,2359 @@
+Job Id: 235141.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_tension_big_VerFull.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 2143:33:45
+    resources_used.mem = 789352kb
+    resources_used.vmem = 1073848kb
+    resources_used.walltime = 2143:32:37
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Mon Sep 29 10:37:02 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/DP_MICRO/BIG_ME
+	SH/Verification/Full_CP/DP_tension_big_VerFull.pbs.e235141
+    exec_host = compute-0-13/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Mon Sep 29 10:37:04 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/DP_MICRO/BIG_M
+	ESH/Verification/Full_CP/output.out
+    Priority = 0
+    qtime = Mon Sep 29 10:37:02 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 20gb
+    session_id = 28957
+    Shell_Path_List = /bin/bash
+    etime = Mon Sep 29 10:37:02 2014
+    submit_args = DP_tension_big_VerFull.pbs
+    start_time = Mon Sep 29 10:37:04 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 236042.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_Huge.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 2068:03:08
+    resources_used.mem = 1424448kb
+    resources_used.vmem = 1726560kb
+    resources_used.walltime = 2068:27:58
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Oct  2 13:42:10 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/DP_MICRO/HUGE_M
+	ESH/REDUCED/DP_Huge.pbs.e236042
+    exec_host = compute-0-16/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Oct  2 13:42:12 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/DP_MICRO/HUGE_
+	MESH/REDUCED/output.out
+    Priority = 0
+    qtime = Thu Oct  2 13:42:10 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 20gb
+    session_id = 6730
+    Shell_Path_List = /bin/bash
+    etime = Thu Oct  2 13:42:10 2014
+    submit_args = DP_Huge.pbs
+    start_time = Thu Oct  2 13:42:12 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 237741.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_Big_VerFull_Final_CorOR.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1799:37:27
+    resources_used.mem = 789288kb
+    resources_used.vmem = 1073924kb
+    resources_used.walltime = 1799:35:58
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Mon Oct 13 18:34:43 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/V
+	ERIFICATION_FULL_corOR/DP_Big_VerFull_Final_CorOR.pbs.e237741
+    exec_host = compute-0-20/4
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Mon Oct 13 18:34:44 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	VERIFICATION_FULL_corOR/output.out
+    Priority = 0
+    qtime = Mon Oct 13 18:34:43 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 20gb
+    session_id = 28473
+    Shell_Path_List = /bin/bash
+    etime = Mon Oct 13 18:34:43 2014
+    submit_args = DP_Big_VerFull_Final_CorOR.pbs
+    start_time = Mon Oct 13 18:34:44 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 241751.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_ValidF_FULL_ISOelast.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1542:40:46
+    resources_used.mem = 789340kb
+    resources_used.vmem = 1073756kb
+    resources_used.walltime = 1542:39:33
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Oct 24 11:30:19 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/V
+	ALIDATION_FINAL_2islands/FULL_ISOelast/DP_ValidF_FULL_ISOelast.pbs.e24
+	1751
+    exec_host = compute-0-27/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Oct 24 11:30:20 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	VALIDATION_FINAL_2islands/FULL_ISOelast/output.out
+    Priority = 0
+    qtime = Fri Oct 24 11:30:19 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 20gb
+    session_id = 9936
+    Shell_Path_List = /bin/bash
+    etime = Fri Oct 24 11:30:19 2014
+    submit_args = DP_ValidF_FULL_ISOelast.pbs
+    start_time = Fri Oct 24 11:30:20 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 256060.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_Proj.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 461:01:09
+    resources_used.mem = 317284kb
+    resources_used.vmem = 561160kb
+    resources_used.walltime = 461:06:40
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Mon Dec  8 12:02:49 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP1/ECP_MP1_Proj.pbs.e256060
+    exec_host = compute-0-26/3
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Mon Dec  8 12:02:50 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP1/output.out
+    Priority = 0
+    qtime = Mon Dec  8 12:02:49 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 16611
+    Shell_Path_List = /bin/bash
+    etime = Mon Dec  8 12:02:49 2014
+    submit_args = ECP_MP1_Proj.pbs
+    start_time = Mon Dec  8 12:02:50 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 256064.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_Proj.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 460:08:51
+    resources_used.mem = 329760kb
+    resources_used.vmem = 573428kb
+    resources_used.walltime = 460:09:26
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Mon Dec  8 13:00:45 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP2/ECP_MP2_Proj.pbs.e256064
+    exec_host = compute-0-25/7
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Mon Dec  8 13:00:46 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP2/output.out
+    Priority = 0
+    qtime = Mon Dec  8 13:00:45 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 16468
+    Shell_Path_List = /bin/bash
+    etime = Mon Dec  8 13:00:45 2014
+    submit_args = ECP_MP2_Proj.pbs
+    start_time = Mon Dec  8 13:00:46 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257295.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_Proj_s.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 441:07:05
+    resources_used.mem = 329748kb
+    resources_used.vmem = 573524kb
+    resources_used.walltime = 441:14:43
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 07:55:44 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP2_slower/ECP_MP2_Proj_s.pbs.e25
+	7295
+    exec_host = compute-0-12/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 07:55:45 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_2mharden/MP2_slower/output.out
+    Priority = 0
+    qtime = Tue Dec  9 07:55:44 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 23668
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 07:55:44 2014
+    submit_args = ECP_MP2_Proj_s.pbs
+    start_time = Tue Dec  9 07:55:45 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257297.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_ProjOR.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 440:26:45
+    resources_used.mem = 317272kb
+    resources_used.vmem = 561096kb
+    resources_used.walltime = 441:02:08
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 08:07:39 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_Orig/MP1/ECP_MP1_ProjOR.pbs.e257297
+    exec_host = compute-0-14/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 08:07:40 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_Orig/MP1/output.out
+    Priority = 0
+    qtime = Tue Dec  9 08:07:39 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 6765
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 08:07:39 2014
+    submit_args = ECP_MP1_ProjOR.pbs
+    start_time = Tue Dec  9 08:07:40 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257299.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_ProjOR.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 441:01:03
+    resources_used.mem = 329756kb
+    resources_used.vmem = 573528kb
+    resources_used.walltime = 441:02:35
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 08:07:50 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_Orig/MP2/ECP_MP2_ProjOR.pbs.e257299
+    exec_host = compute-0-13/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 08:07:51 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_Orig/MP2/output.out
+    Priority = 0
+    qtime = Tue Dec  9 08:07:50 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 931
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 08:07:50 2014
+    submit_args = ECP_MP2_ProjOR.pbs
+    start_time = Tue Dec  9 08:07:51 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257307.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_ValidF_ECP_AnisoB.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 438:42:36
+    resources_used.mem = 789236kb
+    resources_used.vmem = 1065036kb
+    resources_used.walltime = 438:42:25
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 10:27:31 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/V
+	ALIDATION_FINAL_2islands_Proj/ECP_AnisoB/DP_ValidF_ECP_AnisoB.pbs.e257
+	307
+    exec_host = compute-0-20/2
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 10:27:32 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	VALIDATION_FINAL_2islands_Proj/ECP_AnisoB/output.out
+    Priority = 0
+    qtime = Tue Dec  9 10:27:31 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 3gb
+    session_id = 27690
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 10:27:31 2014
+    submit_args = DP_ValidF_ECP_AnisoB.pbs
+    start_time = Tue Dec  9 10:27:32 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257308.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_ValidF_ECP_AnisoAll.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 438:42:26
+    resources_used.mem = 789236kb
+    resources_used.vmem = 1065040kb
+    resources_used.walltime = 438:42:20
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 10:27:36 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/V
+	ALIDATION_FINAL_2islands_Proj/ECP_AnisoAll/DP_ValidF_ECP_AnisoAll.pbs.
+	e257308
+    exec_host = compute-0-20/3
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 10:27:37 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	VALIDATION_FINAL_2islands_Proj/ECP_AnisoAll/output.out
+    Priority = 0
+    qtime = Tue Dec  9 10:27:36 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 3gb
+    session_id = 27753
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 10:27:36 2014
+    submit_args = DP_ValidF_ECP_AnisoAll.pbs
+    start_time = Tue Dec  9 10:27:37 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257309.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_Huge_Final.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 438:38:14
+    resources_used.mem = 1424416kb
+    resources_used.vmem = 1726684kb
+    resources_used.walltime = 438:38:08
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec  9 10:32:32 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/H
+	UGE_REDUCED_Proj/DP_Huge_Final.pbs.e257309
+    exec_host = compute-0-20/5
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec  9 10:32:34 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	HUGE_REDUCED_Proj/output.out
+    Priority = 0
+    qtime = Tue Dec  9 10:32:32 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 28055
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec  9 10:32:32 2014
+    submit_args = DP_Huge_Final.pbs
+    start_time = Tue Dec  9 10:32:34 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257394.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_Proj_LA_Aniso.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 416:01:35
+    resources_used.mem = 317244kb
+    resources_used.vmem = 561164kb
+    resources_used.walltime = 416:01:34
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 10 09:08:22 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/MP1/ECP_MP1_Proj_LA_Aniso
+	.pbs.e257394
+    exec_host = compute-0-20/7
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 10 09:08:23 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/MP1/output.out
+    Priority = 0
+    qtime = Wed Dec 10 09:08:22 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 18029
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 10 09:08:22 2014
+    submit_args = ECP_MP1_Proj_LA_Aniso.pbs
+    start_time = Wed Dec 10 09:08:23 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257416.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_SP1_Proj_LA_Aniso.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 413:40:28
+    resources_used.mem = 329692kb
+    resources_used.vmem = 573560kb
+    resources_used.walltime = 413:47:35
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 10 11:22:18 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/SP1/ECP_SP1_Proj_LA_Aniso
+	.pbs.e257416
+    exec_host = compute-0-18/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 10 11:22:19 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/SP1/output.out
+    Priority = 0
+    qtime = Wed Dec 10 11:22:18 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 26981
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 10 11:22:18 2014
+    submit_args = ECP_SP1_Proj_LA_Aniso.pbs
+    start_time = Wed Dec 10 11:22:19 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257520.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_SP2_Proj_LA_Aniso.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 407:54:10
+    resources_used.mem = 329696kb
+    resources_used.vmem = 573508kb
+    resources_used.walltime = 407:55:05
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 10 17:14:16 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/SP2/ECP_SP2_Proj_LA_Aniso
+	.pbs.e257520
+    exec_host = compute-0-13/2
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 10 17:15:22 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/ANISO/SP2/output.out
+    Priority = 0
+    qtime = Wed Dec 10 17:14:16 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    session_id = 22214
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 10 17:14:16 2014
+    submit_args = ECP_SP2_Proj_LA_Aniso.pbs
+    start_time = Wed Dec 10 17:15:21 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257529.furnace.wfw.wtb.tue.nl
+    Job_Name = DP_Huge_Final_Fd.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 405:19:07
+    resources_used.mem = 1424676kb
+    resources_used.vmem = 1726620kb
+    resources_used.walltime = 405:19:14
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 10 19:50:49 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/H
+	UGE_REDUCED_Proj/STORE_DEFGRAD/DP_Huge_Final_Fd.pbs.e257529
+    exec_host = compute-0-15/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 10 19:50:50 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	HUGE_REDUCED_Proj/STORE_DEFGRAD/output.out
+    Priority = 0
+    qtime = Wed Dec 10 19:50:49 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 30982
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 10 19:50:49 2014
+    submit_args = DP_Huge_Final_Fd.pbs
+    start_time = Wed Dec 10 19:50:50 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257800.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_Proj_LA.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 387:44:04
+    resources_used.mem = 317276kb
+    resources_used.vmem = 561096kb
+    resources_used.walltime = 388:18:49
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Dec 11 12:51:43 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/MP1/ECP_MP1_Proj_LA.pbs.e257800
+	
+    exec_host = compute-0-14/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Dec 11 12:51:44 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/MP1/output.out
+    Priority = 0
+    qtime = Thu Dec 11 12:51:43 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 27137
+    Shell_Path_List = /bin/bash
+    etime = Thu Dec 11 12:51:43 2014
+    submit_args = ECP_MP1_Proj_LA.pbs
+    start_time = Thu Dec 11 12:51:44 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 257901.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_Proj_LA_P2.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 366:31:55
+    resources_used.mem = 317284kb
+    resources_used.vmem = 560992kb
+    resources_used.walltime = 366:32:06
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 12 10:38:05 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_2/MP1/ECP_MP1_Proj_LA_P2.pb
+	s.e257901
+    exec_host = compute-0-25/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 12 10:38:06 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_2/MP1/output.out
+    Priority = 0
+    qtime = Fri Dec 12 10:38:05 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 2627
+    Shell_Path_List = /bin/bash
+    etime = Fri Dec 12 10:38:05 2014
+    submit_args = ECP_MP1_Proj_LA_P2.pbs
+    start_time = Fri Dec 12 10:38:06 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 258280.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_Proj_LA.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 340:29:33
+    resources_used.mem = 329764kb
+    resources_used.vmem = 573472kb
+    resources_used.walltime = 340:30:58
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sat Dec 13 12:39:11 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/MP2/ECP_MP2_Proj_LA.pbs.e258280
+	
+    exec_host = compute-0-16/6
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sat Dec 13 12:39:12 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/MP2/output.out
+    Priority = 0
+    qtime = Sat Dec 13 12:39:11 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 5782
+    Shell_Path_List = /bin/bash
+    etime = Sat Dec 13 12:39:11 2014
+    submit_args = ECP_MP2_Proj_LA.pbs
+    start_time = Sat Dec 13 12:39:12 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 258281.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_Proj_LA_P3.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 340:16:36
+    resources_used.mem = 317268kb
+    resources_used.vmem = 561016kb
+    resources_used.walltime = 340:17:38
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sat Dec 13 12:52:25 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_3/MP1/ECP_MP1_Proj_LA_P3.pb
+	s.e258281
+    exec_host = compute-0-15/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sat Dec 13 12:52:26 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_3/MP1/output.out
+    Priority = 0
+    qtime = Sat Dec 13 12:52:25 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 32556
+    Shell_Path_List = /bin/bash
+    etime = Sat Dec 13 12:52:25 2014
+    submit_args = ECP_MP1_Proj_LA_P3.pbs
+    start_time = Sat Dec 13 12:52:26 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 258282.furnace.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_Proj_LA_P3.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 340:15:52
+    resources_used.mem = 329720kb
+    resources_used.vmem = 573572kb
+    resources_used.walltime = 340:17:22
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sat Dec 13 12:52:30 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPvali
+	d_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_3/MP2/ECP_MP2_Proj_LA_P3.pb
+	s.e258282
+    exec_host = compute-0-18/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sat Dec 13 12:52:32 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_ECPval
+	id_FINAL/ORIG_PARAM_Proj/PAR_LowIsoAust/PAR_3/MP2/output.out
+    Priority = 0
+    qtime = Sat Dec 13 12:52:30 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 1gb
+    session_id = 9966
+    Shell_Path_List = /bin/bash
+    etime = Sat Dec 13 12:52:30 2014
+    submit_args = ECP_MP2_Proj_LA_P3.pbs
+    start_time = Sat Dec 13 12:52:32 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271648.furnace.wfw.wtb.tue.nl
+    Job_Name = Huge_ISOmart_Par3_Fd.pbs
+    Job_Owner = FMaresca@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 194:18:50
+    resources_used.mem = 1404784kb
+    resources_used.vmem = 1742160kb
+    resources_used.walltime = 194:18:44
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 19 14:51:25 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/H
+	UGE_ISOMART_PAR3/Huge_ISOmart_Par3_Fd.pbs.e271648
+    exec_host = compute-0-16/3
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 19 14:51:26 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/FMaresca/CP_sims/PAPER_3_FINAL/
+	HUGE_ISOMART_PAR3/output.out
+    Priority = 0
+    qtime = Fri Dec 19 14:51:25 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 10gb
+    session_id = 5130
+    Shell_Path_List = /bin/bash
+    etime = Fri Dec 19 14:51:25 2014
+    submit_args = Huge_ISOmart_Par3_Fd.pbs
+    start_time = Fri Dec 19 14:51:26 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271751.furnace.wfw.wtb.tue.nl
+    Job_Name = TLd_Clamped_2.pbs
+    Job_Owner = nirani@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 98:55:15
+    resources_used.mem = 44980kb
+    resources_used.vmem = 247972kb
+    resources_used.walltime = 98:55:18
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Dec 23 14:15:09 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quas
+	i_static/disloc/new/1pln_TLd_Clamped_2/TLd_Clamped_2.pbs.e271751
+    exec_host = compute-0-12/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Dec 23 14:15:10 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/qua
+	si_static/disloc/new/1pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Tue Dec 23 14:15:09 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 3265
+    Shell_Path_List = /bin/bash
+    etime = Tue Dec 23 14:15:09 2014
+    submit_args = TLd_Clamped_2.pbs
+    start_time = Tue Dec 23 14:15:10 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271812.furnace.wfw.wtb.tue.nl
+    Job_Name = TLd_Clamped_1.pbs
+    Job_Owner = nirani@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 78:19:15
+    resources_used.mem = 58824kb
+    resources_used.vmem = 300888kb
+    resources_used.walltime = 78:26:41
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 10:43:01 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quas
+	i_static/disloc/new/1pln_TLd_Clamped_1/TLd_Clamped_1.pbs.e271812
+    exec_host = compute-0-12/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 10:43:02 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/qua
+	si_static/disloc/new/1pln_TLd_Clamped_1/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 10:43:01 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 10687
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 24 10:43:01 2014
+    submit_args = TLd_Clamped_1.pbs
+    start_time = Wed Dec 24 10:43:02 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271835.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_01
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1455:55:41
+    resources_used.mem = 111522676kb
+    resources_used.vmem = 120685548kb
+    resources_used.walltime = 77:03:37
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:19 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_01/PS_3d_01.e271835
+    exec_host = compute-0-0/23+compute-0-0/22+compute-0-0/21+compute-0-0/20+co
+	mpute-0-0/19+compute-0-0/18+compute-0-0/17+compute-0-0/16+compute-0-0/
+	15+compute-0-0/14+compute-0-0/13+compute-0-0/12+compute-0-0/11+compute
+	-0-0/10+compute-0-0/9+compute-0-0/8+compute-0-0/7+compute-0-0/6+comput
+	e-0-0/5+compute-0-0/4+compute-0-0/3+compute-0-0/2+compute-0-0/1+comput
+	e-0-0/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:20 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_01/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:19 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 2679
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_01,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:19 2014
+    submit_args = -N PS_3d_01 combine.pbs
+    start_time = Wed Dec 24 12:06:20 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271836.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_02
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1454:48:39
+    resources_used.mem = 110405224kb
+    resources_used.vmem = 120165248kb
+    resources_used.walltime = 77:04:07
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:20 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_02/PS_3d_02.e271836
+    exec_host = compute-0-1/23+compute-0-1/22+compute-0-1/21+compute-0-1/20+co
+	mpute-0-1/19+compute-0-1/18+compute-0-1/17+compute-0-1/16+compute-0-1/
+	15+compute-0-1/14+compute-0-1/13+compute-0-1/12+compute-0-1/11+compute
+	-0-1/10+compute-0-1/9+compute-0-1/8+compute-0-1/7+compute-0-1/6+comput
+	e-0-1/5+compute-0-1/4+compute-0-1/3+compute-0-1/2+compute-0-1/1+comput
+	e-0-1/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:21 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_02/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:20 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 20243
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_02,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:20 2014
+    submit_args = -N PS_3d_02 combine.pbs
+    start_time = Wed Dec 24 12:06:21 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271837.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_03
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1456:20:02
+    resources_used.mem = 112215068kb
+    resources_used.vmem = 120220432kb
+    resources_used.walltime = 77:03:40
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:21 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_03/PS_3d_03.e271837
+    exec_host = compute-0-2/23+compute-0-2/22+compute-0-2/21+compute-0-2/20+co
+	mpute-0-2/19+compute-0-2/18+compute-0-2/17+compute-0-2/16+compute-0-2/
+	15+compute-0-2/14+compute-0-2/13+compute-0-2/12+compute-0-2/11+compute
+	-0-2/10+compute-0-2/9+compute-0-2/8+compute-0-2/7+compute-0-2/6+comput
+	e-0-2/5+compute-0-2/4+compute-0-2/3+compute-0-2/2+compute-0-2/1+comput
+	e-0-2/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:22 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_03/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:21 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 32335
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_03,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:21 2014
+    submit_args = -N PS_3d_03 combine.pbs
+    start_time = Wed Dec 24 12:06:22 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271838.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_04
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1450:43:20
+    resources_used.mem = 112460432kb
+    resources_used.vmem = 119814196kb
+    resources_used.walltime = 77:04:14
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:22 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_04/PS_3d_04.e271838
+    exec_host = compute-0-3/23+compute-0-3/22+compute-0-3/21+compute-0-3/20+co
+	mpute-0-3/19+compute-0-3/18+compute-0-3/17+compute-0-3/16+compute-0-3/
+	15+compute-0-3/14+compute-0-3/13+compute-0-3/12+compute-0-3/11+compute
+	-0-3/10+compute-0-3/9+compute-0-3/8+compute-0-3/7+compute-0-3/6+comput
+	e-0-3/5+compute-0-3/4+compute-0-3/3+compute-0-3/2+compute-0-3/1+comput
+	e-0-3/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:23 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_04/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:22 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 14308
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_04,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:22 2014
+    submit_args = -N PS_3d_04 combine.pbs
+    start_time = Wed Dec 24 12:06:23 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271839.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_05
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1455:21:27
+    resources_used.mem = 111928292kb
+    resources_used.vmem = 120038488kb
+    resources_used.walltime = 77:04:01
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:23 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_05/PS_3d_05.e271839
+    exec_host = compute-0-5/23+compute-0-5/22+compute-0-5/21+compute-0-5/20+co
+	mpute-0-5/19+compute-0-5/18+compute-0-5/17+compute-0-5/16+compute-0-5/
+	15+compute-0-5/14+compute-0-5/13+compute-0-5/12+compute-0-5/11+compute
+	-0-5/10+compute-0-5/9+compute-0-5/8+compute-0-5/7+compute-0-5/6+comput
+	e-0-5/5+compute-0-5/4+compute-0-5/3+compute-0-5/2+compute-0-5/1+comput
+	e-0-5/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:24 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_05/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:23 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 31940
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_05,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:23 2014
+    submit_args = -N PS_3d_05 combine.pbs
+    start_time = Wed Dec 24 12:06:24 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271840.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_06
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1452:32:24
+    resources_used.mem = 112183856kb
+    resources_used.vmem = 119997764kb
+    resources_used.walltime = 77:04:15
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:24 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_06/PS_3d_06.e271840
+    exec_host = compute-0-6/23+compute-0-6/22+compute-0-6/21+compute-0-6/20+co
+	mpute-0-6/19+compute-0-6/18+compute-0-6/17+compute-0-6/16+compute-0-6/
+	15+compute-0-6/14+compute-0-6/13+compute-0-6/12+compute-0-6/11+compute
+	-0-6/10+compute-0-6/9+compute-0-6/8+compute-0-6/7+compute-0-6/6+comput
+	e-0-6/5+compute-0-6/4+compute-0-6/3+compute-0-6/2+compute-0-6/1+comput
+	e-0-6/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:25 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_06/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:24 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 10304
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_06,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:24 2014
+    submit_args = -N PS_3d_06 combine.pbs
+    start_time = Wed Dec 24 12:06:25 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271841.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_07
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1455:32:58
+    resources_used.mem = 112536388kb
+    resources_used.vmem = 119821672kb
+    resources_used.walltime = 77:03:56
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:25 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_07/PS_3d_07.e271841
+    exec_host = compute-0-7/23+compute-0-7/22+compute-0-7/21+compute-0-7/20+co
+	mpute-0-7/19+compute-0-7/18+compute-0-7/17+compute-0-7/16+compute-0-7/
+	15+compute-0-7/14+compute-0-7/13+compute-0-7/12+compute-0-7/11+compute
+	-0-7/10+compute-0-7/9+compute-0-7/8+compute-0-7/7+compute-0-7/6+comput
+	e-0-7/5+compute-0-7/4+compute-0-7/3+compute-0-7/2+compute-0-7/1+comput
+	e-0-7/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:26 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_07/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:25 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 31763
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_07,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:25 2014
+    submit_args = -N PS_3d_07 combine.pbs
+    start_time = Wed Dec 24 12:06:26 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271842.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_08
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1461:45:27
+    resources_used.mem = 113332636kb
+    resources_used.vmem = 119484252kb
+    resources_used.walltime = 77:03:57
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:26 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_08/PS_3d_08.e271842
+    exec_host = compute-0-8/23+compute-0-8/22+compute-0-8/21+compute-0-8/20+co
+	mpute-0-8/19+compute-0-8/18+compute-0-8/17+compute-0-8/16+compute-0-8/
+	15+compute-0-8/14+compute-0-8/13+compute-0-8/12+compute-0-8/11+compute
+	-0-8/10+compute-0-8/9+compute-0-8/8+compute-0-8/7+compute-0-8/6+comput
+	e-0-8/5+compute-0-8/4+compute-0-8/3+compute-0-8/2+compute-0-8/1+comput
+	e-0-8/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:27 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_08/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:26 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 1328
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_08,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:26 2014
+    submit_args = -N PS_3d_08 combine.pbs
+    start_time = Wed Dec 24 12:06:27 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271843.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_09
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1454:14:42
+    resources_used.mem = 112330620kb
+    resources_used.vmem = 119904408kb
+    resources_used.walltime = 77:04:13
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:27 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_09/PS_3d_09.e271843
+    exec_host = compute-0-9/23+compute-0-9/22+compute-0-9/21+compute-0-9/20+co
+	mpute-0-9/19+compute-0-9/18+compute-0-9/17+compute-0-9/16+compute-0-9/
+	15+compute-0-9/14+compute-0-9/13+compute-0-9/12+compute-0-9/11+compute
+	-0-9/10+compute-0-9/9+compute-0-9/8+compute-0-9/7+compute-0-9/6+comput
+	e-0-9/5+compute-0-9/4+compute-0-9/3+compute-0-9/2+compute-0-9/1+comput
+	e-0-9/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:28 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_09/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:27 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 25566
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_09,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:27 2014
+    submit_args = -N PS_3d_09 combine.pbs
+    start_time = Wed Dec 24 12:06:28 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271844.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_10
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 1460:20:46
+    resources_used.mem = 112763744kb
+    resources_used.vmem = 119866936kb
+    resources_used.walltime = 77:03:54
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:28 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_10/PS_3d_10.e271844
+    exec_host = compute-0-10/23+compute-0-10/22+compute-0-10/21+compute-0-10/2
+	0+compute-0-10/19+compute-0-10/18+compute-0-10/17+compute-0-10/16+comp
+	ute-0-10/15+compute-0-10/14+compute-0-10/13+compute-0-10/12+compute-0-
+	10/11+compute-0-10/10+compute-0-10/9+compute-0-10/8+compute-0-10/7+com
+	pute-0-10/6+compute-0-10/5+compute-0-10/4+compute-0-10/3+compute-0-10/
+	2+compute-0-10/1+compute-0-10/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:29 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_10/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:28 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=24:amd
+    session_id = 10794
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_10,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:28 2014
+    submit_args = -N PS_3d_10 combine.pbs
+    start_time = Wed Dec 24 12:06:29 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271845.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_11
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:09:48
+    resources_used.mem = 37495984kb
+    resources_used.vmem = 39554368kb
+    resources_used.walltime = 77:03:57
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:29 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_11/PS_3d_11.e271845
+    exec_host = compute-0-11/7+compute-0-11/6+compute-0-11/5+compute-0-11/4+co
+	mpute-0-11/3+compute-0-11/2+compute-0-11/1+compute-0-11/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:30 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_11/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:29 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 19033
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_11,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:29 2014
+    submit_args = -N PS_3d_11 combine.pbs
+    start_time = Wed Dec 24 12:06:30 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271846.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_12
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:04:54
+    resources_used.mem = 37097656kb
+    resources_used.vmem = 39272648kb
+    resources_used.walltime = 77:03:26
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:30 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_12/PS_3d_12.e271846
+    exec_host = compute-0-17/7+compute-0-17/6+compute-0-17/5+compute-0-17/4+co
+	mpute-0-17/3+compute-0-17/2+compute-0-17/1+compute-0-17/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:31 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_12/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:30 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 8520
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_12,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:30 2014
+    submit_args = -N PS_3d_12 combine.pbs
+    start_time = Wed Dec 24 12:06:31 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271847.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_13
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 458:21:19
+    resources_used.mem = 35419124kb
+    resources_used.vmem = 39074888kb
+    resources_used.walltime = 77:02:57
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:31 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_13/PS_3d_13.e271847
+    exec_host = compute-0-21/7+compute-0-21/6+compute-0-21/5+compute-0-21/4+co
+	mpute-0-21/3+compute-0-21/2+compute-0-21/1+compute-0-21/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:32 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_13/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:31 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 14297
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_13,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:31 2014
+    submit_args = -N PS_3d_13 combine.pbs
+    start_time = Wed Dec 24 12:06:32 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271848.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_14
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:06:26
+    resources_used.mem = 37222764kb
+    resources_used.vmem = 39439916kb
+    resources_used.walltime = 77:02:50
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:32 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_14/PS_3d_14.e271848
+    exec_host = compute-0-22/7+compute-0-22/6+compute-0-22/5+compute-0-22/4+co
+	mpute-0-22/3+compute-0-22/2+compute-0-22/1+compute-0-22/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:33 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_14/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:32 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 17298
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_14,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:32 2014
+    submit_args = -N PS_3d_14 combine.pbs
+    start_time = Wed Dec 24 12:06:33 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271849.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_15
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:04:06
+    resources_used.mem = 37514544kb
+    resources_used.vmem = 41778864kb
+    resources_used.walltime = 77:03:12
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:33 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_15/PS_3d_15.e271849
+    exec_host = compute-0-19/7+compute-0-19/6+compute-0-19/5+compute-0-19/4+co
+	mpute-0-19/3+compute-0-19/2+compute-0-19/1+compute-0-19/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:34 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_15/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:33 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 12809
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_15,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:33 2014
+    submit_args = -N PS_3d_15 combine.pbs
+    start_time = Wed Dec 24 12:06:34 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271850.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_16
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 461:57:48
+    resources_used.mem = 37830008kb
+    resources_used.vmem = 41319960kb
+    resources_used.walltime = 77:03:24
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:34 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_16/PS_3d_16.e271850
+    exec_host = compute-0-24/7+compute-0-24/6+compute-0-24/5+compute-0-24/4+co
+	mpute-0-24/3+compute-0-24/2+compute-0-24/1+compute-0-24/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:35 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_16/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:34 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 16477
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_16,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:34 2014
+    submit_args = -N PS_3d_16 combine.pbs
+    start_time = Wed Dec 24 12:06:35 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271851.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_17
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:05:21
+    resources_used.mem = 37050672kb
+    resources_used.vmem = 39389628kb
+    resources_used.walltime = 77:02:53
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:35 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_17/PS_3d_17.e271851
+    exec_host = compute-0-28/7+compute-0-28/6+compute-0-28/5+compute-0-28/4+co
+	mpute-0-28/3+compute-0-28/2+compute-0-28/1+compute-0-28/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:36 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_17/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:35 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 14485
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_17,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:35 2014
+    submit_args = -N PS_3d_17 combine.pbs
+    start_time = Wed Dec 24 12:06:36 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271852.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_18
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:04:15
+    resources_used.mem = 36967228kb
+    resources_used.vmem = 39302184kb
+    resources_used.walltime = 77:03:28
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:36 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_18/PS_3d_18.e271852
+    exec_host = compute-0-29/7+compute-0-29/6+compute-0-29/5+compute-0-29/4+co
+	mpute-0-29/3+compute-0-29/2+compute-0-29/1+compute-0-29/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:37 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_18/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:36 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 1388
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_18,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:36 2014
+    submit_args = -N PS_3d_18 combine.pbs
+    start_time = Wed Dec 24 12:06:37 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271853.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_19
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 455:58:30
+    resources_used.mem = 35489720kb
+    resources_used.vmem = 39587112kb
+    resources_used.walltime = 77:03:00
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:37 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_19/PS_3d_19.e271853
+    exec_host = compute-0-30/7+compute-0-30/6+compute-0-30/5+compute-0-30/4+co
+	mpute-0-30/3+compute-0-30/2+compute-0-30/1+compute-0-30/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:38 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_19/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:37 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 1501
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_19,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:37 2014
+    submit_args = -N PS_3d_19 combine.pbs
+    start_time = Wed Dec 24 12:06:38 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271854.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_20
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 462:08:45
+    resources_used.mem = 37062252kb
+    resources_used.vmem = 39170260kb
+    resources_used.walltime = 77:03:08
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:38 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_20/PS_3d_20.e271854
+    exec_host = compute-0-31/7+compute-0-31/6+compute-0-31/5+compute-0-31/4+co
+	mpute-0-31/3+compute-0-31/2+compute-0-31/1+compute-0-31/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:39 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_20/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:38 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 14719
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_20,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:38 2014
+    submit_args = -N PS_3d_20 combine.pbs
+    start_time = Wed Dec 24 12:06:39 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271855.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_21
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 461:56:47
+    resources_used.mem = 37395084kb
+    resources_used.vmem = 40627696kb
+    resources_used.walltime = 77:03:21
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:06:39 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D/
+	PS_3d_21/PS_3d_21.e271855
+    exec_host = compute-0-32/7+compute-0-32/6+compute-0-32/5+compute-0-32/4+co
+	mpute-0-32/3+compute-0-32/2+compute-0-32/1+compute-0-32/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:06:40 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	/PS_3d_21/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:06:39 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=8:intel
+    session_id = 19860
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D/PS_3d_21,
+	PBS_O_QUEUE=default
+    etime = Wed Dec 24 12:06:39 2014
+    submit_args = -N PS_3d_21 combine.pbs
+    start_time = Wed Dec 24 12:06:40 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271856.furnace.wfw.wtb.tue.nl
+    Job_Name = TLd_Clamped_1new.pbs
+    Job_Owner = nirani@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 76:47:35
+    resources_used.mem = 56108kb
+    resources_used.vmem = 310556kb
+    resources_used.walltime = 76:52:48
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Dec 24 12:16:54 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quas
+	i_static/disloc/new/1pln_TLd_Clamped_1new/TLd_Clamped_1new.pbs.e271856
+	
+    exec_host = compute-0-12/2
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Dec 24 12:16:55 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/qua
+	si_static/disloc/new/1pln_TLd_Clamped_1new/pbs.out
+    Priority = 0
+    qtime = Wed Dec 24 12:16:54 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1:intel
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13790
+    Shell_Path_List = /bin/bash
+    etime = Wed Dec 24 12:16:54 2014
+    submit_args = TLd_Clamped_1new.pbs
+    start_time = Wed Dec 24 12:16:55 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271899.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_42e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 276:50:24
+    resources_used.mem = 31184776kb
+    resources_used.vmem = 32867692kb
+    resources_used.walltime = 55:22:34
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Dec 25 09:47:17 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_42/PS_3d_42e.e271899
+    exec_host = compute-0-27/7+compute-0-27/6+compute-0-27/5+compute-0-27/4+co
+	mpute-0-27/3+compute-0-27/2+compute-0-27/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Dec 25 09:47:19 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_42/pbs.out
+    Priority = 0
+    qtime = Thu Dec 25 09:47:17 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=7:intel
+    session_id = 1619
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_42,
+	PBS_O_QUEUE=default
+    etime = Thu Dec 25 09:47:17 2014
+    submit_args = -N PS_3d_42e combine.pbs
+    start_time = Thu Dec 25 09:47:19 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271900.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_41e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 157:04:15
+    resources_used.mem = 30827040kb
+    resources_used.vmem = 32918240kb
+    resources_used.walltime = 31:25:47
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 26 09:43:42 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_41/PS_3d_41e.e271900
+    exec_host = compute-0-26/7+compute-0-26/6+compute-0-26/5+compute-0-26/4+co
+	mpute-0-26/2+compute-0-26/1+compute-0-26/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 26 09:43:43 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_41/pbs.out
+    Priority = 0
+    qtime = Fri Dec 26 09:43:42 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=7:intel
+    session_id = 19480
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_41,
+	PBS_O_QUEUE=default
+    etime = Fri Dec 26 09:43:42 2014
+    submit_args = -N PS_3d_41e combine.pbs
+    start_time = Fri Dec 26 09:43:43 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271901.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_43e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 156:50:26
+    resources_used.mem = 30725180kb
+    resources_used.vmem = 32646508kb
+    resources_used.walltime = 31:22:39
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 26 09:47:07 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_43/PS_3d_43e.e271901
+    exec_host = compute-0-14/7+compute-0-14/5+compute-0-14/4+compute-0-14/3+co
+	mpute-0-14/2+compute-0-14/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 26 09:47:09 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_43/pbs.out
+    Priority = 0
+    qtime = Fri Dec 26 09:47:07 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=6:intel
+    session_id = 5114
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_43,
+	PBS_O_QUEUE=default
+    etime = Fri Dec 26 09:47:07 2014
+    submit_args = -N PS_3d_43e combine.pbs
+    start_time = Fri Dec 26 09:47:09 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271902.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_40e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 156:42:27
+    resources_used.mem = 30710956kb
+    resources_used.vmem = 32828304kb
+    resources_used.walltime = 31:21:28
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 26 09:48:35 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_40/PS_3d_40e.e271902
+    exec_host = compute-0-15/7+compute-0-15/5+compute-0-15/4+compute-0-15/3+co
+	mpute-0-15/2+compute-0-15/1
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 26 09:48:36 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_40/pbs.out
+    Priority = 0
+    qtime = Fri Dec 26 09:48:35 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=6:intel
+    session_id = 405
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_40,
+	PBS_O_QUEUE=default
+    etime = Fri Dec 26 09:48:35 2014
+    submit_args = -N PS_3d_40e combine.pbs
+    start_time = Fri Dec 26 09:48:36 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271903.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_39e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 156:39:34
+    resources_used.mem = 30747272kb
+    resources_used.vmem = 32416896kb
+    resources_used.walltime = 31:20:30
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 26 09:49:23 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_39/PS_3d_39e.e271903
+    exec_host = compute-0-18/7+compute-0-18/6+compute-0-18/5+compute-0-18/4+co
+	mpute-0-18/3+compute-0-18/2
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 26 09:49:24 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_39/pbs.out
+    Priority = 0
+    qtime = Fri Dec 26 09:49:23 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=6:intel
+    session_id = 8173
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_39,
+	PBS_O_QUEUE=default
+    etime = Fri Dec 26 09:49:23 2014
+    submit_args = -N PS_3d_39e combine.pbs
+    start_time = Fri Dec 26 09:49:24 2014
+    start_count = 1
+    fault_tolerant = False
+
+Job Id: 271904.furnace.wfw.wtb.tue.nl
+    Job_Name = PS_3d_38e
+    Job_Owner = tdegeus@furnace.wfw.wtb.tue.nl
+    resources_used.cput = 156:39:29
+    resources_used.mem = 30851172kb
+    resources_used.vmem = 32594932kb
+    resources_used.walltime = 31:20:20
+    job_state = R
+    queue = default
+    server = furnace.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Dec 26 09:49:51 2014
+    Error_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D_
+	extra/PS_3d_38/PS_3d_38e.e271904
+    exec_host = compute-0-25/5+compute-0-25/4+compute-0-25/3+compute-0-25/2+co
+	mpute-0-25/1+compute-0-25/0
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Dec 26 09:49:52 2014
+    Output_Path = furnace.wfw.wtb.tue.nl:/home/tdegeus/paper1305/pure-shear_3D
+	_extra/PS_3d_38/pbs.out
+    Priority = 0
+    qtime = Fri Dec 26 09:49:51 2014
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=6:intel
+    session_id = 30679
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_HOME=/home/tdegeus,PBS_O_LANG=en_US.iso885915,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/share/apps/extra/gcc47/output/gcc/4.7.1/bin:/home/tdegeus
+	/bin:/share/apps/extra/bin:/share/apps/extra/python/bin:/usr/kerberos/
+	bin:/usr/java/latest/bin:/usr/local/bin:/bin:/usr/bin:/opt/bio/ncbi/bi
+	n:/opt/bio/mpiblast/bin/:/opt/bio/hmmer/bin:/opt/bio/EMBOSS/bin:/opt/b
+	io/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/phylip/exe:/opt/bio/mrba
+	yes:/opt/bio/fasta:/opt/bio/glimmer/bin://opt/bio/glimmer/scripts:/opt
+	/bio/gromacs/bin:/opt/bio/gmap/bin:/opt/bio/tigr/bin:/opt/bio/autodock
+	suite/bin:/opt/ganglia/bin:/opt/ganglia/sbin:/opt/openmpi/bin/:/opt/ma
+	ui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/rocks/bin:/opt/rocks/sbin
+	:/home/tdegeus/.sage/bin:/opt/sun-ct/bin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_HOST=furnace.wfw.wtb.tue.nl,PBS_SERVER=furnace.wfw.wtb.tue.nl,
+	PBS_O_WORKDIR=/home/tdegeus/paper1305/pure-shear_3D_extra/PS_3d_38,
+	PBS_O_QUEUE=default
+    etime = Fri Dec 26 09:49:51 2014
+    submit_args = -N PS_3d_38e combine.pbs
+    start_time = Fri Dec 26 09:49:52 2014
+    start_count = 1
+    fault_tolerant = False
+
