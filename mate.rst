@@ -139,7 +139,15 @@ Almost all Linux/Mac distributions have a ssh-client installed. To login to the 
 
 .. code-block:: bash
 
-  [username@mypc ~]$  ssh myclusteraccount@furnace
+  [username@mypc ~]$  ssh username@furnace
+
+.. note::
+
+  Do not forget to change ``username`` into your own user-name. Note also that from outside the MaTe-domain (e.g. on the VPN-network) the following command should be used:
+
+  .. code-block:: bash
+
+    [username@mypc ~]$  ssh username@furnace
 
 If this is the first time, ssh will ask you to confirm the identity of the computer you are connecting to. Confirm the question, and enter your password to log-in on the furnace.
 
@@ -157,7 +165,7 @@ To avoid the need to provide the user's password on each login, a key can be gen
 
    .. code-block:: bash
 
-     [username@mypc ~]$  ssh-copy-id myclusteraccount@furnace
+     [username@mypc ~]$  ssh-copy-id username@furnace
 
 If done right, from now on logging in will be password-less.
 

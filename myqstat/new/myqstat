@@ -8,27 +8,22 @@ import gpbs
 
 def getTerminalSize():
   """
-Description
------------
-
 Read the size of the terminal that executes the command, in number of
 characters.
 
-Returns
--------
+:returns:
 
-**lines** = ``<int>``
+  **lines** = ``<int>``
 
-  Number of lines in the terminal.
+    Number of lines in the terminal.
 
-**columns** = ``<int>``
+  **columns** = ``<int>``
 
-  Number of columns in the terminal.
+    Number of columns in the terminal.
 
-Source
-------
+:source:
 
-http://www.codingtiger.com/questions/linux/How-to-get-console-window-width-in-python.html
+  http://www.codingtiger.com/questions/linux/How-to-get-console-window-width-in-python.html
     """
   import os, struct
   def ioctl_GWINSZ(fd):
@@ -68,26 +63,23 @@ http://www.codingtiger.com/questions/linux/How-to-get-console-window-width-in-py
 
 def print_column(data,output,header=True,mode='short',sep=', ',trunc=' ...'):
   '''
-Description
------------
-
 Formatted print to the screen.
 
-Input arguments
----------------
+:arguments:
 
-**data** = ``<list>``
+  **data** = ``<list>``
 
-  List of "Job"/"Node" containing the actual data that is printed to the screen.
+    List of "Job"/"Node" containing the actual data that is printed to the
+    screen.
 
-**output** = ``<dict>``
+  **output** = ``<dict>``
 
-  Dictionary with print settings:
-  - head : header name
-  - wmin : minimum width of the column (otherwise exclude)
-  - col  : column number
-  - rel  : importance ranking of the column, columns are exclude from the
-           highest to the lowest number
+    Dictionary with print settings:
+    - head : header name
+    - wmin : minimum width of the column (otherwise exclude)
+    - col  : column number
+    - rel  : importance ranking of the column, columns are exclude from the
+             highest to the lowest number
 
 Input options
 -------------

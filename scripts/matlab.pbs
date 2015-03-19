@@ -6,7 +6,7 @@
 
 # set alias for the Matlab executable of furnace
 # include options to run in the terminal
-matlab="/share/apps/matlab-2010a/bin/matlab -nodisplay -nojvm "
+matlab="/share/apps/matlab-2010a/bin/matlab -nodisplay -nojvm -singleCompThread"
 
 # execute Matlab-script in "myqscript.m"
 # remember to "quit" when done!

@@ -1,55 +1,51 @@
 '''
-Description
------------
-
 This module provides functions to read the `qstat`, `pbsnodes` and `ganglia`
 command (functions: "stat", "qstatRead", "pbsRead"). The data is stored as lists
 of the "Job" and the "Node" classes.
 
-Both the "Job" and the "Node" class have fields to the "String"-class. Therefore
-these classes have the special feature that::
+Both the "Job" and the "Node" class have fields that are of the "String"-class.
+Each field can be referenced as string but also as raw data, as follows::
 
-  example.test    == ``<str>``
+  example.test    == ``<str>`` # formatted string, format is predefined
   example['test'] == ``<?>``   # class depends on the raw data
 
-Specifically each field have the following parameters::
+Each field has the following parameters::
 
   example.test.data   # raw data
   example.test.fmt    # print format
   example.test.color  # print colors as string (see gpbs.Color)
   example.test.trunc  # symbol to truncate the output string
 
-Classes and functions
----------------------
+:classes and functions:
 
-**Color**
+  **Color**
 
-  The color style: interpretation of colors e.g. 'selection'.
+    The color style: interpretation of colors e.g. 'selection'.
 
-**String**
+  **String**
 
-  Provide storage of raw-data together with print format and color.
+    Provide storage of raw-data together with print format and color.
 
-**Job**
+  **Job**
 
-  Job information.
+    Job information.
 
-**Node**
+  **Node**
 
-  Node information.
+    Node information.
 
-**qstatRead**
+  **qstatRead**
 
-  Convert `qstat -f` command to list of jobs.
+    Convert `qstat -f` command to list of jobs.
 
-**pbsRead**
+  **pbsRead**
 
-  Convert `pbsnodes` and `ganglia` command to list of nodes.
+    Convert `pbsnodes` and `ganglia` command to list of nodes.
 
-**stat**
+  **stat**
 
-  Convert `qstat -f`, `pbsnodes`, and `ganglia` commands to lists of jobs and
-  nodes, with color coding depending on the output.
+    Convert `qstat -f`, `pbsnodes`, and `ganglia` commands to lists of jobs and
+    nodes, with color coding depending on the output.
 
 Copyright
 ---------
@@ -58,7 +54,7 @@ T.W.J. de Geus (tom@geus.me)
 '''
 
 # ==============================================================================
-# class with colors
+# class with color definitions
 # ==============================================================================
 
 class Color(object):
@@ -74,14 +70,11 @@ style file for color highlighting.
   end         = '\033[0m'   # no set color
 
 # ==============================================================================
-# custom string class, for custom format print
+# string class, for custom format print
 # ==============================================================================
 
 class String(object):
   '''
-Description
------------
-
 Class to store data but also the print format (including color). This class is
 used to store all data at the same place with the print settings.
   '''
@@ -92,28 +85,28 @@ used to store all data at the same place with the print settings.
 
   def __init__(self,**kwargs):
     '''
-Input options
--------------
+:options:
 
-**data**
+  **data**
 
-  The raw-data. Can be of any class.
+    The raw-data. Can be of any class.
 
-**fmt** = ``<str>``
+  **fmt** = ``<str>``
 
-  The print format, e.g. "%-10s". If a length is specified this is strictly
-  enforced. I.e. if a string is too long it will be truncated.
+    The print format, e.g. "%-10s". If a length is specified this is strictly
+    enforced. I.e. if a string is too long it will be truncated.
 
-**color** = [``None``] | ``<str>``
+  **color** = [``None``] | ``<str>``
 
-  Select color to print the string in. If set to ``None`` no color is applied to
-  the output. See "gpbs.Color" for implemented colors.
+    Select color to print the string in. If set to ``None`` no color is applied
+    to the output. See "gpbs.Color" for implemented colors.
 
-**trunc** = ["..."] | ``<str>``
+  **trunc** = ["..."] | ``<str>``
 
-  Symbol to indicate that a string has been truncated. N.B. the length of the
-  string is strictly enforced. I.e. the length that is specified includes the
-  truncation symbol.
+    Symbol to indicate that a string has been truncated. N.B. the length of the
+    string is strictly enforced. I.e. the length that is specified includes the
+    truncation symbol.
+
     '''
 
     self.data    = kwargs.pop( 'data'   , None  )
@@ -127,22 +120,18 @@ Input options
 
   def fmt2len(self):
     '''
-Description
------------
-
 Convert the print format the length. For example::
 
   '%-20s'   --> 20
   '%16.8e'  --> 16
   '%s'      --> None
 
-Returns
--------
+:returns:
 
-**N** = ``<int>`` | ``None``
+  **N** = ``<int>`` | ``None``
 
-  The length of the string. Return ``None`` if the length of the string is not
-  explicitly specified.
+    The length of the string. Returns ``None`` if the length of the string is
+    not explicitly specified.
     '''
 
     import re
@@ -158,18 +147,14 @@ Returns
 
   def len2fmt(self,N):
     '''
-Description
------------
-
 Apply length to print format.
 
-Input arguments
----------------
+:arguments:
 
-**N** = ``<int>``
+  **N** = ``<int>``
 
-  The desired length of the string. To remove a pre-specified length use an
-  empty string ("") as input.
+    The desired length of the string. To remove a pre-specified length use an
+    empty string ("") as input.
     '''
 
     # get the current length: to replace
@@ -245,9 +230,6 @@ Input arguments
 
 class Host(object):
   '''
-Description
------------
-
 Class to store host information, and print is in an easily readable format.
 The following information is stored:
 
@@ -261,23 +243,21 @@ The following information is stored:
 
   def __init__(self,*args,**kwargs):
     '''
-Input arguments
----------------
+:arguments (optional):
 
 **text** = ``<str>``, *optional*
 
   String in the following format: "compute-0-1/12+compute-0-1/1".
 
-Input options
--------------
+:options:
 
-**node** = ``<list>``
+  **node** = ``<list>``
 
-  List with node numbers.
+    List with node numbers.
 
-**cpu** = ``<list>``
+  **cpu** = ``<list>``
 
-  List with CPU numbers.
+    List with CPU numbers.
     '''
 
     # check the number of arguments
@@ -313,18 +293,14 @@ Input options
 
   def __cmp__(self,other):
     '''
-Description
------------
-
 Compare two instances of the host class.
 
-Input arguments
----------------
+:arguments:
 
-**other** = ``<Host>``, ``<str>``
+  **other** = ``<Host>``, ``<str>``
 
-  An instance of the host class. If it is a string, the input is first converted
-  to the ``<Host>``-class.
+    An instance of the host class. If it is a string, the input is first
+    converted to the ``<Host>``-class.
     '''
 
     # catch None arguments
@@ -369,9 +345,6 @@ Input arguments
 
   def write(self):
     '''
-Description
------------
-
 Create human readable output. E.g.::
 
   node = [1,1,1,1]  --> "1"
@@ -395,9 +368,6 @@ Create human readable output. E.g.::
 
 class ResNode(object):
   '''
-Description
------------
-
 Class to store the CPU-capacity reserved for a job. It can contain: the amount
 of nodes, the amount of CPUs, and the type of CPU.
   '''
@@ -408,27 +378,25 @@ of nodes, the amount of CPUs, and the type of CPU.
 
   def __init__(self,*args,**kwargs):
     '''
-Input arguments
----------------
+:arguments (optional):
 
-**text** = ``<str>``, *optional*
+  **text** = ``<str>``, *optional*
 
-  String of the format "1:ppn=2:intel" (2 CPUs on 1 node of type "intel").
+    String of the format "1:ppn=2:intel" (2 CPUs on 1 node of type "intel").
 
-Input options
--------------
+:options:
 
-**nnode** = ``<int>``
+  **nnode** = ``<int>``
 
-  Number of nodes.
+    Number of nodes.
 
-**ncpu** = ``<int>``
+  **ncpu** = ``<int>``
 
-  Number of CPUs.
+    Number of CPUs.
 
-**ctype** = ``<str>``
+  **ctype** = ``<str>``
 
-  Type of processor.
+    Type of processor.
     '''
 
     # check number of arguments
@@ -464,9 +432,6 @@ Input options
 
   def __cmp__(self,other):
     '''
-Description
------------
-
 Compare two arguments of the "ResNode" class.
     '''
     default = lambda x: 1 if x is None else x
@@ -489,9 +454,6 @@ Compare two arguments of the "ResNode" class.
 
   def write(self):
     '''
-Description
------------
-
 Convert to human readable string, of the format "1:2:i". For this example the
 owner has requested 1 node, 2 CPUs, of the intel class.
     '''
@@ -512,9 +474,6 @@ owner has requested 1 node, 2 CPUs, of the intel class.
 
   def pbsopt(self):
     '''
-Description
------------
-
 Write as PBS-string
     '''
 
@@ -536,9 +495,6 @@ Write as PBS-string
 
 class Unit(object):
   '''
-Description
------------
-
 A generic class to view and read floats that have a unit. For example a float
 with the unit of time: "1d".
   '''
@@ -626,9 +582,6 @@ with the unit of time: "1d".
 
   def __cmp__(self,other):
     '''
-Description
------------
-
 Compare to other object (==, <, >, etc.). The other object can be of many types
 and is converted to a float to do the comparison.
 
@@ -669,9 +622,6 @@ If the other object is a string
 
 class Time(Unit):
   '''
-Description
------------
-
 Class to store time, and print is in an easily readable format.
   '''
 
@@ -681,15 +631,14 @@ Class to store time, and print is in an easily readable format.
 
   def str2float(self,arg):
     '''
-Input arguments
----------------
+:arguments:
 
-**text** = ``<float>`` | ``<str>``
+  **text** = ``<float>`` | ``<str>``
 
-  Time in:
-  * ``<float>``: number of seconds
-  * ``<str>``  : time in clock format, "HH:MM:SS"
-  * ``<str>``  : time in a single unit, e.g. "1m"
+    Time in:
+    * ``<float>``: number of seconds
+    * ``<str>``  : time in clock format, "HH:MM:SS"
+    * ``<str>``  : time in a single unit, e.g. "1m"
     '''
 
     # if the input is None: return as None immediately
@@ -730,12 +679,9 @@ Input arguments
 
   def write(self,precision=None):
     '''
-  Description
-  -----------
+Create human readable output. E.g.::
 
-  Create human readable output. E.g.::
-
-    24*60*60 == "1.0d"
+  24*60*60 == "1.0d"
     '''
 
     # set the sign
@@ -771,9 +717,6 @@ Input arguments
 
 class Data(Unit):
   '''
-Description
------------
-
 Class to store data, and print is in an easily readable format.
   '''
 
@@ -783,14 +726,13 @@ Class to store data, and print is in an easily readable format.
 
   def str2float(self,arg):
     '''
-Input arguments
----------------
+:arguments:
 
-**text** = ``<float>`` | ``<str>``
+  **text** = ``<float>`` | ``<str>``
 
-  Data in:
-  * ``<float>``: number of bytes
-  * ``<str>``  : humanly readable string, e.g. "1gb"
+    Data in:
+    * ``<float>``: number of bytes
+    * ``<str>``  : humanly readable string, e.g. "1gb"
     '''
 
     # if the input is None: return as None immediately
@@ -833,9 +775,6 @@ Input arguments
 
   def write(self,precision=0):
     '''
-Description
------------
-
 Create human readable output. E.g.::
 
   1000.0 == "1mb"
@@ -882,18 +821,13 @@ class Item(object):
 
   def check(self,*args):
     '''
-Description
------------
+Check if all arguments are specified and not ``None``.
 
-Check if all arguments are specified and not ``None``. Only in this case does
-this function return ``True``, otherwise ``False`` is returned.
+:arguments:
 
-Input arguments
----------------
+  **args** = ``<list>`` | ``<str>``
 
-**args** = ``<str>``
-
-  The names of the fields to check.
+    The names of the fields to check.
     '''
 
     for arg in args:
@@ -911,13 +845,10 @@ Input arguments
 
 class Job(Item):
   '''
-Description
------------
-
 Class to store the job information. Each field of this class is stored using the
 custom "gpbs.String" class. To read:
 
-- a string: ``job.example``
+- a string:     ``job.example``
 - the raw data: ``job['example']``
 
 To modify the data, or the print format use::
@@ -934,32 +865,30 @@ To modify the data, or the print format use::
 
   def __init__(self,*args,**kwargs):
     '''
-Input arguments
----------------
+:arguments (optional):
 
-**text** = ``<str>``
+  **text** = ``<str>``
 
-  The output of the `qstat -f` command for this job. I.e.::
+    The output of the `qstat -f` command for this job. I.e.::
 
-    text << `qstat -f`
-    Job(text.split(Job Id:))
+      text << `qstat -f`
+      Job(text.split(Job Id:))
 
-Input options
--------------
+:options:
 
-========= ========= ============================================================
-field     type      description
-========= ========= ============================================================
-id        <str>     id (as string)
-name      <str>     name
-owner     <str>     owner
-state     <str>     status of the job (R=running, Q=queued, E=exiting)
-resnode   <ResNode> claimed nodes/CPUs
-cputime   <Time>    time that the job has been consuming CPU resources
-walltime  <Time>    time that the job has been running
-host      <Host>    job that is running the job
-score     <float>   score: ratio between the 'cputime' and the 'walltime'
-========= ========= ============================================================
+  ========= ========= ==========================================================
+  field     type      description
+  ========= ========= ==========================================================
+  id        <str>     id (as string)
+  name      <str>     name
+  owner     <str>     owner
+  state     <str>     status of the job (R=running, Q=queued, E=exiting)
+  resnode   <ResNode> claimed nodes/CPUs
+  cputime   <Time>    time that the job has been consuming CPU resources
+  walltime  <Time>    time that the job has been running
+  host      <Host>    job that is running the job
+  score     <float>   score: ratio between the 'cputime' and the 'walltime'
+  ========= ========= ==========================================================
     '''
 
     # check number of input arguments
@@ -1021,13 +950,10 @@ score     <float>   score: ratio between the 'cputime' and the 'walltime'
 
 class Node(Item):
   '''
-Description
------------
-
 Class to store the node-information. Each field of this class is stored using the
 custom "gpbs.String" class. To read:
 
-- a string: ``node.example``
+- a string:     ``node.example``
 - the raw data: ``node['example']``
 
 To modify the data, or the print format use::
@@ -1044,38 +970,36 @@ To modify the data, or the print format use::
 
   def __init__(self,*args,**kwargs):
     '''
-Input arguments
----------------
+:arguments (optional):
 
-**text** = ``<str>``
+  **text** = ``<str>``
 
-  The output of the `pbsnodes` command for this node. I.e.::
+    The output of the `pbsnodes` command for this node. I.e.::
 
-    text << `qpbsnodes`
-    Node(text.split('\n\n'))
+      text << `qpbsnodes`
+      Node(text.split('\n\n'))
 
-Input options
--------------
+:options:
 
-=========== =========== ========================================================
-field       type        description
-=========== =========== ========================================================
-name        <str>       name of the compute-node
-node        <int>       node number (compute-0-X -> int(X))
-state       <str>       status (free,job-exclusive,down,offline)
-ncpu        <int>       number of CPUs
-ctype       <str>       type of node (intel,amd)
-jobs        <list>      list of job numbers <int>
-memt        <Data>      total memory
-mema        <Data>      available memory
-memu        <Data>      memory in use
-memp        <Data>      physical memory
-disk_total  <Data>      total disk space
-disk_free   <Data>      free disk space
-bytes_in    <Data>      network traffic in-bound
-bytes_out   <Data>      network traffic out-bound
-cpu_idle    <float>     CPU idle (waiting) percentage
-=========== =========== ========================================================
+  =========== =========== ======================================================
+  field       type        description
+  =========== =========== ======================================================
+  name        <str>       name of the compute-node
+  node        <int>       node number (compute-0-X -> int(X))
+  state       <str>       status (free,job-exclusive,down,offline)
+  ncpu        <int>       number of CPUs
+  ctype       <str>       type of node (intel,amd)
+  jobs        <list>      list of job numbers <int>
+  memt        <Data>      total memory
+  mema        <Data>      available memory
+  memu        <Data>      memory in use
+  memp        <Data>      physical memory
+  disk_total  <Data>      total disk space
+  disk_free   <Data>      free disk space
+  bytes_in    <Data>      network traffic in-bound
+  bytes_out   <Data>      network traffic out-bound
+  cpu_idle    <float>     CPU idle (waiting) percentage
+  =========== =========== ======================================================
     '''
 
     # support function, split jobs: 0/X.hostname
@@ -1175,53 +1099,49 @@ def csplit(text,name,postfix=' =',sep='\n',dtype=None):
   '''
 Split a string, and convert to a specific data type.
 
-Input arguments
----------------
+:arguments:
 
-**text** = ``<str>``
+  **text** = ``<str>``
 
-  String to split/convert.
+    String to split/convert.
 
-**name** = ``<str>``
+  **name** = ``<str>``
 
-  Key-name, at which to split the string (in front of the data).
+    Key-name, at which to split the string (in front of the data).
 
-Input options
--------------
+:options:
 
-**postfix** = ``<str>``
+  **postfix** = ``<str>``
 
-  Post-fix of the key-name (in front of the data).
+    Post-fix of the key-name (in front of the data).
 
-**sep** = ``<str>``
+  **sep** = ``<str>``
 
-  Separator (after the data).
+    Separator (after the data).
 
-**dtype** = [None] | int | float | Data | Time | ResNode | Host | ...
+  **dtype** = [None] | int | float | Data | Time | ResNode | Host | ...
 
-  Data-type to which to convert the data.
+    Data-type to which to convert the data.
 
-Output arguments
-----------------
+:returns:
 
-**data** = [``<str>``] | ...
+  **data** = [``<str>``] | ...
 
-  Data read (and converted to a specific data-type).
+    Data read (and converted to a specific data-type).
 
-Examples
---------
+:example:
 
-To read the memory form the following string::
+  To read the memory form the following string::
 
-  ...
-  resources_used.cputime = 995:58:01
-  resources_used.mem     = 6286932kb
-  resources_used.vmem    = 6611296kb
-  ...
+    ...
+    resources_used.cputime = 995:58:01
+    resources_used.mem     = 6286932kb
+    resources_used.vmem    = 6611296kb
+    ...
 
-use the command::
+  use the command::
 
-  csplit(text,'resources_used.mem',dtype='Data')
+    csplit(text,'resources_used.mem',dtype='Data')
   '''
 
   import re
@@ -1244,31 +1164,21 @@ use the command::
 
 def qstatRead(qstat=None):
   '''
-Description
------------
-
 Read the output of the `qstat -f` command. The output is converted to a list of
 jobs.
 
-Input options
--------------
+:options:
 
-**qstat** = [``None``] | ``<str>``
+  **qstat** = [``None``] | ``<str>``
 
-  In stead of reading the `qstat -f` command, supply a string containing this
-  output. Mostly used for debugging.
+    In stead of reading the `qstat -f` command, supply a string containing this
+    output. Mostly used for debugging.
 
-Output arguments
-----------------
+:returns:
 
-**jobs** = ``<list>``
+  **jobs** = ``<list>``
 
-  A list with jobs of the ``<Job>``-class.
-
-See also
---------
-
-* gpbs.Job
+    A list with jobs of the ``<Job>``-class.
   '''
 
   # read output `qstat -f` command
@@ -1299,35 +1209,28 @@ Description
 Read the output of the `pbsnodes` and the `ganglia` command. The output is
 converted to a list of compute-nodes.
 
-Input option
-------------
+:options:
 
-**pbsnodes** = [``None``] | ``<str>``
+  **pbsnodes** = [``None``] | ``<str>``
 
-  In stead of reading the `pbsnodes` command, supply a string containing this
-  output. Mostly used for debugging.
+    In stead of reading the `pbsnodes` command, supply a string containing this
+    output. Mostly used for debugging.
 
-**ganglia** = [``None``] | ``False`` | ``<str>``
+  **ganglia** = [``None``] | ``False`` | ``<str>``
 
-  If set ``False`` the `ganglia` command is not read. This option is used to
-  speed up, as the `ganglia` command is slow. If a ``<str>`` is supplied the
-  `ganglia` command is also not read, but the output in the ``<str>`` is used
-  in stead. Notice that the following command should be used to form the
-  string::
+    If set ``False`` the `ganglia` command is not read. This option is used to
+    speed up, as the `ganglia` command is slow. If a ``<str>`` is supplied the
+    `ganglia` command is also not read, but the output in the ``<str>`` is used
+    in stead. Notice that the following command should be used to form the
+    string::
 
-    ganglia disk_total disk_free bytes_in bytes_out cpu_idle
+      ganglia disk_total disk_free bytes_in bytes_out cpu_idle
 
-Output arguments
-----------------
+:returns:
 
-**nodes** = ``<list>``
+  **nodes** = ``<list>``
 
-  A list with compute-nodes of the ``<Node>``-class.
-
-See also
---------
-
-* gpbs.Node
+    A list with compute-nodes of the ``<Node>``-class.
   '''
 
   # read the `pbsnodes` command
@@ -1376,43 +1279,34 @@ See also
 
 def stat(qstat=None,pbsnodes=None,ganglia=False):
   '''
-Description
------------
-
 Read the "qstat" and the "pbsnodes" commands, and apply colors to warn users of
 potential misuse or problems.
 
-Input options
--------------
+:options:
 
-**qstat** = [``None``] | ``<str>``
+  **qstat** = [``None``] | ``<str>``
 
-  The output of the `qstat -f` command. If set to ``None`` (default) the command
-  is run inside this function.
+    The output of the `qstat -f` command. If set to ``None`` (default) the
+    command is run inside this function.
 
-**pbsnodes** = [``None``] | ``<str>``
+  **pbsnodes** = [``None``] | ``<str>``
 
-  The output of the `pbsnodes` command. If set to ``None`` (default) the command
-  is run inside this function.
+    The output of the `pbsnodes` command. If set to ``None`` (default) the
+    command is run inside this function.
 
-**ganglia** = [``False``] | ``None`` | ``<str>``
+  **ganglia** = [``False``] | ``None`` | ``<str>``
 
-  The output of the `ganglia` command. If set to ``None`` (default) the command
-  is run inside this function. If set to ``False`` no ganglia information is
-  read. If the input is a string the extact arguments must have been used to run
-  the command.
+    The output of the `ganglia` command. If set to ``None`` (default) the
+    command is run inside this function. If set to ``False`` no ganglia
+    information is read. If the input is a string the extact arguments must have
+    been used to run the command.
 
-See also
---------
-
-* gpbs.qstatRead / gpbs.Job
-* gpbs.pbsRead   / gpbs.Node
   '''
 
   # read all running jobs, and all node information
   jobs  = qstatRead(qstat=qstat)
   nodes = pbsRead(pbsnodes=pbsnodes,ganglia=ganglia)
-  # convert nodes to dictionary for easly lookup
+  # convert nodes to dictionary for easy lookup
   ndict = {}
   for node in nodes:
     ndict[node['node']] = node
@@ -1427,7 +1321,7 @@ See also
       job.score.color = 'warning'
 
   # check the job's memory usage
-  # - less than 10% free memory remaining of host: warning
+  # - less than 10% free memory remaining on host: warning
   # - more that 1gb of memory without claim: soft warning
   for job in jobs:
     for n in set(job['host'].node):
