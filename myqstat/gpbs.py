@@ -1,1372 +1,2048 @@
 '''
-Description
-===========
+This module provides functions to read the ``qstat``, ``pbsnodes`` and
+``ganglia`` command, and store:
 
-The ``gpbs``-module is used to read/store/write information from the PBS-queuing
-system. In particular it reads/convert the output of (either of) the following
-commands::
+* ``myqstat``     : a list of ``<gpbs.Job>``
+* ``myqstat_user``: a list of ``<gpbs.Owner>``
+* ``myqstat_node``: a list of ``<gpbs.Node>``
 
-  qstat -f    # information on individual jobs
-  pbsnodes    # information on the status of the compute-nodes
-  ganglia ... # information on the status of the compute-nodes
+All these classes have the customized functionality to obtain a field as data or
+as string (with a certain formatting default). Consider the following example::
 
-Main usage
-==========
+  >>> type(job.cputime)
+  <class 'gpbs.Time'>
 
-1.  Read individual job information::
+  >>> type(job['cputime'])
+  <str>
 
-      jobs = gpbs.qstatRead()
+Custom print formatting is also available. Consider the following example to
+print a list of jobs in columns (namely: "id", "host" and "pmem")::
 
-    This command reads the information from the ``qstat -f`` command and stores
-    it as a list of individual jobs [dict].
+  for job in jobs:
+    print '{job.id:>6.6s}, {job.host:>3s}, {job.pmem:>5s}'.format(job=job)
 
-2.  Read basic compute-node information::
+:copyright:
 
-      nodes = gpbs.pbsRead(ganglia=False)
-
-    This command reads the information from the ``pbsnodes`` command and stores
-    it as a list of individual compute-nodes [dict].
-
-3.  Read detailed compute-node information::
-
-      nodes = gpbs.pbsRead()
-
-    This command reads the information from the ``pbsnodes`` and
-    ``ganlia ...`` command and stores it as a list of individual compute-nodes
-    [dict]. Notice: the ganglia command is slow, as it needs to connect to each
-    of the individual nodes.
-
-Implementation details
-======================
-
-Basic interface
----------------
-
-The basic interface with the module is through:
-
-1. The information is read by one of the following commands::
-
-     jobs  = gpbs.qstatRead()
-     nodes = gpbs.pbsRead()
-
-   These commands return: a list of jobs/nodes, with a dictionary per
-   list-entry. Each entry in the dictionary has at least the following methods::
-
-     __cmp__(self,other)  # to compare (e.g. sort) the list
-     __str__(self)        # to convert the entry to a string
-
-   To deal with the custom classes (see below) and "None" entries when the
-   "qstat -f" and/or "pbsnodes" command did not posses some of the data, the
-   "Data"-class is used. It acts as the Swiss-army knife of the "gpbs"-module:
-
-   * Perform arithmetic operations (e.g. "__cmp__" to sort) even when
-     "None"-entries are encountered.
-   * Convert fields to humanly-readable strings (e.g. walltime="1m" or
-     host="1*").
-   * Compare based on string input (e.g. check if walltime ">1d".
-
-2. Calculate additional summary information::
-
-     qsum = gpbs.qstatSummary(jobs,nodes)
-     psum = gpbs.pbsSummary(nodes)
-
-   The ouput is again a list of jobs/nodes/owners/... where each list-entry is
-   a dictionary. Similar to above, each entry in the dictionary has at least
-   the following fields:
-
-     __cmp__(self,other)  # to compare (e.g. sort) the list
-     __str__(self)        # to convert the entry to a string
-
-Classes
--------
-
-**Byte(float)**
-
-  Class to convert bytes (as "floats") to/from humanly readable strings, e.g.
-
-    1mb <-> 1.0e6
-
-  This class is a child of the "float"-class and therefore all it's methods are
-  inherited by this class. Overwritten/extra methods:
-  * __repr__() and __str__(): called by e.g. "print" and "str(...)".
-  * strcmp(expr): compare a humanly readable string.
-
-**Time(float)**
-
-  Class to convert seconds (as "floats") to/from humanly readable strings, e.g.
-
-    2m <-> 60.0
-
-  This class is a child of the "float"-class and therefore all it's methods are
-  inherited by this class. Overwritten/extra methods:
-  * __repr__() and __str__(): called by e.g. "print" and "str(...)".
-  * strcmp(expr): compare a humanly readable string.
-
-**ResNode**
-
-  CPU resources requested for the job. Fields:
-
-  * nnode:  #nodes
-  * npcu:   #CPUs per node
-  * ctype:  CPU type
-
-  To convert to string (e.g. "1:2:i") use str(...).
-
-**Host**
-
-  Compute-node information for the job. Fields:
-
-  * node:   compute-node-number
-  * cpu:    CPU number
-  * ctype:  CPU type
-  * ntype:  totals per ctype
-
-  To convert to string (e.g. "10*") use str(...).
-
-To-do list:
------------
-
-* Update qstatLog / pbsLog (?), also change to "ascii" in-stead of binary
-  to make more readable.
-
-Change-log
-----------
-
-Version 1.3 - June 2014 - [TdG]
-
-* Introduced the "Data" class as Swiss army knife handle all information fields.
-  The Data class is to store/write all the Job/Node fields. This class also
-  deals with "None" fields that are encountered if the data was not read.
-
-Version 1.2 - May 2014 - [TdG]
-
-* Numerous changes to accommodate myqstat better.
-* Removed "HostInfo": qstatLog should be changed accordingly.
-
-Version 1.1 - January 2014 - [JvB,TdG]
-
-* Small bug-fixes [TdG].
-* Added CPU-type to Host [TdG].
-* Add log-commands (qstatLog,pbsLog) used for logging [JvB,TdG].
-
-Version 1.0 - January 2014 - [TdG]
-
-* First version.
-
-Copyright
----------
-
-[TdG]   T.W.J. de Geus
-        t.degeus@gmail.com
-        www.geus.me
-
-[JvB]   J. van Beeck
-        j.v.beeck@tue.nl
+  `T.W.J. de Geus <http://www.geus.me>`_ (`tom@geus.me <mailto:tom@geus.me>`_)
 '''
 
+import re
+
 # ==============================================================================
-# reserved nodes
+# job host(s)
 # ==============================================================================
 
-class ResNode:
-  '''
-Description
------------
+class Host(object):
+  r'''
+Class to store host information. This class can be used to print the host
+information in a compact way. Thereby, only the node-number is included as
+follows::
 
-CPU-resources reserved for a job:
+  node = [1,1,1,1]  --> "1"
+  node = [1,1,1,2]  --> "1*"
 
-======= ===============================
-field   description
-======= ===============================
-nnode   #nodes
-------- -------------------------------
-ncpu    #CPUs
-------- -------------------------------
-ctype   CPU type (e.g. intel,amd)
-======= ===============================
+:arguments:
 
-Input arguments (1/2)
----------------------
+  **text** (``<str>``), *optional*
+    String in the following format: "compute-0-1/12+compute-0-1/1".
 
-**string** = ``<str>``
+:options/fields:
 
-  String of the format "1:ppn=2:intel" whereby the owner of this job has
-  requested 2 CPUs on 1 node of type "intel".
+  **node** (``<list>``)
+    List with node numbers.
 
-Input arguments (2/2)
----------------------
+  **cpu** (``<list>``)
+    List with CPU numbers.
 
-**nnode** = ``<int>``
+:print format:
 
-  Number of nodes.
+  The print format may be of the following type::
 
-**ncpu** = ``<int>``
+    {:[align][width].[precision]}
 
-  Number of CPUs.
+  The 'precision' can be ``0,1,2``, as shown in the following example::
 
-**ctype** = ``<str>``
+    >>> gpbs.Host('compute-0-1/2+compute-0-2/3')
+    1*
 
-  Type of processor.
+    >>> '{:.1}'.format(gpbs.Host('compute-0-1/2+compute-0-2/3'))
+    1,2
 
-Usage
------
-
-* Store data or convert string::
-
-    gpbs.ResNodes(nnode=...,ncpu=...,ctype=...)
-    # or
-    gpbs.ResNodes(string="1:ppn=1:intel")
-
-* Compare::
-
-    # set a variable "A"
-    A = gpbs.ResNodes(...)
-
-    # compare number of CPUs: compare to "ResNodes"-class
-    A > gpbs.ResNodes(...)
-
-    # compare number of CPUs: compare to string
-    A > "10"
-
-* Convert to humanly readable string::
-
-    A = gpbs.ResNodes(...)
-
-    print A # str(A)
-
-      "1:1:i"
-
-* Convert to PBS-options::
-
-    A = gpbs.ResNodes(...)
-
-    print A.pbsopt()
-
-      "nodes=1:ppn=1:intel"
+    >>> '{:.2}'.format(gpbs.Host('compute-0-1/2+compute-0-2/3'))
+    1/2,2/3
   '''
 
   # ----------------------------------------------------------------------------
-  # class initiator
+  # class constructor
   # ----------------------------------------------------------------------------
 
-  def __init__(self,**kwargs):
+  def __init__(self,*args,**kwargs):
 
-    # set defaults
-    for key in ['nnode','ncpu','ctype']:
-      if key in kwargs:
-        setattr(self,key,kwargs[key])
-      else:
-        setattr(self,key,None)
+    # check the number of arguments
+    if len(args)>1:
+      raise IOError('Unknown number of input arguments')
 
-    # read string
-    if 'string' in kwargs:
-
-      # check for other arguments
-      if len(kwargs)>1:
-        raise IOError('If "string" supplied: supply nothing else')
-
-      # alias to variable
-      string = kwargs['string']
-
-      # convert string: type 1 (?)
-      if len(string.split('ppn='))==1:
-        self.nnode = 1
-        self.ncpu  = 1
-        for ctype in ['intel','amd']:
-          if len(string.split(ctype))>1:
-            self.ctype = ctype
-      # convert string: type 2 (?)
-      else:
-        # split using format: NNODE:ppn=NCPU:CTYPE
-        string = (string.replace('ppn=','')+':'*3).split(':')[0:3]
-        # number of nodes
-        try:
-          self.nnode = int(string[0])
-        except:
-          pass
-        # number of CPUs
-        try:
-          self.ncpu  = int(string[1])
-        except:
-          pass
-        # type
-        if len(string[2])>0:
-          self.ctype = string[2]
+    # read from text
+    if len(args)==1:
+      if args[0] is not None and args[0] is not '':
+        # remove the "compute-0-" and split at "+"
+        text = args[0].replace("compute-0-","").split("+")
+        # store nodes and cpu
+        if any([len(i.split('/'))>1 for i in text]):
+          self.node = [int(i.split("/")[0]) for i in text]
+          self.cpu  = [int(i.split("/")[1]) for i in text]
         else:
-          self.ctype = 'other'
+          self.node = [int(i) for i in text]
+          self.cpu  = []
+
+    # optional overwrite with options
+    self.node = kwargs.pop( 'node' , getattr(self,'node',[]) )
+    self.cpu  = kwargs.pop( 'cpu'  , getattr(self,'cpu' ,[]) )
 
   # ----------------------------------------------------------------------------
-  # compare: "<" "<=" "==" ">=" ">"
+  # combine hosts
+  # ----------------------------------------------------------------------------
+
+  def __add__(self,other):
+    return Host(node=self.node+other.node,cpu=self.cpu+other.cpu)
+
+  def __radd__(self,other):
+    if type(other)==int:
+      return other + len(self.node)
+    else:
+      other.node += self.node
+      other.cpu  += self.cpu
+
+  # ----------------------------------------------------------------------------
+  # comparison of two instances of the host class
   # ----------------------------------------------------------------------------
 
   def __cmp__(self,other):
+    '''
+Compare two instances of the ``<Host>``-class.
 
-    # set comparison depending on type of "other"
-    if isinstance(other,ResNode):
-      A = self.ncpu
-      B = other.ncpu
-    elif type(other)==str:
-      A = str(self.ncpu)
-      B = other
-    elif type(other)==int:
-      A = self.ncpu
-      B = other
-    else:
-      return +1
+:arguments:
 
-    # compare "A" and "B"
-    if A<B:
+  **other** (``<Host>`` | ``<str>``)
+    Quantity to compare with. If it is a string, the input is first converted to
+    the ``<Host>``-class.
+    '''
+
+    # catch None arguments
+    if type(other)==type(None):
       return -1
-    elif A>B:
-      return 1
-    else:
+    if len(self.node)==0:
+      return -1
+
+    # allow for several comparison types
+    if type(other)==str:
+      other = Host(other)
+    elif type(other)==int:
+      other = Host(node=[other])
+    elif type(other)==list:
+      other = Host(node= other )
+
+    # check if any of the nodes match
+    if len([True for i in self.node if i in other.node])>0:
       return 0
 
+    # compare not matching host
+    if min(self.node) < min(other.node):
+      return -1
+    elif min(self.node) > min(other.node):
+      return +1
+    else:
+      return  0
+
   # ----------------------------------------------------------------------------
-  # write humanly readable output, and create alias for print command
+  # number of CPUs
+  # ----------------------------------------------------------------------------
+
+  def __len__(self):
+    return len(self.node)
+
+  # ----------------------------------------------------------------------------
+  # convert to string
   # ----------------------------------------------------------------------------
 
   def __repr__(self):
-    return self.write()
+    return self.__str__()
+
   def __str__(self):
-    return self.write()
+    return '{}'.format(self)
 
-  def write(self):
-    '''
-Convert to human readable string, of the format "1:2:i". For this example the
-owner has requested 1 node, 2 CPUs, of the intel class.
-    '''
-    txt = ''
-    if self.nnode>0:
-      txt += str(self.nnode)
-    txt += ':'
-    if self.ncpu>0:
-      txt += str(self.ncpu)
-    txt += ':'
-    if self.ctype not in ['other'] and self.ctype is not None:
-      txt += self.ctype[0]
-    return txt
+  def __format__(self,fmt):
 
-  # ----------------------------------------------------------------------------
-  # return to PBS options
-  # ----------------------------------------------------------------------------
+    # break up print format in pieces / set default
+    if len(fmt)>0:
+      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else:
+      fmt = ['','','','','','','']
 
-  def pbsopt(self):
-    '''
-Write as PBS-string
-    '''
+    # set default precision
+    precision = '0'
+    # if print-format "f"loat: extract print precision
+    if fmt[5] in ['f']:
+      fmt[5] = 's'
+      if len(fmt[4])>0:
+        precision = fmt[4]
+        fmt[4]    = ''
+      else:
+        precision = '0'
 
-    text = []
+    # remove precision
+    if len(fmt[4])==0:
+      fmt[3] = ''
 
-    if self.nnode is not None:
-      text.append('nodes=%d'%self.nnode)
-    if self.ncpu is not None:
-      text.append('ppn=%d'%self.ncpu)
-    if self.ctype is not None:
-      text.append(self.ctype)
+    # convert to print format
+    fmt = '{:%s}'%''.join(fmt)
 
-    return ':'.join(text)
+    # act on empty host
+    if len(self.node)==0:
+      return fmt.format(' ')
+
+    # create text, based of print precision
+    if precision=='0':
+      if self.node.count(self.node[0])==len(self.node):
+        return fmt.format(str(self.node[0]))
+      else:
+        return fmt.format(str(self.node[0])+'*')
+
+    if precision=='1':
+      return fmt.format(','.join([str(i) for i in self.node]))
+
+    if precision=='2':
+      return fmt.format(','.join([str(i)+'/'+str(j) for i,j in zip(self.node,self.cpu)]))
+
+    raise IOError('Unknown print format')
 
 # ==============================================================================
-# information of the compute-node
+# job resources: nodes/CPUs
 # ==============================================================================
 
-class Host:
-  '''
-Description
------------
+class ResNode(object):
+  r'''
+Class to store the CPU-capacity reserved for a job. It can contain: the amount
+of nodes, the amount of CPUs, and the type of CPU.
 
-Class to store host information, and print is in an easily readable format.
+:arguments:
 
-===== ============================================================
-field description
-===== ============================================================
-node  list with node-numbers
------ ------------------------------------------------------------
-cpu   list with CPU-numbers on the corresponding node
------ ------------------------------------------------------------
-ctype CPU-type per node/CPU
-      (only after "typecal")
------ ------------------------------------------------------------
-ntype dictionary with total number of nodes per unique "ctype"
-      (only after "typecal")
-===== ============================================================
+  **text** (``<str>``) *optional*
+    String of the format "1:ppn=2:intel" (2 CPUs on 1 node of type "intel").
 
-Input arguments (1/2)
----------------------
+:options/fields:
 
-**string** = ``<str>``
+  **nodes** (``<int>``)
+    Number of nodes.
 
-  String in the following format: "compute-0-1/12+compute-0-1/1".
+  **ppn** (``<int>``)
+    Number of CPUs per node.
 
-Input arguments (1/2)
----------------------
+  **ctype** (``<str>``)
+    Type of processor.
 
-**node** = ``<lst>``
+:print format:
 
-  List with node numbers.
+  The print format may be of the following type::
 
-**cpu** = ``<lst>``
+    {:[align][width][type]}
 
-  List with CPU numbers.
+  The *type* can be:
 
-Usage
------
+  * ``s`` or ``c`` (default): print in compact form
+  * ``p``: print as PBS-option
 
-* Store data or convert string::
+  Consider the following example::
 
-    gpbs.Host(node=[...],cpu=[...])
-    # or
-    gpbs.Host(string="...")
+    >>> gpbs.ResNode('nodes=1:ppn=10:intel')
+    1:10:i
 
-* Compare::
+    >>> '{:s}'.format(gpbs.ResNode('nodes=1:ppn=10:intel'))
+    1:10:i
 
-    # set a variable "A"
-    A = gpbs.Host(...)
-
-    # compare (first) node-number: to "Host"-class
-    A > gpbs.Host(...)
-
-    # compare (first) node-number as string: to string
-    A > "10"
-
-    # 'advanced' string compare
-    A.strcmp(">10")
-
-* Write humanly readable output (e.g. "1" or "1*").
-
+    >>> '{:p}'.format(gpbs.ResNode('nodes=1:ppn=10:intel'))
+    nodes=1:ppn=10:intel
   '''
 
   # ----------------------------------------------------------------------------
-  # class initiator
+  # class constructor
   # ----------------------------------------------------------------------------
 
-  def __init__(self,string=None,node=[],cpu=[]):
+  def __init__(self,*args,**kwargs):
 
-    # initiate
-    self.node = node
-    self.cpu  = cpu
-    self.ncpu = 0
-    # convert/store string
-    if string is not None:
-      # remove the "compute-0-" and split at "+"
-      string = string.replace("compute-0-","").split("+")
-      # store nodes and CPU
-      self.node = [int(i.split("/")[0]) for i in string]
-      self.cpu  = [int(i.split("/")[1]) for i in string]
-      # calculate counters
-      self.ncpu = len(self.cpu)
+    # check number of arguments
+    if len(args)>1:
+      raise IOError('Unknown number of input arguments')
+
+    # read from input text
+    if len(args)==1:
+      if args[0] is not None and args[0] is not '':
+        # extract node information from other resources
+        text = args[0]
+        if   len(text.split('nodes='))>1:
+          text = 'nodes='+text.split('nodes=')[1].split(',')[0]
+        elif len(text.split('ppn='))>1:
+          text = 'ppn='  +text.split('ppn='  )[1].split(',')[0]
+        else:
+          text = text.split(',')[0]
+        # read node information
+        for arg in text.split(':'):
+          if   len(arg.split('nodes='))>1:
+            self.nodes = int(arg.split('nodes=')[1])
+          elif len(arg.split('ppn='  ))>1:
+            self.ppn   = int(arg.split('ppn='  )[1])
+          else:
+            self.ctype = arg
+
+    # optional overwrite with options
+    self.nodes = kwargs.pop( 'nodes' , getattr(self,'nodes',1   ) )
+    self.ppn   = kwargs.pop( 'ppn'   , getattr(self,'ppn'  ,1   ) )
+    self.ctype = kwargs.pop( 'ctype' , getattr(self,'ctype',None) )
 
   # ----------------------------------------------------------------------------
-  # compare: "<" "<=" "==" ">=" ">"
+  # count the number of CPUs
+  # ----------------------------------------------------------------------------
+
+  def __len__(self):
+    return self.nodes*self.ppn
+
+  # ----------------------------------------------------------------------------
+  # compare two variables of the ResNode class
   # ----------------------------------------------------------------------------
 
   def __cmp__(self,other):
     '''
-Comparison for operators "<" "<=" "==" ">=" ">". Comparison to:
-
-* Host
-* str
+Compare two arguments of the "ResNode" class.
     '''
+    default = lambda x: 1 if x is None else x
 
-    # set comparison depending on type of "other"
-    if isinstance(other,Host):
-      A = self.node[0]
-      B = other.node[0]
-    elif type(other)==str:
-      A = self.node.write()
-      B = other
-    else:
-      return +1
-
-    # compare "A" and "B"
-    if A<B:
+    if   default(self.nodes)*default(self.ppn) < default(other.nodes)*default(other.ppn):
       return -1
-    elif A>B:
-      return 1
+    elif default(self.nodes)*default(self.ppn) > default(other.nodes)*default(other.ppn):
+      return +1
     else:
-      return 0
+      return  0
 
   # ----------------------------------------------------------------------------
-  # add hosts
-  #TODO: deepcopy
+  # convert to string
+  # ----------------------------------------------------------------------------
+
+  def __repr__(self):
+    return self.__str__()
+
+  def __str__(self):
+    return '{}'.format(self)
+
+  def __format__(self,fmt):
+
+    # set default
+    pbs = False
+
+    # break apart print format
+    if len(fmt)>0:
+      if fmt[-1]=='p':
+        pbs = True
+        fmt = fmt[:-1]
+      elif fmt[-1] in ['c','s']:
+        fmt = fmt[:-1]
+
+    # convert print format
+    fmt = '{:%ss}'%fmt
+
+    # print short-hand
+    if not pbs:
+      text = ''
+      if self.nodes is not None:
+        text +=     str(self.nodes)
+      if self.ppn is not None:
+        text += ':'+str(self.ppn)
+      if self.ctype is not None:
+        text += ':'+self.ctype[0]
+      return fmt.format(text)
+
+    # print long
+    text = [
+      'nodes=%d' % self.nodes ,
+      'ppn=%d'   % self.ppn   ,
+    ]
+    if self.ctype is not None:
+      text.append(self.ctype)
+    return fmt.format(':'.join(text))
+
+# ==============================================================================
+# class to store an object with a unit (e.g. Time = 1d)
+# ==============================================================================
+
+class Unit(object):
+  r'''
+A generic class to view and read floats that have a unit. For example a float
+with the unit of time: "1d".
+
+To complete the behavior of a child-class the following functions have to be
+specified:
+
+* ``<float> = str2float (self,arg)``: convert string to float (as return)
+* ``<str>   = __format__(self,arg)``: formatted print
+
+:argument/field:
+
+  **arg** (``<int>`` | ``<float>`` | ``<str>``)
+    The input data.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # class constructor
+  # ----------------------------------------------------------------------------
+
+  def __init__(self,arg):
+
+    if arg is None or arg is '':
+      self.arg = None
+    elif type(arg)==str:
+      self.arg = self.str2float(arg)
+    else:
+      self.arg = arg
+
+  # ----------------------------------------------------------------------------
+  # functions to convert to float or string, makes comparison easy
+  # ----------------------------------------------------------------------------
+
+  def __float__(self):
+    if self.arg is None:
+      return 0.0
+    else:
+      return self.arg
+
+  def __int__(self):
+    return int(float(self))
+
+  # ----------------------------------------------------------------------------
+  # convert to string
+  # ----------------------------------------------------------------------------
+
+  def __repr__(self):
+    return self.__str__()
+
+  def __str__(self):
+    return '{}'.format(self)
+
+  # ----------------------------------------------------------------------------
+  # subtract: output of the same class
+  # ----------------------------------------------------------------------------
+
+  def __sub__(self,other):
+
+    if self.__class__ != other.__class__:
+      raise IOError('Arguments must have the same class')
+
+    return globals()[self.__class__.__name__](float(self)-float(other))
+
+  # ----------------------------------------------------------------------------
+  # add: output of the same class
   # ----------------------------------------------------------------------------
 
   def __add__(self,other):
 
-    # check the class of other
-    if not isinstance(other,Host):
-      raise IOError('"other" must be of the Host class')
+    if self.__class__ != other.__class__:
+      raise IOError('Arguments must have the same class')
 
-    # add fields
-    self.node += other.node
-    self.cpu  += other.cpu
-    self.ncpu += other.ncpu
-
-    return self
+    return globals()[self.__class__.__name__](float(self)+float(other))
 
   # ----------------------------------------------------------------------------
-  # return #CPU as integer
+  # right add: to use sum
   # ----------------------------------------------------------------------------
 
-  def __int__(self):
-    return self.ncpu
+  def __radd__(self,other):
+    return globals()[self.__class__.__name__](float(other)+float(self))
 
   # ----------------------------------------------------------------------------
-  # write humanly readable output, and create alias for print command
+  # divide: output has no unit
   # ----------------------------------------------------------------------------
 
-  def __repr__(self):
-    return self.write()
-  def __str__(self):
-    return self.write()
+  def __div__(self,other):
 
-  def write(self):
-    '''
-Create human readable output. E.g.::
-
-  node = [1,1,1,1]  --> "1"
-  node = [1,1,1,2]  --> "1*"
-    '''
-    node = self.node
-    if self.ncpu > 0:
-      if node.count(node[0])==len(node):
-        return "%d" % node[0]
-      else:
-        return "%d%s" % (node[0],"*")
+    if self.arg is not None and other is not None:
+      return float(self)/float(other)
     else:
-      return ''
-
-  # ----------------------------------------------------------------------------
-  # compare humanly readable string
-  # ----------------------------------------------------------------------------
-
-  def strcmp(self,expr):
-    '''
-Compare time to humanly readable string, e.g.::
-
-  x.strcmp(">10")
-  x.strcmp("<=10")
-  x.strcmp("10")
-    '''
-
-    try:
-      if expr[:2]=='<=':
-        return any([i for i in self.node if i<=int(expr[2:])])
-      elif expr[:2]=='>=':
-        return any([i for i in self.node if i>=int(expr[2:])])
-      elif expr[:2]=='==':
-        return any([i for i in self.node if i==int(expr[2:])])
-      elif expr[0]=='<':
-        return any([i for i in self.node if i< int(expr[1:])])
-      elif expr[0]=='>':
-        return any([i for i in self.node if i> int(expr[1:])])
-      else:
-        return any([i for i in self.node if i==int(expr)    ])
-    except:
-      return False
-
-  # ----------------------------------------------------------------------------
-  # convert nodes to CPU-type
-  # ----------------------------------------------------------------------------
-
-  def typecal(self,nodes):
-    '''
-Description
------------
-
-Calculate the CPU type of each node. An additional field "ctype" is added to
-class, which is a list of CPU-types. For example::
-
-  self.node  = [   11    ,   11    ]
-  self.ctype = [ 'intel' , 'intel' ]
-
-Input arguments
----------------
-
-**nodes**
-
-  List with node-information (see pbsRead).
-    '''
-
-    # set allowed CPU-type
-    types = ['intel','amd']
-    # check allowed CPU-type
-    for node in nodes:
-      if str(node['ctype']) not in types:
-        raise IOError('Unknown CPU-type %s',node.ctype)
-
-    # convert list of nodes to type per node
-    clist = {}
-    for node in nodes:
-      clist[int(node['node'])] = str(node['ctype'])
-
-    # convert node list to type list
-    self.ctype = [clist[i] for i in self.node]
-
-    # calculate total
-    self.ntype = {}
-    for t in types:
-      self.ntype[t] = self.ctype.count(t)
-
-    # calculate overall total
-    self.ntype['total'] = sum([self.ntype[i] for i in self.ntype])
-
-    return self
-
-# ==============================================================================
-# memory
-# ==============================================================================
-
-class Byte(float):
-  '''
-Description
------------
-
-Class to store (byte-)data, and print is in an easily readable format.
-
-Input arguments (mutually exclusive)
-------------------------------------
-
-**num** = ``<float>``
-
-  Number of seconds.
-
-**string** = ``<str>``
-
-  String in the following format: "1gb".
-
-Function overview
------------------
-
-**write**
-
-  Write humanly readable output (e.g. "1mb").
-
-**strcmp**
-
-  Compare a humanly readable string (e.g. ">10mb").
-  '''
-
-  # ----------------------------------------------------------------------------
-  # class initiator
-  # ----------------------------------------------------------------------------
-
-  def __new__(cls,num=None,string=None):
-    '''
-Initiate variables. Notice "__new__" instead of "__init__" as the Python-class
-"float" is overloaded. For this class "__init__" is non-writable.
-    '''
-
-    # convert "1gb" to float
-    def convertstring(string):
-      # set conversion ratio
-      ratio = {}
-      ratio["tb"] = 1.0e12
-      ratio["gb"] = 1.0e9
-      ratio["mb"] = 1.0e6
-      ratio["kb"] = 1.0e3
-      # loop to find conversion
-      for (i,iden) in enumerate(ratio):
-        if len(string.split(iden))>1:
-          return float(string.split(iden)[0])*ratio[iden]
-        if i==len(ratio):
-          iden = 'b'
-          if len(string.split(iden))>1:
-            return float(string.split(iden)[0])*ratio[iden]
-          else:
-            raise IOError('Unknown "human" data %s'%string)
-
-    # check number of arguments
-    arg = [True for i in [num,string] if i is not None]
-    if len(arg)==0:
       return None
-    elif len(arg)!=1:
-      raise IOError('Incorrect number of input options')
-    # convert string to number
-    if string is not None:
-      num = convertstring(string)
-
-    # initiate as float
-    return float.__new__(cls,float(num))
 
   # ----------------------------------------------------------------------------
-  # write humanly readable output, and create alias for print command
+  # comparison to other object (==, <, >, etc.)
   # ----------------------------------------------------------------------------
 
-  def __repr__(self):
-    return self.write()
-  def __str__(self):
-    return self.write()
-
-  def write(self,precision=None):
+  def __cmp__(self,other):
     '''
-Create human readable output. E.g.::
-
-  1000.0 == "1mb"
+Compare to other object (==, <, >, etc.). The other object can be of many types
+and is converted to a float to do the comparison.
     '''
-    # set conversion factors (days,hours,minutes,seconds)
-    ratio = {}
-    ratio[1.0e12] = 'tb'
-    ratio[1.0e9]  = 'gb'
-    ratio[1.0e6]  = 'mb'
-    ratio[1.0e3]  = 'kb'
-    ratio[1.0e0]  = 'b'
-    for fac in sorted(ratio)[-1::-1]:
-      if self>=fac:
-        # set precision default
-        if precision is None:
-          precision = 0
-        # return output
-        return ('%1.'+str(precision)+'f'+ratio[fac])%(self/fac)
 
-    return '0.0b'
-
-  # ----------------------------------------------------------------------------
-  # compare humanly readable string
-  # ----------------------------------------------------------------------------
-
-  def strcmp(self,expr):
-    '''
-Compare time to humanly readable string, e.g.::
-
-  x.strcmp(">10mb")
-  x.strcmp("<=10mb")
-  x.strcmp("10mb")
-      '''
-
-    try:
-      if expr[:2]=='<=':
-        return self <= Byte(human=expr[2:])
-      elif expr[:2]=='>=':
-        return self >= Byte(human=expr[2:])
-      elif expr[:2]=='==':
-        return self == Byte(human=expr[2:])
-      elif expr[0]=='<':
-        return self  < Byte(human=expr[1:])
-      elif expr[0]=='>':
-        return self  > Byte(human=expr[1:])
+    # act on other None
+    if other is None:
+      if self.arg is None:
+        return 0
       else:
-        return self == Byte(human=expr)
-    except:
-      return False
+        return -1
+
+    # convert string to float
+    # - if the comparison is embedded in the string (e.g. ">10d") the comparison
+    #   is directly done
+    # - otherwise the comparison below is used
+    if type(other)==str:
+
+      import re
+
+      # split operator from value, and convert value to own class
+      compare = re.split('[0-9]',other)[0]
+      other   = self.str2float(other.replace(compare,''))
+
+      # perform comparison, the '-1' is arbitrarily unequal to 0
+      if len(compare)>0:
+        if eval('float(self) %s other' % compare):
+          return 0
+        else:
+          return -1
+
+    # act on None
+    if self.arg is None:
+      if type(other)==float:
+        return 0
+      else:
+        return -1
+
+    # compare to other values: class/float/int
+    if float(self) < float(other):
+      return -1
+    elif float(self) > float(other):
+      return +1
+    else:
+      return  0
+
 
 # ==============================================================================
-# time
+# Time class: derived of the Unit class, and thus similar to Data
 # ==============================================================================
 
-class Time(float):
-  '''
-Description
------------
+class Time(Unit):
+  r'''
+Class to store time, and print in an easily readable format.
 
-Class to store time, and print is in an easily readable format.
+:argument/field:
 
-Input arguments (mutually exclusive)
-------------------------------------
+  **arg** (``<int>`` | ``<float>`` | ``<str>``)
+    The time as:
 
-**num** = ``<float>``
+    * ``<float>``: number of seconds
+    * ``<str>``  : time in clock format, "HH:MM:SS"
+    * ``<str>``  : time in a single unit, e.g. "1m"
 
-  Number of seconds.
+:print format:
 
-**string** = ``<str>``
+  The print format may be of the following type::
 
-  String in the following format: "HH:MM:SS".
+    {:[align][width].[precision][type]}
 
-**human** = ``<str>``
+  The *type* can be:
 
-  Time in humanly readable format, e.g. "1d".
+  * ``s`` or ``m`` (default) to print using the dominating unit (seconds,
+    minutes, hours, days)
+  * ``f`` or ``e`` to print the time as floating point in seconds
 
-Function overview
------------------
+  Consider the following example::
 
-**write**
+    >>> gpbs.Time('10d')
+    10d
 
-  Write humanly readable output (e.g. "2d").
+    >>> '{:.1f}'.format(gpbs.Time('10d'))
+    864000.0
 
-**strcmp**
+    >>> '{:.1e}'.format(gpbs.Time('10d'))
+    8.6e+05
 
-  Compare a humanly readable string (e.g. ">10s").
+    >>> '{:.1s}'.format(gpbs.Time('10d'))
+    10.0d
   '''
 
   # ----------------------------------------------------------------------------
-  # class initiator
+  # convert string (or float) to float [used in class constructor]
   # ----------------------------------------------------------------------------
 
-  def __new__(cls,num=None,string=None,human=None):
-    '''
-Initiate variables. Notice "__new__" instead of "__init__" as the Python-class
-"float" is overloaded. For this class "__init__" is non-writable.
-    '''
+  def str2float(self,arg):
 
-    # convert "HH:MM:SS" to float
-    def convertstring(string):
-      string = string.split(":")
-      return float(int(string[0])*60*60+int(string[1])*60+int(string[2]))
-
-    # convert "1d" to float
-    def converthuman(string):
-      # set conversion ratio
-      ratio = {}
-      ratio["d"] = 60.0*60.0*24.0
-      ratio["h"] = 60.0*60.0
-      ratio["m"] = 60.0
-      ratio["s"] = 1.0
-      # loop to find conversion
-      for (i,iden) in enumerate(ratio):
-        if len(string.split(iden))>1:
-          return float(string.split(iden)[0])*ratio[iden]
-        if i==len(ratio):
-          raise IOError('Unknown "human" time %s'%string)
-
-    # check number of arguments
-    arg = [True for i in [num,string,human] if i is not None]
-    if len(arg)==0:
+    # if the input is None: return as None immediately
+    if arg is None:
       return None
-    elif len(arg)!=1:
-      raise IOError('Incorrect number of input options')
-    # convert string to number
-    if string is not None:
-      num = convertstring(string)
-    if human is not None:
-      num = converthuman(human)
 
-    # initiate as float
-    return float.__new__(cls,float(num))
+    # if the input is a float: return immediately
+    if type(arg)==float or type(arg)==int:
+      return float(arg)
+
+    # clock format: convert and return
+    if len(arg.split(':'))>=2:
+      arg = arg.split(":")
+      return float(int(arg[0])*60*60+int(arg[1])*60+int(arg[2]))
+
+    # set conversion ratio
+    ratio = {
+      'd' : 60.0*60.0*24.0 ,
+      'h' : 60.0*60.0      ,
+      'm' : 60.0           ,
+      's' : 1.0            ,
+    }
+
+    # check if the string has one of the units, if so convert and return
+    unit = arg[-1]
+    if unit in ratio:
+      return float(arg.split(unit)[0])*ratio[unit]
+
+    # final possibility: string without a unit
+    try:
+      return float(arg)
+    except:
+      raise IOError('Unknown input string "%s"' % arg)
 
   # ----------------------------------------------------------------------------
-  # write humanly readable output, and create alias for print command
+  # convert to string
   # ----------------------------------------------------------------------------
 
-  def __repr__(self):
-    return self.write()
-  def __str__(self):
-    return self.write()
+  def __format__(self,fmt):
 
-  def write(self,precision=None):
-    '''
-Create human readable output. E.g.::
+    # print seconds as float (in different representations)
+    if len(fmt)>0:
+      if fmt[-1] in ['f','F','e','E']:
+        return ('{:%s}'%fmt).format(float(self))
+      if fmt[-1] in ['m','s']:
+        fmt = fmt[:-1]+'%'
 
-  24*60*60 == "1.0d"
-    '''
+    # break up print format in pieces / set default
+    if len(fmt)>0:
+      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else:
+      fmt = ['','','','','','','']
+
+    # set defaults: misuse percent print to append unit
+    fmt[-2] = '%'
+    fmt[ 3] = '.'
+
     # set conversion factors (days,hours,minutes,seconds)
     ratio = {}
     ratio[60.0*60.0*24.0] = 'd'
-    ratio[60.0*60.0]      = 'h'
-    ratio[60.0]           = 'm'
-    ratio[1.0]            = 's'
+    ratio[60.0*60.0     ] = 'h'
+    ratio[60.0          ] = 'm'
+    ratio[1.0           ] = 's'
+
+    # set function to convert (print-format + unit + value) to string
+    string = lambda fmt,unit,value: (('{:%s}'%''.join(fmt)).format(value/100.)).replace('%',unit)
+
+    # loop over units from large to small, to print with unit
     for fac in sorted(ratio)[-1::-1]:
-      if self>=fac:
-        # set precision default, based on scaled output
-        if precision is None:
-          if self/fac>=2:
-            precision = 0
-          else:
-            precision = 1
-        # return output
-        return ('%1.'+str(precision)+'f'+ratio[fac])%(self/fac)
+      if abs(float(self))>=fac:
+        # print with default precision
+        if len(fmt[4])>0:
+          return string(fmt,ratio[fac],float(self)/fac)
+        # no precision and no length: print with precision of one
+        if len(fmt[2])==0:
+          fmt[4] = '1'
+          return string(fmt,ratio[fac],float(self)/fac)
+        # fixed length: set precision to maximize the information
+        fmt[4] = '1'
+        text   = string(fmt,ratio[fac],float(self)/fac)
+        if len(text)<=int(fmt[2]):
+          return text
+        else:
+          fmt[4] = '0'
+          return string(fmt,ratio[fac],float(self)/fac)
 
-    return '0.0s'
+    # in all other cases: return empty string
+    fmt[4] = '0'
+    return ' '*len(string(fmt,'N',0.0))
+
+# ==============================================================================
+# Data class: derived of the Unit class, and thus similar to Time
+# ==============================================================================
+
+class Data(Unit):
+  r'''
+Class to store data, and print in an easily readable format.
+
+:argument/field:
+
+  **arg** (``<int>`` | ``<float>`` | ``<str>``)
+    The data as number of bytes, or string:
+
+    * ``<float>``: number of bytes
+    * ``<str>``  : humanly readable string, e.g. "1gb"
+
+:print format:
+
+  The print format may be of the following type::
+
+    {:[align][width].[precision][type]}
+
+  The *type* can be:
+
+  * ``s`` or ``m`` (default) to print using the dominating unit (kb,mb,gb,tb)
+  * ``f`` or ``e`` to print the time as floating point in seconds
+
+  Consider the following example::
+
+    >>> gpbs.Data('10mb')
+    10mb
+
+    >>> '{:.1f}'.format(gpbs.Data('10mb'))
+    10000000.0
+
+    >>> '{:.1e}'.format(gpbs.Data('10mb'))
+    1.0e+07
+
+    >>> '{:.1s}'.format(gpbs.Data('10mb'))
+    10.0mb
+  '''
 
   # ----------------------------------------------------------------------------
-  # compare humanly readable string
+  # convert string (or float) to float [used in class constructor]
   # ----------------------------------------------------------------------------
 
-  def strcmp(self,expr):
-    '''
-Compare time to humanly readable string, e.g.::
+  def str2float(self,arg):
 
-  x.strcmp(">10m")
-  x.strcmp("<=10d")
-  x.strcmp("10d")
+    # if the input is None: return as None immediately
+    if arg is None:
+      return None
+
+    # if the input is a float: return immediately
+    if type(arg)==float or type(arg)==int:
+      return float(arg)
+
+    # set conversion ratio
+    ratio = {
+      'tb' : 1.0e12 ,
+      'gb' : 1.0e9  ,
+      'mb' : 1.0e6  ,
+      'kb' : 1.0e3  ,
+      'b'  : 1.0    ,
+      'T'  : 1.0e12 ,
+      'G'  : 1.0e9  ,
+      'M'  : 1.0e6  ,
+      'K'  : 1.0e3  ,
+    }
+
+    # check if the string has one of the units, if so convert and return
+    for i in [2,1]:
+      if len(arg)>i:
+        unit = arg[-i:]
+        if unit in ratio:
+          return float(arg.split(unit)[0])*ratio[unit]
+
+    # final possibility: string without a unit
+    try:
+      return float(arg)
+    except:
+      raise IOError('Unknown input string "%s"' % arg)
+
+  # ----------------------------------------------------------------------------
+  # convert to string
+  # ----------------------------------------------------------------------------
+
+  def __format__(self,fmt):
+
+    # print seconds as float (in different representations)
+    if len(fmt)>0:
+      if fmt[-1] in ['f','F','e','E']:
+        return ('{:%s}'%fmt).format(float(self))
+      if fmt[-1] in ['m','s']:
+        fmt = fmt[:-1]+'%'
+
+    # break up print format in pieces / set default
+    if len(fmt)>0:
+      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else:
+      fmt = ['','','','','','','']
+
+    # set defaults: misuse percent print to append unit
+    fmt[-2] = '%'
+    fmt[ 3] = '.'
+    if len(fmt[2])>0:
+      fmt[2] = str(int(fmt[2])-1)
+
+    # set conversion factors
+    ratio = {}
+    ratio[1.0e12] = 'tb'
+    ratio[1.0e9 ] = 'gb'
+    ratio[1.0e6 ] = 'mb'
+    ratio[1.0e3 ] = 'kb'
+    ratio[1.0e0 ] = 'b '
+
+    # set function to convert (print-format + unit + value) to string
+    string = lambda fmt,unit,value: (('{:%s}'%''.join(fmt)).format(value/100.)).replace('%',unit)
+
+    # loop over units from large to small, to print with unit
+    for fac in sorted(ratio)[-1::-1]:
+      if abs(float(self))>=fac:
+        # print with default precision
+        if len(fmt[4])>0:
+          return string(fmt,ratio[fac],float(self)/fac)
+        # no precision and no length: print with precision of one
+        if len(fmt[2])==0:
+          fmt[4] = '0'
+          return string(fmt,ratio[fac],float(self)/fac)
+        # fixed length: set precision to maximize the information
+        fmt[4] = '1'
+        text   = string(fmt,ratio[fac],float(self)/fac)
+        if len(text)<=int(fmt[2])+1:
+          return text
+        else:
+          fmt[4] = '0'
+          return string(fmt,ratio[fac],float(self)/fac)
+
+    # in all other cases: return empty string
+    fmt[4] = '0'
+    return ' '*(len(string(fmt,'N',0.0))+1)
+
+# ==============================================================================
+# Custom float class
+# ==============================================================================
+
+class Float(Unit):
+  r'''
+Custom float class. This class can also be ``None``, such that the conversion
+to a string results in an empty string.
+
+:argument/field:
+
+  **arg** (``<float>`` | ``None``)
+    The argument.
+
+:print format:
+
+  The print format may be of the following type::
+
+    {:[align][width].[precision][type]}
+
+  The output to a ``None`` argument is an empty string.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # class constructor
+  # ----------------------------------------------------------------------------
+
+  def __init__(self,arg):
+    try:
+      self.arg = float(arg)
+    except:
+      self.arg = None
+
+  # ----------------------------------------------------------------------------
+  # formatted print
+  # ----------------------------------------------------------------------------
+
+  def __format__(self,fmt):
+
+    fmt = '{:%s}'%fmt
+
+    if self.arg is None:
+      return ' '*len(fmt.format(0.0))
+    else:
+      return fmt.format(self.arg)
+
+# ==============================================================================
+# define color-schemes
+# ==============================================================================
+# ------------------------------------------------------------------------------
+# default
+# ------------------------------------------------------------------------------
+
+class ColorDefault:
+  r'''
+Define default color scheme.
+
+=========== ========================
+Name        Style
+=========== ========================
+warning     red,bold
+error       red,bold
+selection   green,bold
+down        red,strike-through
+free        green,bold
+end         end of style definition
+=========== ========================
+  '''
+
+  warning   = '\033[1;31m'
+  error     = '\033[1;31m'
+  selection = '\033[1;32m'
+  down      = '\033[9;31m'
+  free      = '\033[1;32m'
+  end       = '\033[0m'
+
+# ------------------------------------------------------------------------------
+# no colors
+# ------------------------------------------------------------------------------
+
+class ColorNone:
+  r'''
+Define scheme to print without color formatting.
+
+=========== ========================
+Name        Style
+=========== ========================
+warning     -
+error       -
+selection   -
+down        -
+free        -
+end         -
+=========== ========================
+  '''
+
+  warning   = ''
+  error     = ''
+  selection = ''
+  down      = ''
+  free      = ''
+  end       = ''
+
+# ==============================================================================
+# parent class for Job/Node/Owner
+# ==============================================================================
+
+class Item(object):
+  '''
+Parent class for to provide common methods.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # print column header
+  # ----------------------------------------------------------------------------
+
+  def print_header(self,columns,fmt,ifs,trunc,line):
+    r'''
+Print the column header, including a separator line.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``  (mandatory): the name of the field (see class-constructor),
+    * ``width``(mandatory): the desired output-width,
+    * ``head`` (mandatory): the header text,
+    * ``color``           : the color of the column (see ``<gpbs.Color>``).
+
+    Note that if a color was specified, print the string using::
+
+      print Item.print_header(...).format(color=...)
+
+  **fmt** (``<dict>``)
+    A dictionary with the print-format for each field. The ``width`` is
+    replacement by the specified width.
+
+    Example::
+
+      fmt = {
+        'example' : '>{width}.{width}s' ,
+      }
+
+  **ifs** (``<str>``)
+    The column separator.
+
+  **trunc** (``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+
+  **line** (``<str>``)
+    A symbol to form the separator line, for example ``'-'``
     '''
+
+    # initiate output at list, combined to line of text below
+    output = []
+
+    # loop over the columns set as argument
+    for column in columns:
+      # read the field name, and apply print format
+      key  = column['key']
+      text = ('{:'+fmt[key].format(**column)+'}').format(column['head'])
+      # if the column is shorter than the information: add a truncation symbol
+      if len(text)<len(self[key]):
+        text = text[:-len(trunc)]+trunc
+      # add color
+      if 'color' in column:
+        text = '{color.'+column['color']+'}'+text+'{color.end}'
+      # add column to output
+      output += [text]
+
+    # return the line as text
+    head = ifs.join(output)
+
+    if len(line)==0:
+      return head
+
+    # initiate output at list, combined to line of text below
+    output = []
+
+    # loop over the columns set as argument
+    for column in columns:
+      # read the field name, and apply print format
+      key  = column['key']
+      text = ('{:'+fmt[key].format(**column)+'}').format(line*100)
+      # add column to output
+      output += [text]
+
+    return head+'\n'+ifs.join(output)
+
+  # ----------------------------------------------------------------------------
+  # print in columns
+  # ----------------------------------------------------------------------------
+
+  def print_column(self,columns,color,fmt,ifs,trunc):
+    r'''
+Print data in columns.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key`` (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``color``: the color of the column (see ``<gpbs.Color>``).
+
+  **color** (``<dict>``)
+    A dictionary with a ``lambda`` function for each field that returns two
+    strings to allow color-print. I.e.::
+
+      (prefix,postfix) = color['example']()
+      print (prefix+text+postfix).format(color=...)
+
+    For the ``...`` replace a color look-up class. Using this module::
+
+      print (prefix+text+postfix).format(color=gpbs.ColorDefault) # default colors
+      print (prefix+text+postfix).format(color=gpbs.ColorNone   ) # no colors
+
+    Example::
+
+      color = {
+        'example' : ('{color.warning}','{color.end}') if self.test else ('','') ,
+      }
+
+  **fmt** (``<dict>``)
+    A dictionary with the print-format for each field. The ``width`` is
+    replacement by the specified width.
+
+    Example::
+
+      fmt = {
+        'example' : '>{width}.{width}s' ,
+      }
+
+  **ifs** (``<str>``)
+    The column separator.
+
+  **trunc** (``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+    '''
+
+    # initiate output at list, combined to line of text below
+    output = []
+
+    # loop over the columns set as argument
+    for column in columns:
+      # read the field name, and apply print format
+      key  = column['key']
+      text = ('{:'+fmt[key].format(**column)+'}').format(getattr(self,key))
+      # if the column is shorter than the information: add a truncation symbol
+      if len(text)<len(self[key]):
+        text = text[:-len(trunc)]+trunc
+      # add color
+      if 'color' not in column:
+        pre,post = color[key]()
+        text     = pre+text+post
+      elif column['color']:
+        text     = '{color.'+column['color']+'}'+text+'{color.end}'
+      # add column to output
+      output += [text]
+
+    # return the line as text
+    return ifs.join(output)
+
+
+# ==============================================================================
+# class to store an individual job
+# ==============================================================================
+
+class Job(Item):
+  r'''
+Class to store the job information. The data is stored as fields of this class.
+If the class is reference as index, a string is returned in a common print
+format. I.e.::
+
+  >>> type(job.cputime)
+  <class 'gpbs.Time'>
+
+  >>> type(job['cputime'])
+  <str>
+
+For example::
+
+  >>> float(job.cputime)
+  1000.0
+
+  >>> job['cputime']
+  17m
+
+:arguments:
+
+  **text** (``<str>``) *optional*
+    The output of the `qstat -f` command for this job. I.e.::
+
+      text << `qstat -f`
+      Job(text.split(Job Id:))
+
+:options/fields:
+
+  **id** (``<str>``)
+    ID (as string).
+
+  **name** (``<str>``)
+    Name, as specified by the ``-N`` option.
+
+  **owner** (``<str>``)
+    Owner (username).
+
+  **state** (``<str>``)
+    Status of the job (R=running, Q=queued, E=exiting).
+
+  **resnode** (``<gpbs.ResNode>``)
+    Claimed nodes/CPUs.
+
+  **cputime** (``<gpbs.Time>``)
+    Time that the job has been using CPU resources.
+
+  **walltime** (``<gpbs.Time>``)
+    Time that the job has been running.
+
+  **host** (``<gpbs.Host>``)
+    Host that is running the job.
+
+  **memused** (``<gpbs.Data>``)
+    Memory used by the job.
+
+  **pmem** (``<gpbs.Data>``)
+    Specified ``pmem`` qsub-option.
+
+  **score** (``<gpbs.Float>``)
+    Score: ``cputime / walltime``.
+
+  **submit_args** (``<str>``)
+    The arguments that were given to the ``qsub`` command: the filename and the
+    options.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # class constructor
+  # ----------------------------------------------------------------------------
+
+  def __init__(self,*args,**kwargs):
+
+    # check number of input arguments
+    if len(args)>1:
+      raise IOError('Unknown number of input arguments')
+
+    # (a) read input text
+    if len(args)==1:
+      # name alias
+      text = args[0]
+      # split/convert the different parts
+      self.id          = text.split('\n')[0].split('.')[0].strip()
+      self.name        = csplit(text,'Job_Name'                               )
+      self.owner       = csplit(text,'Job_Owner'                              ).split('@')[0]
+      self.state       = csplit(text,'job_state'                              )
+      self.resnode     = csplit(text,'Resource_List.nodes'    ,dtype='ResNode')
+      self.pmem        = csplit(text,'Resource_List.pmem'     ,dtype='Data'   )
+      self.memused     = csplit(text,'resources_used.mem'     ,dtype='Data'   )
+      self.cputime     = csplit(text,'resources_used.cput'    ,dtype='Time'   )
+      self.walltime    = csplit(text,'resources_used.walltime',dtype='Time'   )
+      self.host        = csplit(text,'exec_host'              ,dtype='Host'   )
+      self.submit_args = csplit(text,'submit_args'                            )
+
+    # (b) store from input (overwrites read data)
+    for key in kwargs:
+      setattr(self,key,kwargs[key])
+
+    # calculate the job's score
+    if not hasattr(self,'score'):
+      try:
+        self.score = Float(float(self.cputime)/(float(self.walltime)*float(len(self.host))))
+      except:
+        self.score = Float(None)
+
+  # ----------------------------------------------------------------------------
+  # print to screen
+  # ----------------------------------------------------------------------------
+
+  def __repr__(self):
+    return self.__str__()
+
+  def __str__(self):
+    return self['id']
+
+  # ----------------------------------------------------------------------------
+  # reference as dictionary: return as string
+  # ----------------------------------------------------------------------------
+
+  def __getitem__(self,key):
+
+    fmt = {
+      'id'          : '{:s}'    ,
+      'owner'       : '{:s}'    ,
+      'resnode'     : '{:s}'    ,
+      'state'       : '{:s}'    ,
+      'pmem'        : '{:.0s}'  ,
+      'memused'     : '{:.0s}'  ,
+      'cputime'     : '{:4s}'   ,
+      'walltime'    : '{:4s}'   ,
+      'host'        : '{:s}'    ,
+      'score'       : '{:>4.2f}',
+      'name'        : '{:s}'    ,
+      'submit_args' : '{:s}'    ,
+    }
+
+    return fmt[key].format(getattr(self,key))
+
+  # ----------------------------------------------------------------------------
+  # print in columns
+  # ----------------------------------------------------------------------------
+
+  def print_column(self,columns,ifs='  ',trunc='...'):
+    r'''
+Print job in columns.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+    '''
+
+    # function per field to set color based on values; the usage is as follows
+    # (prefix,postfix) = color[key]
+    # (prefix+text+postfix).format(color=...)
+    color = {
+      'id'          : lambda: ('','') ,
+      'owner'       : lambda: ('','') ,
+      'resnode'     : lambda: ('','') ,
+      'state'       : lambda: ('','') ,
+      'pmem'        : lambda: ('','') ,
+      'cputime'     : lambda: ('','') ,
+      'walltime'    : lambda: ('','') ,
+      'host'        : lambda: ('','') ,
+      'name'        : lambda: ('','') ,
+      'submit_args' : lambda: ('','') ,
+      'memused'     : lambda:
+             ('{color.warning}','{color.end}') if (self.memused>'1gb' and self.pmem==None)
+        else (''               ,''           ) ,
+      'score'       : lambda:
+             ('{color.warning}','{color.end}') if (self.score>1.03 or self.score<0.95)
+        else (''               ,''           ) ,
+    }
+
+    # print format per available field
+    fmt = {
+      'id'          : '>{width}.{width}s' ,
+      'owner'       : '<{width}.{width}s' ,
+      'resnode'     : '>{width}.{width}s' ,
+      'state'       : '>{width}.{width}s' ,
+      'pmem'        : '>{width}.0s'       ,
+      'memused'     : '>{width}.0s'       ,
+      'cputime'     : '>{width}s'         ,
+      'walltime'    : '>{width}s'         ,
+      'host'        : '>{width}.{width}s' ,
+      'score'       : '>{width}.2f'       ,
+      'name'        : '<{width}.{width}s' ,
+      'submit_args' : '<{width}.{width}s' ,
+    }
+
+    # print using parent 'Item' class
+    return super(Job,self).print_column(columns,color,fmt,ifs,trunc)
+
+  # ----------------------------------------------------------------------------
+  # print column header
+  # ----------------------------------------------------------------------------
+
+  def print_header(self,columns,ifs='  ',trunc='...',line='-'):
+    r'''
+Print column headers, and a header separator line.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``head``  (mandatory): the header text,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+
+  **line** ([``'-'``] | ``<str>``)
+    Symbol that forms the separator line.
+    '''
+
+    # print format per available field
+    fmt = {
+      'id'          : '<{width}.{width}s' ,
+      'owner'       : '<{width}.{width}s' ,
+      'resnode'     : '<{width}.{width}s' ,
+      'state'       : '<{width}.{width}s' ,
+      'pmem'        : '<{width}.{width}s' ,
+      'memused'     : '<{width}.{width}s' ,
+      'cputime'     : '<{width}.{width}s' ,
+      'walltime'    : '<{width}.{width}s' ,
+      'host'        : '<{width}.{width}s' ,
+      'score'       : '<{width}.{width}s' ,
+      'name'        : '<{width}.{width}s' ,
+      'submit_args' : '<{width}.{width}s' ,
+    }
+
+    # print using parent 'Item' class
+    return super(Job,self).print_header(columns,fmt,ifs,trunc,line)
+
+# ==============================================================================
+# compute node information
+# ==============================================================================
+
+class Node(Item):
+  r'''
+Class to store the node information. The data is stored as fields of this class.
+If the class is reference as index, a string is returned in a common print
+format. I.e.::
+
+  >>> type(node.memt)
+  <class 'gpbs.Data'>
+
+  >>> type(node['memt'])
+  <str>
+
+For example::
+
+  >>> float(node.memt)
+  1000.0
+
+  >>> node['memt']
+  1kb
+
+:arguments:
+
+  text (``<str>``) *optional*
+    The output of the `pbsnodes` command for this node. I.e.::
+
+      text << `qpbsnodes`
+      Node(text.split('\\n\\n'))
+
+:options/fields:
+
+  **name** (``<str>``)
+    Name of the compute-node.
+
+  **node** (``<int>``), *calculated*
+    Node number (``compute-0-X -> int(X)``)
+
+  **state** (``<str>``)
+    Status (free,job-exclusive,down,offline).
+
+  **ncpu** (``<int>``)
+    Number of CPUs present in the node.
+
+  **cpufree** (``<int>``), *calculated*
+    Number of free CPUs.
+
+  **ctype** (``<str>``)
+    Type of node (intel,amd).
+
+  **jobs** (``<list>``)
+    List of job-ids.
+
+  **memt** (``<gpbs.Data>``)
+    Total memory.
+
+  **mema** (``<gpbs.Data>``)
+    Available memory.
+
+  **memu** (``<gpbs.Data>``), *calculated*
+    Memory in use.
+
+  **memp** (``<gpbs.Data>``)
+    Physical memory.
+
+  **relmemu** (``<gpbs.Float>``)
+    Percentage of memory used.
+
+  **load** (``<gpbs.Float>``)
+    The load of the node, defined as
+    :math:`0 \leq \mathrm{load} \leq n_\mathrm{cpu}`.
+
+  **score** (``<gpbs.Float>``), *calculated*
+    The relative CPU usage by the jobs: ``load / len(jobs)``
+
+  **disk_total** (``<gpbs.Data>``)
+    Total disk space.
+
+  **disk_free** (``<gpbs.Data>``)
+    Free disk space.
+
+  **reldisku** (``<gpbs.Float>``)
+    Percentage of disk space used.
+
+  **bytes_in** (``<gpbs.Data>``)
+    Network traffic in-bound.
+
+  **bytes_out** (``<gpbs.Data>``)
+    Network traffic out-bound.
+
+  **bytes_total** (``<gpbs.Data>``)
+    Total network traffic.
+
+  **cpu_idle** (``<gpbs.Float>``)
+    CPU idle (waiting) percentage.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # class constructor
+  # ----------------------------------------------------------------------------
+
+  def __init__(self,*args,**kwargs):
+
+    # support functions
+    # -----------------
+
+    # support function, split jobs: 0/X.hostname
+    def jsplit(txt):
+      try:
+        jobs = txt.split('jobs =')[1].split('\n')[0].strip().split(',')
+        return [int(i.split('/')[1].split('.')[0].strip()) for i in jobs]
+      except:
+        return []
+
+    # set function to convert GB to B
+    giga = lambda x: None if x is None else float(x)*1.0e9
+
+    # read input
+    # ----------
+
+    # check number of input arguments
+    if len(args)>1:
+      raise IOError('Unknown number of input arguments')
+
+    # (a) read ganglia output
+    self.disk_total = Data( giga( kwargs.pop( 'disk_total' , None ) ) )
+    self.disk_free  = Data( giga( kwargs.pop( 'disk_free'  , None ) ) )
+    self.bytes_in   = Data(       kwargs.pop( 'bytes_in'   , None )   )
+    self.bytes_out  = Data(       kwargs.pop( 'bytes_out'  , None )   )
+    self.cpu_idle   = Float(      kwargs.pop( 'cpu_idle'   , None )   )
+
+    # (b) read input string to pbsnodes command
+    if len(args)==1:
+      # alias the input text
+      text = args[0]
+      # read different fields
+      self.name  = text.split('\n')[0]
+      self.state = csplit(text,'state'                                     )
+      self.ncpu  = csplit(text,'np'                          ,dtype='int'  )
+      self.ctype = csplit(text,'properties'                                )
+      self.jobs  = jsplit(text                                             )
+      self.memt  = csplit(text,'totmem'  ,postfix='=',ifs=',',dtype='Data' )
+      self.memp  = csplit(text,'physmem' ,postfix='=',ifs=',',dtype='Data' )
+      self.mema  = csplit(text,'availmem',postfix='=',ifs=',',dtype='Data' )
+      self.load  = csplit(text,'loadave' ,postfix='=',ifs=',',dtype='Float')
+
+    # (c) copy from input (overwrites input from the pbsnodes command)
+    for key in kwargs:
+      setattr(self,key,kwargs.pop(key))
+
+    # set default
+    if self.jobs is None:
+      self.jobs = []
+
+    # calculate extra fields
+    # ----------------------
+
+    # derive memory, disk, network
+    self.memu      = self.memt       -     self.mema
+    self.bytes_tot = self.bytes_in   +     self.bytes_out
+    self.disk_used = self.disk_total -     self.disk_free
+    self.cpufree   = self.ncpu       - len(self.jobs)
+
+    # score: the average load per running job
+    if len(self.jobs)>0:
+      self.score = Float(self.load/len(self.jobs))
+    else:
+      self.score = 1.0
+
+    # percentage of memory used
+    try:
+      self.relmemu = Float(self.memu/self.memt)
+    except:
+      self.relmemu = Float(None)
+
+    # percentage of disk space used
+    try:
+      self.reldisku = Float(self.disk_used/self.disk_total)
+    except:
+      self.reldisku = Float(None)
+
+    # node number as integer
+    try:
+      self.node = int(self.name.replace('compute-0-',''))
+    except:
+      self.node = None
+
+    # remove information for offline nodes
+    if self.state in ['offline','down','down,job-exclusive']:
+      self.cpufree   = 0
+      self.bytes_tot = Data(None)
+      self.memu      = Data(None)
+
+  # ----------------------------------------------------------------------------
+  # print to screen
+  # ----------------------------------------------------------------------------
+
+  def __repr__(self):
+    return self.__str__()
+
+  def __str__(self):
+    return self['node']
+
+  # ----------------------------------------------------------------------------
+  # reference as dictionary: return as string
+  # ----------------------------------------------------------------------------
+
+  def __getitem__(self,key):
+
+    fmt = {
+      'node'        : '{:d}'    ,
+      'name'        : '{:s}'    ,
+      'state'       : '{:s}'    ,
+      'ncpu'        : '{:d}'    ,
+      'cpufree'     : '{:d}'    ,
+      'ctype'       : '{:s}'    ,
+      'jobs'        : '{:s}'    ,
+      'memt'        : '{:.0s}'  ,
+      'memp'        : '{:.0s}'  ,
+      'mema'        : '{:.0s}'  ,
+      'memu'        : '{:.0s}'  ,
+      'relmemu'     : '{:4.2f}' ,
+      'disk_total'  : '{:.0s}'  ,
+      'disk_free'   : '{:.0s}'  ,
+      'reldisku'    : '{:4.2f}' ,
+      'bytes_in'    : '{:.0s}'  ,
+      'bytes_out'   : '{:.0s}'  ,
+      'bytes_tot'   : '{:.0s}'  ,
+      'load'        : '{:4.2f}' ,
+      'score'       : '{:4.2f}' ,
+      'cpu_idle'    : '{:4.1f}' ,
+    }
+
+    return fmt[key].format(getattr(self,key))
+
+  # ----------------------------------------------------------------------------
+  # print in columns
+  # ----------------------------------------------------------------------------
+
+  def print_column(self,columns,ifs='  ',trunc='...'):
+    r'''
+Function used to print nodes in columns.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+    '''
+
+    # function per field to set color based on values; the usage is as follows
+    # (prefix,postfix) = color[key]
+    # (prefix+text+postfix).format(color=...)
+    color = {
+      'node'        : lambda: ('','') ,
+      'name'        : lambda: ('','') ,
+      'ctype'       : lambda: ('','') ,
+      'jobs'        : lambda: ('','') ,
+      'bytes_in'    : lambda: ('','') ,
+      'bytes_out'   : lambda: ('','') ,
+      'bytes_tot'   : lambda: ('','') ,
+      'load'        : lambda: ('','') ,
+      'cpu_idle'    : lambda: ('','') ,
+      'disk_total'  : lambda: ('','') ,
+      'memt'        : lambda: ('','') ,
+      'memp'        : lambda: ('','') ,
+      'mema'        : lambda: ('','') ,
+      'memu'        : lambda:
+             ('{color.warning}','{color.end}') if self.relmemu>0.8
+        else (''               ,''           ) ,
+      'relmemu'     : lambda:
+             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.relmemu!=None
+        else ('{color.warning}','{color.end}') if self.relmemu>0.8
+        else (''               ,''           ) ,
+      'reldisku'    : lambda:
+             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.reldisku!=None
+        else ('{color.warning}','{color.end}') if self.reldisku>0.7
+        else (''               ,''           ) ,
+      'disk_free'    : lambda:
+             ('{color.warning}','{color.end}') if self.reldisku>0.7
+        else (''               ,''           ) ,
+      'state'       : lambda:
+             ('{color.error}'  ,'{color.end}') if self.state not in ['free','job-exclusive']
+        else (''               ,''           ) ,
+      'ncpu'        : lambda:
+             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive']
+        else (''               ,''           ) ,
+      'cpufree'     : lambda:
+             ('{color.free}'   ,'{color.end}') if self.cpufree>0
+        else ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive']
+        else (''               ,''           ) ,
+      'score'       : lambda:
+             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.score!=None
+        else ('{color.warning}','{color.end}') if (self.score>1.05 or self.score<0.95)
+        else (''               ,''           ) ,
+    }
+
+    # print format per available field
+    fmt = {
+      'node'        : '>{width}d'         ,
+      'name'        : '<{width}.{width}s' ,
+      'state'       : '<{width}.{width}s' ,
+      'ncpu'        : '>{width}d'         ,
+      'cpufree'     : '>{width}d'         ,
+      'ctype'       : '<{width}.{width}s' ,
+      'jobs'        : '<{width}.{width}s' ,
+      'memt'        : '>{width}.0s'       ,
+      'memp'        : '>{width}.0s'       ,
+      'mema'        : '>{width}.0s'       ,
+      'memu'        : '>{width}.0s'       ,
+      'relmemu'     : '>{width}.2f'       ,
+      'disk_total'  : '>{width}.0s'       ,
+      'disk_free'   : '>{width}.0s'       ,
+      'reldisku'    : '>{width}.2f'       ,
+      'bytes_in'    : '>{width}.0s'       ,
+      'bytes_out'   : '>{width}.0s'       ,
+      'bytes_tot'   : '>{width}.0s'       ,
+      'load'        : '>{width}.2f'       ,
+      'score'       : '>{width}.2f'       ,
+      'cpu_idle'    : '>{width}.1f'       ,
+    }
+
+    # print using parent 'Item' class
+    return super(Node,self).print_column(columns,color,fmt,ifs,trunc)
+
+  # ----------------------------------------------------------------------------
+  # print column header
+  # ----------------------------------------------------------------------------
+
+  def print_header(self,columns,ifs='  ',trunc='...',line='-'):
+    r'''
+Print column headers, and a header separator line.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``head``  (mandatory): the header text,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+
+  **line** ([``'-'``] | ``<str>``)
+    Symbol that forms the separator line.
+    '''
+
+    fmt = {
+      'node'        : '<{width}.{width}s' ,
+      'name'        : '<{width}.{width}s' ,
+      'state'       : '<{width}.{width}s' ,
+      'ncpu'        : '<{width}.{width}s' ,
+      'cpufree'     : '<{width}.{width}s' ,
+      'ctype'       : '<{width}.{width}s' ,
+      'jobs'        : '<{width}.{width}s' ,
+      'memt'        : '<{width}.{width}s' ,
+      'memp'        : '<{width}.{width}s' ,
+      'mema'        : '<{width}.{width}s' ,
+      'memu'        : '<{width}.{width}s' ,
+      'relmemu'     : '<{width}.{width}s' ,
+      'disk_total'  : '<{width}.{width}s' ,
+      'disk_free'   : '<{width}.{width}s' ,
+      'reldisku'    : '<{width}.{width}s' ,
+      'bytes_in'    : '<{width}.{width}s' ,
+      'bytes_out'   : '<{width}.{width}s' ,
+      'bytes_tot'   : '<{width}.{width}s' ,
+      'load'        : '<{width}.{width}s' ,
+      'score'       : '<{width}.{width}s' ,
+      'cpu_idle'    : '<{width}.{width}s' ,
+    }
+
+    # print using parent 'Item' class
+    return super(Node,self).print_header(columns,fmt,ifs,trunc,line)
+
+# ==============================================================================
+# class to store user summary
+# ==============================================================================
+
+class Owner(Item):
+  r'''
+Class to store and print total resources per owner.
+
+:options/fields:
+
+  **owner** (``<str>``)
+    Owner (username).
+
+  **cpus** (``<int>``)
+    Claimed CPUs.
+
+  **memused** (``<gpbs.Data>``)
+    Memory used by the owner's jobs.
+
+  **walltime** (``<gpbs.Time>``)
+    Time that the jobs have been running.
+
+  **claimtime** (``<gpbs.Time>``)
+    The total walltime multiplied by the number of CPUs (per individual job).
+
+  **cputime** (``<gpbs.Time>``)
+    Time that the jobs have been using CPU resources.
+  '''
+
+  # ----------------------------------------------------------------------------
+  # class constructor
+  # ----------------------------------------------------------------------------
+
+  def __init__(self,**kwargs):
+
+    self.owner     = kwargs.pop( 'owner'                   )
+    self.cpus      = kwargs.pop( 'cpus'      , 0           )
+    self.memused   = kwargs.pop( 'memused'   , Data(0.0)   )
+    self.walltime  = kwargs.pop( 'walltime'  , Time(0.0)   )
+    self.claimtime = kwargs.pop( 'claimtime' , Time(0.0)   )
+    self.cputime   = kwargs.pop( 'cputime'   , Time(0.0)   )
 
     try:
-      if expr[:2]=='<=':
-        return self <= Time(human=expr[2:])
-      elif expr[:2]=='>=':
-        return self >= Time(human=expr[2:])
-      elif expr[:2]=='==':
-        return self == Time(human=expr[2:])
-      elif expr[0]=='<':
-        return self  < Time(human=expr[1:])
-      elif expr[0]=='>':
-        return self  > Time(human=expr[1:])
-      else:
-        return self == Time(human=expr)
+      self.score = Float(float(self.cputime)/float(self.claimtime))
     except:
-      return False
+      self.score = Float(None)
 
+  # ----------------------------------------------------------------------------
+  # print to screen
+  # ----------------------------------------------------------------------------
+
+  def __repr__(self):
+    return self.__str__()
+
+  def __str__(self):
+    return self['owner']
+
+  # ----------------------------------------------------------------------------
+  # reference as dictionary: return as string
+  # ----------------------------------------------------------------------------
+
+  def __getitem__(self,key):
+
+    fmt = {
+      'owner'       : '{:s}'    ,
+      'cpus'        : '{:d}'    ,
+      'memused'     : '{:5.0s}' ,
+      'walltime'    : '{:4.0s}' ,
+      'cputime'     : '{:4.0s}' ,
+      'claimtime'   : '{:4.0s}' ,
+      'score'       : '{:4.2f}' ,
+    }
+
+    return fmt[key].format(getattr(self,key))
+
+  # ----------------------------------------------------------------------------
+  # print in columns
+  # ----------------------------------------------------------------------------
+
+  def print_column(self,columns,ifs='  ',trunc='...'):
+    r'''
+Print user-summary in columns.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+    '''
+
+    # function per field to set color based on values; the usage is as follows
+    # (prefix,postfix) = color[key]
+    # (prefix+text+postfix).format(color=...)
+    color = {
+      'owner'       : lambda: ('','') ,
+      'cpus'        : lambda: ('','') ,
+      'memused'     : lambda: ('','') ,
+      'walltime'    : lambda: ('','') ,
+      'cputime'     : lambda: ('','') ,
+      'claimtime'   : lambda: ('','') ,
+      'score'       : lambda:
+             ('{color.warning}','{color.end}') if (self.score>1.01 or self.score<0.99)
+        else (''               ,''           ) ,
+    }
+
+    # print format per available field
+    fmt = {
+      'owner'       : '<{width}.{width}s' ,
+      'cpus'        : '>{width}d'         ,
+      'memused'     : '>{width}.0s'       ,
+      'walltime'    : '>{width}.0s'       ,
+      'cputime'     : '>{width}.0s'       ,
+      'claimtime'   : '>{width}.0s'       ,
+      'score'       : '>{width}.2f'       ,
+    }
+
+    # print using parent 'Item' class
+    return super(Owner,self).print_column(columns,color,fmt,ifs,trunc)
+
+  # ----------------------------------------------------------------------------
+  # print column header
+  # ----------------------------------------------------------------------------
+
+  def print_header(self,columns,ifs='  ',trunc='...',line='-'):
+    r'''
+Print column headers, and a header separator line.
+
+:arguments:
+
+  **columns** (``(``<dict>``,``<dict>``,...)``)
+    A list with the print settings per column. For each column the print
+    settings are given as dictionary, with the following fields:
+
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``head``  (mandatory): the header text,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+:options:
+
+  **ifs** ([``'  '``] | ``<str>``)
+    The column separator.
+
+  **trunc** ([``...``] | ``<str>``)
+    The symbol to truncate columns that are printed narrower than their length.
+
+  **line** ([``'-'``] | ``<str>``)
+    Symbol that forms the separator line.
+    '''
+    fmt = {
+      'owner'       : '<{width}.{width}s' ,
+      'cpus'        : '<{width}.{width}s' ,
+      'memused'     : '<{width}.{width}s' ,
+      'walltime'    : '<{width}.{width}s' ,
+      'cputime'     : '<{width}.{width}s' ,
+      'claimtime'   : '<{width}.{width}s' ,
+      'score'       : '<{width}.{width}s' ,
+    }
+
+    # print using parent 'Item' class
+    return super(Owner,self).print_header(columns,fmt,ifs,trunc,line)
 
 # ==============================================================================
 # support function to split text
 # ==============================================================================
 
-def csplit(text,name,postfix=' =',sep='\n',dtype=None):
-  '''
+def csplit(text,name,postfix=' =',ifs='\n',dtype=None,default=''):
+  r'''
 Split a string, and convert to a specific data type.
 
-Input arguments
----------------
+:arguments:
 
-**text** <str>
+  **text** (``<str>``)
+    String to split/convert.
 
-  String to split/convert.
+  **name** (``<str>``)
+    Key-name, at which to split the string (in front of the data).
 
-**name** <str>
+:options:
 
-  Key-name, at which to split the string (in front of the data).
+  **postfix** ([``' ='``] | ``<str>``)
+    Post-fix of the key-name (in front of the data).
 
-Input options
--------------
+  **ifs** ([``'\n'``] | ``<str>``)
+    Separator (after the data).
 
-**postfix** <str>
+  **dtype** ([``None``] | ``<int>`` | ... | ``<Data>`` | ...)
+    Data-type to which to convert the data.
 
-  Post-fix of the key-name (in front of the data).
+:returns:
 
-**sep** <str>
+  **data** ([``<str>``] | ...)
+    Data read (and converted to a specific data-type).
 
-  Separator (after the data).
+:example:
 
-**dtype** [None] | int | float | Byte | Time | ResNode | Host | ...
+  To read the memory form the following string::
 
-  Data-type to which to convert the data.
+    ...
+    resources_used.cputime = 995:58:01
+    resources_used.mem     = 6286932kb
+    resources_used.vmem    = 6611296kb
+    ...
 
-Output arguments
-----------------
+  use the command::
 
-**data** [<str>] | ...
-
-  Data read (and converted to a specific data-type).
-
-Examples
---------
-
-To read the memory form the following string::
-
-  ...
-  resources_used.cputime = 995:58:01
-  resources_used.mem     = 6286932kb
-  resources_used.vmem    = 6611296kb
-  ...
-
-use the command::
-
-  csplit(txt,'resources_used.mem',dtype='Data')
+    csplit(text,'resources_used.mem',dtype='Data')
   '''
+
+  import re
 
   # split the text
   try:
-    text = text.split(name+postfix)[1].split(sep)[0].strip()
+    text = re.sub(' +',' ',text).strip().split(name+postfix)[1].split(ifs)[0].strip()
   except:
-    return None
+    text = default
+
   # convert the data-type
-  if dtype in ['Byte','ResNode','Time','Host']:
-    return eval('%s(string=text)'%dtype)
-  elif dtype is not None:
+  if dtype is not None:
     return eval('%s(text)'%dtype)
   else:
     return text
 
 # ==============================================================================
-# data entry
-# ==============================================================================
-
-class Data:
-  '''
-Description
------------
-
-This class serves as a Swiss-army knife for all fields in Job and Node. This
-class is used to:
-
-* Distinguish between unread (None) and read items.
-
-* Compare strings, etc.
-
-* Convert field to printable string (by str(...)).
-
-Input arguments
----------------
-
-**data**
-
-  The actual data. Can be "float", "int", "Byte", "Time, or any other class.
-
-**fmt**
-
-  The print format of this field, e.g. "%s" or "%4.2f". If "self.data" is
-  not read (==None) the output is an empty string.
-
-**dtype**
-
-  The type the the "data".
-  '''
-
-  # ----------------------------------------------------------------------------
-  # class initiator
-  # ----------------------------------------------------------------------------
-
-  def __init__(self,data=None,fmt='%s',dtype=None):
-    self.data  = data
-    self.fmt   = fmt
-    self.dtype = dtype
-
-  # ----------------------------------------------------------------------------
-  # compare Data to other variable (<,<=,==,>=,>)
-  # ----------------------------------------------------------------------------
-
-  def __cmp__(self,other):
-    '''
-Compare "self" to another field. Depending on the class of "other"
-
-* ``Data``::
-
-    return self.other ? other.data
-
-  No safe-guard needed for None items, automatically taken care of.
-
-* ``str``::
-
-    re.match: self.data ? other
-
-* ``Time`` | ``Byte``::
-
-    self.data.strcmp ? other
-    '''
-
-    # self.data(None) ? Data|None
-    if self.data is None:
-
-      # self.data(None) == other.Data(None)
-      if isinstance(other,Data):
-        if other.data is None:
-          return 0
-
-      # self.data(None) == None
-      if other is None:
-        return 0
-
-      # all other cases
-      return -1
-
-    # Data ? Data
-    if isinstance(other,Data):
-
-      if self.data<other.data:
-        return -1
-      elif self.data>other.data:
-        return 1
-      else:
-        return 0
-
-    # Data ? str
-    # self.dtype(Time|Byte):  strcmp (e.g. Time(14.).strcmp("<10d")
-    # other cases:            regexp (e.g. ^.*$)
-    if type(other)==str:
-
-      if self.dtype in ['Time','Byte','Host']:
-        if self.data.strcmp(other):
-          return 0
-
-      if self.dtype=='str' or self.dtype=='int':
-        import re
-        if re.compile(other).match(str(self.data)):
-          return 0
-
-      return -1
-
-    # all other comparison, let the classes figure out what to do
-    if self.data < other:
-      return -1
-    elif self.data > other:
-      return 1
-    else:
-      return 0
-
-  # ----------------------------------------------------------------------------
-  # return as different data type
-  # ----------------------------------------------------------------------------
-
-  def __int__(self):
-    try:
-      return int(self.data)
-    except:
-      return 0
-
-  def __float__(self):
-    try:
-      return float(self.data)
-    except:
-      return 0.0
-
-  def __len__(self):
-    return len(self.data)
-
-  # ----------------------------------------------------------------------------
-  # mathematical operations
-  # ----------------------------------------------------------------------------
-
-  # front-end of "arithmetic"
-  # -------------------------
-
-  def __add__(self,other):
-    return self.arithmetic(other,'+')
-
-  def __sub__(self,other):
-    return self.arithmetic(other,'-')
-
-  def __mul__(self,other):
-    return self.arithmetic(other,'*')
-
-  def __div__(self,other):
-    return self.arithmetic(other,'/')
-
-  # actual operation
-  # ----------------
-
-  def arithmetic(self,other,operator):
-
-    # copy the input to a new output variable
-    # this is needed to make sure that that operation does not influence the
-    # variables. E.g. in "A = B+C" the variable "B" and "C" must be unaffected
-    import copy
-    result = copy.deepcopy(self)
-
-    # operator between "Data" and "Data" objects
-    if isinstance(other,Data):
-      # both not None
-      # normal arithmetic
-      if self.data is not None and other.data is not None:
-        if operator=='+':
-          result.data = self.data+other.data
-        elif operator=='-':
-          result.data = self.data-other.data
-        elif operator=='*':
-          result.data = self.data*other.data
-        elif operator=='/':
-          result.data = self.data/other.data
-      # other.data == None
-      # return self
-      elif self.data is not None:
-        pass
-      # self.data == None
-      # return other
-      else:
-        result.data = other.data
-
-      # convert output type
-      if self.dtype=='Byte' and other.dtype=='Byte':
-        result.data = Byte(result.data)
-      if self.dtype=='Time' and other.dtype=='Time':
-        result.data = Time(result.data)
-
-    # operator between "Data" and some other object
-    else:
-      if operator=='+':
-        result = self.data+other
-      elif operator=='-':
-        result = self.data-other
-      elif operator=='*':
-        result = self.data*other
-      elif operator=='/':
-        result = self.data/other
-
-    return result
-
-  # ----------------------------------------------------------------------------
-  # convert to string (e.g. "print" or "str" commands)
-  # ----------------------------------------------------------------------------
-
-  def __str__(self):
-    return self.__repr__()
-
-  def __repr__(self):
-    if self.data is None:
-      return ''
-    else:
-      return self.fmt % self.data
-
-  # ----------------------------------------------------------------------------
-  # return as original class (return self.data)
-  # ----------------------------------------------------------------------------
-
-  def type(self):
-    '''
-Return the "data".
-    '''
-    return self.data
-
-# ==============================================================================
 # convert `qstat -f` output
 # ==============================================================================
 
-def qstatRead(qstat=None):
+def read_qstat(qstat=None):
+  r'''
+Read the output of the ``qstat -f`` command. The output is converted to a list
+of jobs.
+
+:options:
+
+  **qstat** ([``None``] | ``<str>``)
+    If the input is a string, the jobs are read from it instead of reading the
+    ``qstat -f`` command. Mostly used for debugging.
+
+:returns:
+
+  **jobs** (``<list>``)
+    A list with jobs of the ``<gpbs.Job>``-class.
   '''
-Description
------------
-
-Read the output of the `qstat -f` command. The output is converted to a list of
-jobs. Each job is a dictionary with fields:
-
-=========== ======================================================
-key         description
-=========== ======================================================
-id          unique job-identifier
-owner       job-owner
-name        job-name
-resnode     reserved CPU resources (e.g. "1:1:i")
-state       job-state ("Q" or "R")
-host        compute-node(s) at which the job is running
-pmem        requested memory
-memused     current memory usage
-walltime    time the the job has been running
-cputime     effective time that CPU(s) have been in use
-score       cputime / ( walltime * ncpu )
-=========== ======================================================
-
-Input options
--------------
-
-**qstat** [None] | <str>
-
-  In stead of reading the `qstat -f` command, supply a string containing this
-  output. Mostly used for debugging.
-
-Returns
--------
-
-**jobs** <lst>
-
-  A list with jobs.
-  '''
-
-  # convert job to dictionary
-  def convert(qstat):
-    # initiate output
-    d = {}
-    # convert str -> fields
-    d['id'      ] = Data(int(qstat.split('\n')[0].split('.')[0].strip())        ,'%d','int'    )
-    d['name'    ] = Data(csplit(qstat,'Job_Name' )                              ,'%s','str'    )
-    d['owner'   ] = Data(csplit(qstat,'Job_Owner').split('@')[0]                ,'%s','str'    )
-    d['state'   ] = Data(csplit(qstat,'job_state')                              ,'%s','str'    )
-    d['resnode' ] = Data(csplit(qstat,'Resource_List.nodes'    ,dtype='ResNode'),'%s','ResNode')
-    d['pmem'    ] = Data(csplit(qstat,'Resource_List.pmem'     ,dtype='Byte'   ),'%s','Byte'   )
-    d['memused' ] = Data(csplit(qstat,'resources_used.mem'     ,dtype='Byte'   ),'%s','Byte'   )
-    d['cputime' ] = Data(csplit(qstat,'resources_used.cput'    ,dtype='Time'   ),'%s','Time'   )
-    d['walltime'] = Data(csplit(qstat,'resources_used.walltime',dtype='Time'   ),'%s','Time'   )
-    d['host'    ] = Data(csplit(qstat,'exec_host'              ,dtype='Host'   ),'%s','Host'   )
-    # calculate score
-    try:
-      walltime   = float(    d['walltime'] )
-      cputime    = float(    d['cputime' ] )
-      ncpu       = float(int(d['host'    ]))
-      d['score'] = Data(cputime/(walltime*ncpu),'%4.2f','float')
-      d['ncpu' ] = Data(ncpu,'%d','int')
-    except:
-      d['score'] = Data()
-      d['ncpu' ] = Data()
-    # close
-    return d
 
   # read output `qstat -f` command
   if qstat is None:
     import commands
-    qstat = commands.getoutput('qstat -f')
+    (stat,qstat) = commands.getstatusoutput('qstat -f')
+    if stat:
+      raise RuntimeError('Command "qstat -f" failed:\n %s'%qstat)
 
   # replace hard word-wrap, and split in jobs
   jobs = qstat.replace('\n\t','')
   jobs = jobs.split('Job Id:')[1:]
   # read/convert each job
   for (ijob,job) in enumerate(jobs):
-    jobs[ijob] = convert(job)
+    jobs[ijob] = Job(job)
 
   return jobs
 
 # ==============================================================================
-# compute node information
+# convert `pbsnodes` and `ganglia` output
 # ==============================================================================
 
-def pbsRead(pbsnodes=None,ganglia=None):
+def read_pbs(pbsnodes=None,ganglia=False):
+  r'''
+Read the output of the ``pbsnodes`` (and the ``ganglia``) command. The output is
+converted to a list of compute-nodes.
+
+:options:
+
+  pbsnodes ([``None``] | ``<str>``)
+    If the input is a string, the node information is read from it, instead of
+    reading the ``pbsnodes`` command. Mostly used for debugging.
+
+  ganglia ([``None``] | ``False`` | ``<str>``)
+    If set ``False`` the ``ganglia`` command is not read at all. This option is
+    used to speed up, as the ``ganglia`` command is slow. If a ``<str>`` is
+    supplied the ``ganglia`` command is also not read, but the input string is
+    used in stead. Notice that the following command should be used to form the
+    string::
+
+      ganglia disk_total disk_free bytes_in bytes_out cpu_idle
+
+:returns:
+
+  nodes (``<list>``)
+    A list with compute-nodes of the ``<gpbs.Node>``-class.
   '''
-Description
------------
-
-Read the output of the `pbsnodes` and the `ganglia` command. The output is
-converted to a list of compute-nodes. Each node is a dictionary with the
-following fields:
-
-=========== =======================================================
-key         description
-=========== =======================================================
-name        name of the compute-node
-state       state (e.g. "free", "job-exclusive", "down", etc.)
-ncpu        #CPUs
-cpufree     #CPUs free
-ctype       type of the CPUs
-jobs        job-id of the jobs running on the node
-njobs       #jobs running on the node
-load        load of the node, scaled by the number of CPUs in use
-memt        total memory
-memp        physical memory
-mema        available memory
-memu        used memory
-memr        fraction of the memory used
-disk_total  total disk space
-disk_free   free disk space
-disk_used   used disk space
-disk_rel    fractions of the disk space used
-bytes_in    network traffic inbound
-bytes_out   network traffic outbound
-bytes_tot   total network traffic
-cpu_idle    CPU idle time
-=========== =======================================================
-
-Input option
-------------
-
-**pbsnodes** [None] | <str>
-
-  In stead of reading the `pbsnodes` command, supply a string containing this
-  output. Mostly used for debugging.
-
-**ganglia** [None] | False | <str>
-
-  If set ``False`` the `ganglia` command is not read. This option is used to
-  speed up, as the `ganglia` command is slow. If a <str> is supplied the
-  `ganglia` command is also not read, but the output in the <str> is used in
-  stead. Notice that the following command should be used to form the string::
-
-    ganglia disk_total disk_free bytes_in bytes_out cpu_idle
-
-Returns
--------
-
-**nodes** <lst>
-
-  A list with compute-nodes.
-  '''
-
-  # read `pbsnodes` command
-  # -----------------------
 
   # read the `pbsnodes` command
   if pbsnodes is None:
     import commands
-    pbsnodes = commands.getoutput('pbsnodes')
+    (stat,pbsnodes) = commands.getstatusoutput('pbsnodes')
+    if stat:
+      raise RuntimeError('Command "pbsnodes" failed:\n %s'%pbsnodes)
   # split the `pbsnodes` output in different nodes
-  nodes = filter(None,pbsnodes.split('\n\n'))
-
-  # read `ganglia` command, convert to dictionary
-  # ---------------------------------------------
+  pbsnodes = filter(None,pbsnodes.split('\n\n'))
 
   # initiate the ganglia options, and the output
   args = ['disk_total','disk_free','bytes_in','bytes_out','cpu_idle']
   dat  = {}
   # read the `ganglia` command
-  if ganglia is None:
+  if ganglia is None or ganglia==True:
     import commands
-    ganglia = commands.getoutput('ganglia '+' '.join(args))
+    (stat,ganglia) = commands.getstatusoutput('ganglia '+' '.join(args))
+    if stat:
+      raise RuntimeError('Command "ganglia" failed:\n %s'%ganglia)
   # convert the `ganglia` command output to dictionary
   if ganglia is not False:
     # loop over lines: split lines and store in dictionary per node
@@ -1376,445 +2052,123 @@ Returns
       dat[name] = {arg:out[i] for (i,arg) in enumerate(args)}
   # change name
   ganglia = dat
-  # change the units of the ganglia command / convert to Data-type
-  for node in ganglia:
-    for key in ganglia[node]:
-      if key in ['disk_total','disk_free']:
-        ganglia[node][key] = Data(Byte(float(ganglia[node][key])*1.0e9),'%s'   ,'Byte')
-      elif key in ['bytes_in','bytes_out']:
-        ganglia[node][key] = Data(Byte(float(ganglia[node][key])      ),'%s'   ,'Byte')
-      else:
-        ganglia[node][key] = Data(     float(ganglia[node][key])       ,'%4.2f','float')
 
-  # convert `pbsnodes` command to dictionary (and include defaults)
-  # ---------------------------------------------------------------
+  # loop over pbs-output (nodes) and convert to Node class
+  for (ipbs,pbs) in enumerate(pbsnodes):
+    # get node number
+    node = pbs.split('\n')[0]
+    # convert output, with or without ganglia options
+    try:
+      pbsnodes[ipbs] = Node(pbs,**ganglia[node])
+    except:
+      pbsnodes[ipbs] = Node(pbs)
 
-  # support function, split jobs: 0/XXX.hostname
-  def splitjobs(txt):
-    try:
-      jobs = txt.split('jobs =')[1].split('\n')[0].strip().split(',')
-      return [int(i.split('/')[1].split('.')[0].strip()) for i in jobs]
-    except:
-      return None
-
-  # convert string to dictionary
-  def convert(text):
-    d = {}
-    d['name' ] = Data(text.split('\n')[0]                                      ,'%s'   ,'str'  )
-    d['state'] = Data(csplit(text,'state')                                     ,'%s'   ,'str'  )
-    d['ncpu' ] = Data(csplit(text,'np',dtype='int')                            ,'%d'   ,'int'  )
-    d['ctype'] = Data(csplit(text,'properties')                                ,'%s'   ,'str'  )
-    d['jobs' ] = Data(splitjobs(text)                                          ,'%s'   ,'list' )
-    d['load' ] = Data(csplit(text,'loadave' ,postfix='=',sep=',',dtype='float'),'%4.2f','float')
-    d['memt' ] = Data(csplit(text,'totmem'  ,postfix='=',sep=',',dtype='Byte' ),'%s'   ,'Byte' )
-    d['memp' ] = Data(csplit(text,'physmem' ,postfix='=',sep=',',dtype='Byte' ),'%s'   ,'Byte' )
-    d['mema' ] = Data(csplit(text,'availmem',postfix='=',sep=',',dtype='Byte' ),'%s'   ,'Byte' )
-    return d
-
-  # loop over nodes and convert the string
-  for (inode,node) in enumerate(nodes):
-    # convert pbsnodes output
-    n    = int(node.split('\n')[0].replace('compute-0-',''))
-    node = convert(node)
-    node['node'] = Data(n,'%d','int')
-    name = str(node['name'])
-    # add ganglia output
-    for key in args:
-      node[key] = Data()
-    if name in ganglia:
-      for key in ganglia[name]:
-        node[key] = ganglia[name][key]
-    # number of jobs
-    try:
-      node['njobs'] = Data(len(node['jobs']),'%d','int')
-    except:
-      node['njobs'] = Data()
-    # number of CPUs free
-    try:
-      node['cpufree'] = Data(node['ncpu']-node['njobs'],'%d','int')
-    except:
-      node['cpufree'] = Data()
-    # scale the load
-    try:
-      node['load'] = Data(node['load']/float(node['njobs']),'%4.2f','float')
-    except:
-      pass
-    # available memory
-    try:
-      node['memu'] = Data(Byte(node['memt']-node['mema']),'%s','Byte')
-    except:
-      node['memu'] = Data()
-    # relative memory usages
-    try:
-      node['memr'] = Data(float(node['memu']/node['memt']),'%4.2f','float')
-    except:
-      node['memr'] = Data()
-    # disk usage
-    try:
-      node['disk_used'] = Data(Byte(node['disk_total']-node['disk_free']),'%s','Byte')
-    except:
-      node['disk_used'] = Data()
-    # relative disk usage
-    try:
-      node['disk_rel'] = Data(float(node['disk_used']/node['disk_total']),'%4.2f','float')
-    except:
-      node['disk_rel'] = Data()
-    # total network traffic
-    try:
-      node['bytes_tot'] = Data(Byte(node['bytes_in']+node['bytes_out']),'%s','Byte')
-    except:
-      node['bytes_tot'] = Data()
-
-    # remove output
-    if node['state'] not in ['free','job-exclusive']:
-      for key in ['load','njobs','cpufree','memu','memr','disk_free','bytes_in',\
-                  'bytes_out','bytes_tot','disk_rel','disk_used']:
-        node[key] = Data()
-
-    # store to list
-    nodes[inode] = node
-
-  return nodes
+  return pbsnodes
 
 # ==============================================================================
-# calculate node summary
+# list of jobs
 # ==============================================================================
 
-def pbsSummary(nodes):
-  '''
-Summarize the compute-node information. The output has the following structure:
+def myqstat(qstat=None):
+  r'''
+Read the output of the ``qstat -f`` command.
 
-  out[key][field] = N
+:options:
 
-  keys   = ['total','offline','online','njobs','cpufree']
-  fields = ['total','intel','amd']
+  **qstat** ([``None``] | ``<str>``)
+    If the input is a string, the jobs are read from it instead of reading the
+    ``qstat -f`` command. Mostly used for debugging.
+
+:returns:
+
+  **jobs** (``<list>``)
+    A list with jobs of the ``<gpbs.Job>``-class.
   '''
 
-  # set output keys, and field per key; states which count as "online"
-  keys   = ['total','offline','online','njobs','cpufree']
-  fields = ['total','intel','amd']
-  on     = ['free','job-exclusive']
+  return read_qstat(qstat=qstat)
+
+# ==============================================================================
+# list of nodes
+# ==============================================================================
+
+def myqstat_node(pbsnodes=None,ganglia=False):
+  r'''
+Read the output of the ``pbsnodes`` (and the ``ganglia``) command. The output is
+converted to a list of compute-nodes.
+
+:options:
+
+  pbsnodes ([``None``] | ``<str>``)
+    If the input is a string, the node information is read from it, instead of
+    reading the ``pbsnodes`` command. Mostly used for debugging.
+
+  ganglia ([``None``] | ``False`` | ``<str>``)
+    If set ``False`` the ``ganglia`` command is not read at all. This option is
+    used to speed up, as the ``ganglia`` command is slow. If a ``<str>`` is
+    supplied the ``ganglia`` command is also not read, but the input string is
+    used in stead. Notice that the following command should be used to form the
+    string::
+
+      ganglia disk_total disk_free bytes_in bytes_out cpu_idle
+
+:returns:
+
+  nodes (``<list>``)
+    A list with compute-nodes of the ``<gpbs.Node>``-class.
+  '''
+
+  #TODO: summary
+
+  return read_pbs(pbsnodes=pbsnodes,ganglia=ganglia)
+
+# ==============================================================================
+# summary per user
+# ==============================================================================
+
+def myqstat_user(qstat=None):
+  r'''
+Summary per user.
+
+:options:
+
+  **qstat** ([``None``] | ``<str>``)
+    If the input is a string, the jobs are read from it instead of reading the
+    ``qstat -f`` command. Mostly used for debugging.
+
+:returns:
+
+  **owners** (``<list>``)
+    A list with user summary of the ``<gpbs.Owner>``-class.
+  '''
+
+  # read all jobs
+  jobs = read_qstat(qstat=qstat)
+
+  # list all owners that are running jobs
+  owners = set([job.owner for job in jobs])
 
   # initiate output
-  out = {}
-  for key in keys:
-    out[key] = {}
-    for field in fields:
-      out[key][field] = 0
+  summary = []
 
-  # loop over nodes, and add to the appropriate fields
-  for node in nodes:
+  # calculate total resources per user
+  for owner in owners:
+    # list wtth all the owner's jobs
+    user = [job for job in jobs if job.owner==owner]
+    # add to summary list
+    summary.append(Owner(
+      owner     = owner,
+      cpus      = sum([job.host                                       for job in user]),
+      memused   = sum([job.memused                                    for job in user]),
+      walltime  = sum([job.walltime                                   for job in user]),
+      cputime   = sum([job.cputime                                    for job in user]),
+      claimtime = sum([Time(float(job.walltime)*float(len(job.host))) for job in user]),
+    ))
 
-    ctype = str(node['ctype'])
-    state = str(node['state'])
-
-    # add to total
-    out['total']['total'] += int(node['ncpu'])
-    out['total'][ctype]   += int(node['ncpu'])
-
-    # add to online/offline
-    if state in on:
-      out['online']['total'] += int(node['ncpu'])
-      out['online'][ctype]   += int(node['ncpu'])
-    else:
-      out['offline']['total'] += int(node['ncpu'])
-      out['offline'][ctype]   += int(node['ncpu'])
-
-    # add to working
-    if state in on:
-      out['njobs']['total'] += int(node['njobs'])
-      out['njobs'][ctype]   += int(node['njobs'])
-
-    # add to free
-    if state in on:
-      out['cpufree']['total'] += int(node['cpufree'])
-      out['cpufree'][ctype  ] += int(node['cpufree'])
-
-  return out
+  return sorted(summary,key=lambda owner: owner.cpus)
 
 # ==============================================================================
-# summarize the jobs
-# ==============================================================================
-
-def qstatSummary(jobs,nodes,key='owner'):
-
-  # initiate output
-  out = {}
-
-  # loop over jobs, and add relative fields
-  for job in jobs:
-
-    # get storage key
-    if key in ['owner']:
-      field = str(job['owner'])
-    # zero-initiate fields
-    if field not in out:
-      out[field] = {}
-      out[field]['host'    ] = Data(Host(node=[],cpu=[]),'%s','Host')
-      out[field]['memused' ] = Data(Byte(0.0),'%s','Byte')
-      out[field]['cputime' ] = Data(Time(0.0),'%s','Time')
-      out[field]['walltime'] = Data(Time(0.0),'%s','Time')
-      out[field]['owner'   ] = str(job['owner'])
-    # add fields
-    for name in ['walltime','cputime','memused','host']:
-      out[field][name] += job[name]
-
-  # calculate number of CPUs per type, and score
-  for key in out:
-    # get cpu-type
-    host = out[key]['host'].type().typecal(nodes)
-    for name in host.ntype:
-      out[key][name] = host.ntype[name]
-    # add score
-    try:
-      walltime   = float(out[key]['walltime'])
-      cputime    = float(out[key]['cputime' ])
-      ncpu       = float(int(host))
-      out[key]['score'] = Data(cputime/(walltime*ncpu),'%4.2f','float')
-    except:
-      out[key]['score'] = Data()
-
-  return [out[key] for key in sorted(out)]
-
-#TODO:
-## ==============================================================================
-## write/convert qstat log files
-## ==============================================================================
-#
-#def qstatLog(read=None,path='.'):
-#  '''
-#Description
-#------------
-#
-#Write/convert log-files of the "qstat -f" output. The following files are
-#written (or modified):
-#
-#1.  "jobhistory_YYYY_MM.log"
-#
-#    A monthly summary.
-#
-#2.  "jobcurrent.log"
-#
-#    A temporary file with the last logged jobs. The files are written to the
-#    monthly summary when they are finished.
-#
-#Input options
-#-------------
-#
-#**read** = [``None``] | ``<str>``
-#
-#  Set the file-name to read.
-#
-#**path** = [``None``] | ``<str>``
-#
-#  Set the path in which to write the files.
-#  '''
-#
-#  import time,os,struct
-#
-#  ### convert, set defaults
-#  def default(job,fields):
-#    # initiate output
-#    out = dict()
-#    # loop over fields
-#    for field in fields:
-#      if field in ['id','walltime','cputime','memused']:
-#        if eval('job.%s'%field) is None:
-#          out[field] = 0
-#        else:
-#          out[field] = int(eval('job.%s'%field))
-#      elif field in ['owner','hostinfo']:
-#        if eval('job.%s'%field) is None:
-#          out[field] = ''
-#        else:
-#          out[field] = str(eval('job.%s'%field))
-#      else:
-#        raise IOError('Unknown field %s'%field)
-#    return out
-#
-#  ### convert a job to a binary "string"
-#  def job2bin(job,fields,fmt):
-#    info = [job[i] for i in fields]
-#    return struct.pack(fmt,*info)
-#
-#  ### convert a binary "string" to a job
-#  def bin2job(string,fields,fmt):
-#    import re
-#    expr = re.compile('^[a-zA-Z0-9\.]+$')
-#    args = {}
-#    for (field,data) in zip(fields,struct.unpack(fmt,string)):
-#      if field in ['owner','hostinfo']:
-#        data = ''.join([i for i in data if expr.match(i)])
-#      if field in ['walltime']:
-#        data = float(data)
-#      args[field] = data
-#    return Job(**args)
-#
-#  ### fields and print settings (including the length of the binary "string")
-#  fields = ['id','owner','walltime','cputime','memused','hostinfo']
-#  fmt    = 'Q15sQQQ15s'
-#  fmtlen = struct.calcsize(fmt)
-#
-#  ### read log-file
-#  if read is not None:
-#
-#    jobs = open(read,'r').read()
-#    jobs = [jobs[i:i+fmtlen] for i in range(0,len(jobs),fmtlen) ]
-#    return [bin2job(job,fields,fmt) for job in jobs]
-#
-#  ### write the log-files
-#  else:
-#
-#    # set the filenames
-#    t = time.localtime()
-#    filetemp = 'jobcurrent.log'
-#    filehist = 'jobhistory_%s.log' % ('%04i_%02i'%(t.tm_year,t.tm_mon))
-#    filetemp = os.path.join(path,filetemp)
-#    filehist = os.path.join(path,filehist)
-#
-#    # list the current jobs, store the id's, and convert to binary
-#    running   = qstatRead()
-#    running   = [default(job,fields) for job in running]
-#    runningid = [job['id'] for job in running]
-#    running   = [job2bin(job,fields,fmt) for job in running]
-#
-#    # convert the "temp"-file to list, and read the job id
-#    try:
-#      temp   = open(filetemp,'r').read()
-#      temp   = [temp[i:i+fmtlen] for i in range(0,len(temp),fmtlen) ]
-#      tempid = [struct.unpack(fmt,job)[0] for job in temp]
-#    except:
-#      temp   = []
-#      tempid = []
-#
-#    # combine finished jobs
-#    finished = []
-#    for (jobid,job) in zip(tempid,temp):
-#      if jobid not in runningid:
-#        finished.append(job)
-#    # write log and "temp" file
-#    open(filehist,'a').write(''.join(finished))
-#    open(filetemp,'w').write(''.join(running))
-#
-## ==============================================================================
-## write/convert pbs-node log files
-## ==============================================================================
-#
-#def pbsLog(path='.',read=None):
-#
-#  import time,struct
-#
-#  ### set default values
-#  def default(node,field):
-#    # initiate output
-#    out = dict()
-#    # loop over fields
-#    for field in fields:
-#      # set defaults
-#      if field in ['ncpu','cpufree','memt','memu','disk_total','disk_free']:
-#        if eval('node.%s'%field) is None:
-#          out[field] = 0
-#        else:
-#          out[field] = int(eval('node.%s'%field))
-#      elif field in ['name','state']:
-#        if eval('node.%s'%field) is None:
-#          out[field] = ''
-#        else:
-#          out[field] = str(eval('node.%s'%field))
-#      else:
-#        raise IOError('Unknown field %s'%field)
-#      # scale to ganglia command
-#      if field in ['disk_free','disk_total']:
-#        out[field] /= 1.0e9
-#    return out
-#
-#  ### convert a job to a binary "string"
-#  def node2bin(node,fields,fmt):
-#    info = [node[i] for i in fields]
-#    return struct.pack(fmt,*info)
-#
-#  ### convert a binary "string" to a node
-#  def bin2node(string,fields,fmt):
-#    import re
-#    expr = re.compile('^[a-zA-Z0-9\.]+$')
-#    args = {}
-#    for (field,data) in zip(fields,struct.unpack(fmt,string)):
-#      if field in ['name','state']:
-#        data = ''.join([i for i in data if expr.match(i)])
-#      # fix custom fields
-#      if field in ['name']:
-#        data = data.replace('compute0','compute-0-')
-#      if field in ['state']:
-#        data = data.replace('jobexclusive','job-exclusive')
-#      args[field] = data
-#    return Node(**args)
-#
-#  ### basic parameters
-#  fields = ['name','state','ncpu','cpufree','memt','memu','disk_total','disk_free']
-#  fmt    = '15s15sQQQQQQ'
-#  fmtlen = struct.calcsize(fmt)
-#
-#  ### read an archive
-#  if read is not None:
-#
-#    nodes = open(read,'r').read()
-#    nodes = [nodes[i:i+fmtlen] for i in range(0,len(nodes),fmtlen) ]
-#    return [bin2node(node,fields,fmt) for node in nodes]
-#
-#  ### create an archive
-#  else:
-#
-#    # set the filename
-#    t = time.localtime()
-#    filename = 'nodehistory_%04i%02i%02i_%02i%02i%02i.log'%(t.tm_year,t.tm_mon,t.tm_mday,t.tm_hour,t.tm_min,t.tm_sec)
-#
-#    # get node information
-#    nodes = pbsRead()
-#    nodes = [default(node,fields) for node in nodes]
-#    nodes = [node2bin(node,fields,fmt) for node in nodes]
-#
-#    # write output file
-#    open(filename,'w').write(''.join(nodes))
-
-# ==============================================================================
-# test routines
+# designated for testing
 # ==============================================================================
 
 if __name__=='__main__':
-
-  # set documentation
-  doc = '''
-GPBS test function. To test:
-
-1.  Create text-files with the relevant output::
-
-      qstat -f > qstat.txt
-      pbsnodes > pbs.txt
-      ganglia disk_total disk_free bytes_in bytes_out cpu_idle > ganglia.txt
-
-2.  Test the gpbs-module::
-
-      python gpbs.py qstat.txt pbs.txt ganglia.txt
-'''
-  # set argument parser
-  import argparse
-  form   = lambda prog: argparse.RawDescriptionHelpFormatter(prog,max_help_position=27)
-  parser = argparse.ArgumentParser(\
-    formatter_class=form,\
-    description=doc,\
-  )
-  # add arguments
-  parser.add_argument('files', metavar='FILE', type=str, nargs=3,
-    help='Command output: qstat.txt pbs.txt ganglia.txt')
-  # read arguments
-  args = parser.parse_args()
-  # convert
-  (qstat,pbs,ganglia) = args.files
-
-  # read job-information
-  jobs = qstatRead(open(qstat,'r').read())
-  # read pbs/ganglia output
-  pbs = pbsRead(open(pbs,'r').read(),open(ganglia,'r').read())
-
-  print ' '.join([str(job.id) for job in jobs])
-  print ' '.join([node.name for node in pbs])
+  pass

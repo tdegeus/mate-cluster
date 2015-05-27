@@ -205,3 +205,42 @@ Let us examine several lines of this script:
 
   If your job fails in any way it will leave your data on the compute-node, please remember to clean it manually (see :ref:`etiquette-monitor-resources-rocks`).
 
+Common pitfalls
+---------------
+
+1.  This script:
+
+    (a) creates a temporary folder on the compute-node,
+    (b) copies all files (and sub-folders) in a certain location on the head-node,
+    (c) executes the computations,
+    (d) copies all files (and sub-folders) back from the temporary folder to the original location on the head-node.
+
+
+    .. note::
+
+      As any other PBS-script, the entire script runs on the compute-node. The only thing that used from the head-node is the hard-drive (mounted on :file:`/home/username/`), specifically before executing the computations (line 27-33) and after completing the computations (line 49-54).
+
+.. todo::
+
+  * Copy the entire home directory.
+
+  * Absolute path in input file.
+
+
+Full example
+------------
+
+.. todo::
+
+  1. Introduce file structure.
+
+  2. Discuss example pbs/py
+
+  3. Discuss expected output
+
+  4. Discuss what happens if "example.py" is replaced by "simulations/sim1/example.py"
+
+
+:download:`source: withtransfer.zip <examples/withtransfer.pbs>`
+
+
