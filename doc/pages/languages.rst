@@ -61,10 +61,10 @@ Matlab scripting guidelines
    To this end include the ``quit`` command at the end of your script. Consider the following pbs-file to run
    ``myscript.m``
 
-   .. literalinclude:: scripts/matlab.pbs
+   .. literalinclude:: ../scripts/matlab.pbs
       :language: bash
 
-   :download:`source: matlab.pbs <scripts/matlab.pbs>`
+   :download:`source: matlab.pbs <../scripts/matlab.pbs>`
 
 2. Because there is no ``MATLAB`` desktop ``MATLAB`` is unable to render any figures. As a result, most commands producing
    figures, like for instance ``plot`` will cause your job the abort prematurely.
@@ -205,15 +205,15 @@ An example Marc job
 
 Since ``MSC Marc`` jobs typically involve a lot of disk access, it is strongly recommended to use the script for the :ref:`page-queuing-heavyio`. Consider the example below, for which it is remarked that it is necessary that the ``MSC Marc`` input file (``.dat``) and, if needed, user ``Fortran`` subroutines are in the same directory as the ``.pbs`` script. This can of course be changed.
 
-.. literalinclude:: scripts/marc.pbs
+.. literalinclude:: ../scripts/marc.pbs
    :language: bash
 
-:download:`source: marc.pbs <scripts/marc.pbs>`
+:download:`source: marc.pbs <../scripts/marc.pbs>`
 
 Marc parallelization
 ~~~~~~~~~~~~~~~~~~~~
 
-The most common method to parallelize ``MSC Marc`` is by domain decomposition, i.e. the FE domain is split in multiple subdomains and each subdomain is assigned to a cpu-core. For relatively small models (e.g. < 10.000 degrees of freedom), parallelization is not recommended because of the overhead involved with it. For domain decomposition some more considerations need to be made. First, one needs to make sure that the solution is not impacted by the domain decomposition scheme. Secondly, several features, such as remeshing, do not work in the domain decomposition mode. For more unsupported features, see manual volume A. Thirdly, subroutines (e.g. ``impd.f``) may not work correctly in domain decomposition mode. 
+The most common method to parallelize ``MSC Marc`` is by domain decomposition, i.e. the FE domain is split in multiple subdomains and each subdomain is assigned to a cpu-core. For relatively small models (e.g. < 10.000 degrees of freedom), parallelization is not recommended because of the overhead involved with it. For domain decomposition some more considerations need to be made. First, one needs to make sure that the solution is not impacted by the domain decomposition scheme. Secondly, several features, such as remeshing, do not work in the domain decomposition mode. For more unsupported features, see manual volume A. Thirdly, subroutines (e.g. ``impd.f``) may not work correctly in domain decomposition mode.
 
 The domain decomposition parallelization is flagged through a command line option: ``-nprocds 4``, where 4 is the number of cpu-cores to use in this case. To prevent mistakes in assigning the number of cpu-cores, the best way to adapt your ``.pbs`` is to add
 
@@ -268,10 +268,10 @@ Example Fortran job
 
 ``Fortran`` code can be compiled on the cluster before it is executed. Consider the following example.
 
-.. literalinclude:: scripts/fortran.pbs
+.. literalinclude:: ../scripts/fortran.pbs
    :language: bash
 
-:download:`source: fortran.pbs <scripts/fortran.pbs>`
+:download:`source: fortran.pbs <../scripts/fortran.pbs>`
 
 Fortran parallelization
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -280,9 +280,9 @@ Fortran parallelization
 will try to use all the cores in the node, even if you did not reserve them. This means that you can seriously harm other
 people's jobs. To prevent this you need to make some small changes to the ``.pbs`` script.
 
-.. literalinclude:: scripts/fortranparallel.pbs
+.. literalinclude:: ../scripts/fortranparallel.pbs
    :language: bash
 
-:download:`source: fortranparallel.pbs <scripts/fortranparallel.pbs>`
+:download:`source: fortranparallel.pbs <../scripts/fortranparallel.pbs>`
 
 

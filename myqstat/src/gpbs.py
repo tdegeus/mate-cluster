@@ -982,7 +982,7 @@ Print the column header, including a separator line.
     for column in columns:
       # read the field name, and apply print format
       key  = column['key']
-      text = ('{:'+fmt[key].format(**column)+'}').format(line*100)
+      text = ('{:'+fmt[key].format(**column)+'}').format(line*200)
       # add column to output
       output += [text]
 

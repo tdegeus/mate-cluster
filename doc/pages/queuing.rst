@@ -97,10 +97,10 @@ My first PBS job
 
 Consider this very simple ``.pbs`` script written in Bash:
 
-.. literalinclude:: scripts/myfirst.pbs
+.. literalinclude:: ../scripts/myfirst.pbs
    :language: bash
 
-:download:`source: myfirst.pbs <scripts/myfirst.pbs>`
+:download:`source: myfirst.pbs <../scripts/myfirst.pbs>`
 
 The queuing system reads all lines until the first line not starting with a ``#``. For each line starting with ``#PBS``, the options, called :ref:`page-queuing-pbs`, will be interpreted.
 
@@ -131,10 +131,10 @@ Multiple core job
 
 Now consider this ``.pbs`` script
 
-.. literalinclude:: scripts/parallel.pbs
+.. literalinclude:: ../scripts/parallel.pbs
    :language: bash
 
-:download:`source: parallel.pbs <scripts/parallel.pbs>`
+:download:`source: parallel.pbs <../scripts/parallel.pbs>`
 
 This script will cause the queuing system to reserve two cores on one compute-node, for the duration of the job. Similar to above, we start the job and check the output
 
@@ -164,16 +164,16 @@ Each user has a "home" directory on the head node, located at ``/home/username``
 
 3. Transfer the results back to the home folder, which is actually on the head-node [network traffic].
 
-.. image:: images/heavyio.svg
+.. image:: ../images/heavyio.svg
   :width: 600px
 
 Consider this example ``.pbs`` script (which is executed (only) on the compute-node)
 
-.. literalinclude:: scripts/withtransfer.pbs
+.. literalinclude:: ../scripts/withtransfer.pbs
    :language: bash
    :linenos:
 
-:download:`source: withtransfer.pbs <scripts/withtransfer.pbs>`
+:download:`source: withtransfer.pbs <../scripts/withtransfer.pbs>`
 
 Let us examine several lines of this script:
 
@@ -225,22 +225,5 @@ Common pitfalls
   * Copy the entire home directory.
 
   * Absolute path in input file.
-
-
-Full example
-------------
-
-.. todo::
-
-  1. Introduce file structure.
-
-  2. Discuss example pbs/py
-
-  3. Discuss expected output
-
-  4. Discuss what happens if "example.py" is replaced by "simulations/sim1/example.py"
-
-
-:download:`source: withtransfer.zip <examples/withtransfer.pbs>`
 
 

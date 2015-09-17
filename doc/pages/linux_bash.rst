@@ -153,7 +153,7 @@ Command           Description
 :command:`cd` -- change directory
 ---------------------------------
 
-.. image:: images/file-structure.svg
+.. image:: ../images/file-structure.svg
   :width: 300 px
 
 The change directory (:command:`cd`) command can be used to navigate through the file-tree by changing the current directory. Let us use an example of a file-tree such as displayed above. Typically the terminal will start in the user's home folder, i.e.

@@ -1,0 +1,2521 @@
+Job Id: 105.rng.wfw.wtb.tue.nl
+    Job_Name = DP_Huge_Red_Par3_Fd_smstep.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 780:54:41
+    resources_used.mem = 1485096kb
+    resources_used.vmem = 1562664kb
+    resources_used.walltime = 784:46:27
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri May  8 16:44:22 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Paper4_Final/Huge_reduced_P
+	ar3/output.out
+    exec_host = compute-0-18/15
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Paper4_Final/Huge_reduced_
+	Par3/output.out
+    Priority = 0
+    qtime = Fri May  8 16:44:22 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 10gb
+    session_id = 19791
+    Shell_Path_List = /bin/bash
+    etime = Fri May  8 16:44:22 2015
+    submit_args = DP_Huge_Red_Par3_Fd_smstep.pbs
+    start_time = Fri May  8 16:44:23 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 148.rng.wfw.wtb.tue.nl
+    Job_Name = FShear_NOdisl_NPTmin_Final.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 9466:21:27
+    resources_used.mem = 981312kb
+    resources_used.vmem = 2660360kb
+    resources_used.walltime = 591:34:49
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sat May 16 17:52:48 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/05_NPT_Fi
+	nal/NoDislo/output.out
+    exec_host = compute-0-21/0+compute-0-21/1+compute-0-21/2+compute-0-21/3+co
+	mpute-0-21/4+compute-0-21/5+compute-0-21/6+compute-0-21/7+compute-0-21
+	/8+compute-0-21/9+compute-0-21/10+compute-0-21/11+compute-0-21/12+comp
+	ute-0-21/13+compute-0-21/14+compute-0-21/15
+    exec_port = 15003+15003+15003+15003+15003+15003+15003+15003+15003+15003+15
+	003+15003+15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/05_NPT_F
+	inal/NoDislo/output.out
+    Priority = 0
+    qtime = Sat May 16 17:52:48 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=16
+    Resource_List.pmem = 1gb
+    session_id = 915
+    Shell_Path_List = /bin/bash
+    etime = Sat May 16 17:52:48 2015
+    submit_args = FShear_NOdisl_NPTmin_Final.pbs
+    start_time = Sat May 16 17:56:01 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 149.rng.wfw.wtb.tue.nl
+    Job_Name = FShear_Dislo_NPTmin_Final.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 9466:15:51
+    resources_used.mem = 971872kb
+    resources_used.vmem = 2659716kb
+    resources_used.walltime = 591:34:44
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sat May 16 17:55:02 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/05_NPT_Fi
+	nal/Dislo_slow/output.out
+    exec_host = compute-0-16/0+compute-0-16/1+compute-0-16/2+compute-0-16/3+co
+	mpute-0-16/4+compute-0-16/5+compute-0-16/6+compute-0-16/7+compute-0-16
+	/8+compute-0-16/9+compute-0-16/10+compute-0-16/11+compute-0-16/12+comp
+	ute-0-16/13+compute-0-16/14+compute-0-16/15
+    exec_port = 15003+15003+15003+15003+15003+15003+15003+15003+15003+15003+15
+	003+15003+15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/05_NPT_F
+	inal/Dislo_slow/output.out
+    Priority = 0
+    qtime = Sat May 16 17:55:02 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=16
+    Resource_List.pmem = 1gb
+    session_id = 23934
+    Shell_Path_List = /bin/bash
+    etime = Sat May 16 17:55:02 2015
+    submit_args = FShear_Dislo_NPTmin_Final.pbs
+    start_time = Sat May 16 17:56:01 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 193.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 477:18:44
+    resources_used.mem = 323248kb
+    resources_used.vmem = 548868kb
+    resources_used.walltime = 474:16:59
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu May 21 15:13:50 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample2_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-18/9
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample2_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Thu May 21 15:13:50 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 2158
+    Shell_Path_List = /bin/bash
+    etime = Thu May 21 15:13:50 2015
+    submit_args = bend2_TLd_2slp_3.pbs
+    start_time = Thu May 21 15:13:51 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 198.rng.wfw.wtb.tue.nl
+    Job_Name = bend3_TLd_1slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 473:21:02
+    resources_used.mem = 159040kb
+    resources_used.vmem = 383848kb
+    resources_used.walltime = 474:13:35
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu May 21 15:17:44 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample3_/bending/1slp/1pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-17/1
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample3_/bending/1slp/1pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Thu May 21 15:17:44 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13462
+    Shell_Path_List = /bin/bash
+    etime = Thu May 21 15:17:44 2015
+    submit_args = bend3_TLd_1slp_2.pbs
+    start_time = Thu May 21 15:17:45 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 199.rng.wfw.wtb.tue.nl
+    Job_Name = bend3_TLd_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 487:27:52
+    resources_used.mem = 338504kb
+    resources_used.vmem = 562068kb
+    resources_used.walltime = 474:13:28
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu May 21 15:17:51 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample3_/bending/1slp/1pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-17/3
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample3_/bending/1slp/1pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Thu May 21 15:17:51 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13537
+    Shell_Path_List = /bin/bash
+    etime = Thu May 21 15:17:51 2015
+    submit_args = bend3_TLd_1slp_3.pbs
+    start_time = Thu May 21 15:17:52 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 204.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_2slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 475:11:49
+    resources_used.mem = 154388kb
+    resources_used.vmem = 379664kb
+    resources_used.walltime = 474:12:18
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu May 21 15:19:00 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample3_/bending/2slp/2pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-17/13
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample3_/bending/2slp/2pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Thu May 21 15:19:00 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13955
+    Shell_Path_List = /bin/bash
+    etime = Thu May 21 15:19:00 2015
+    submit_args = bend2_TLd_2slp_2.pbs
+    start_time = Thu May 21 15:19:02 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 205.rng.wfw.wtb.tue.nl
+    Job_Name = bend3_TLd_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 484:49:47
+    resources_used.mem = 324440kb
+    resources_used.vmem = 549956kb
+    resources_used.walltime = 474:12:11
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu May 21 15:19:07 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample3_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-17/14
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu May 21 17:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample3_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Thu May 21 15:19:07 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 14027
+    Shell_Path_List = /bin/bash
+    etime = Thu May 21 15:19:07 2015
+    submit_args = bend3_TLd_2slp_3.pbs
+    start_time = Thu May 21 15:19:09 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 306.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_SS_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 360:05:15
+    resources_used.mem = 414488kb
+    resources_used.vmem = 804812kb
+    resources_used.walltime = 357:27:45
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:03:39 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/1slp/1pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-17/5
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:03:41 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/1slp/1pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:03:39 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 28607
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:03:39 2015
+    submit_args = bend1_SS_1slp_3.pbs
+    start_time = Tue May 26 12:03:41 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 308.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_TLd_1slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 354:27:17
+    resources_used.mem = 156228kb
+    resources_used.vmem = 379780kb
+    resources_used.walltime = 357:26:49
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:03:50 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/1slp/1pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-17/8
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:03:52 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/1slp/1pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:03:50 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 28769
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:03:50 2015
+    submit_args = bend1_TLd_1slp_2.pbs
+    start_time = Tue May 26 12:03:52 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 310.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_SS_2slp_1.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 353:41:53
+    resources_used.mem = 178960kb
+    resources_used.vmem = 1274876kb
+    resources_used.walltime = 357:25:59
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:04:56 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_1/pbs.out
+    exec_host = compute-0-15/2
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:04:58 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_1/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:04:56 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 5053
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:04:56 2015
+    submit_args = bend1_SS_2slp_1.pbs
+    start_time = Tue May 26 12:04:58 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 312.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_SS_2slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 363:38:32
+    resources_used.mem = 279432kb
+    resources_used.vmem = 774388kb
+    resources_used.walltime = 357:25:50
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:05:05 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_2/pbs.out
+    exec_host = compute-0-14/4
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:05:05 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:05:05 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 12392
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:05:05 2015
+    submit_args = bend1_SS_2slp_2.pbs
+    start_time = Tue May 26 12:05:05 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 313.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_SS_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 366:26:04
+    resources_used.mem = 409300kb
+    resources_used.vmem = 779720kb
+    resources_used.walltime = 357:25:44
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:05:10 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-14/10
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:05:11 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:05:10 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 12482
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:05:10 2015
+    submit_args = bend1_SS_2slp_3.pbs
+    start_time = Tue May 26 12:05:11 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 314.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_TLd_2slp_1.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 348:49:24
+    resources_used.mem = 88604kb
+    resources_used.vmem = 313844kb
+    resources_used.walltime = 357:25:14
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:05:37 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_1/pbs.out
+    exec_host = compute-0-13/9
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:05:39 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_1/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:05:37 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 11172
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:05:37 2015
+    submit_args = bend1_TLd_2slp_1.pbs
+    start_time = Tue May 26 12:05:39 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 315.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_TLd_2slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 361:59:53
+    resources_used.mem = 154400kb
+    resources_used.vmem = 378244kb
+    resources_used.walltime = 357:25:09
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:05:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-13/15
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:05:44 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:05:43 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 11247
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:05:43 2015
+    submit_args = bend1_TLd_2slp_2.pbs
+    start_time = Tue May 26 12:05:44 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 316.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_TLd_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 393:49:48
+    resources_used.mem = 310564kb
+    resources_used.vmem = 536204kb
+    resources_used.walltime = 357:25:07
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:05:48 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-12/14
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:05:49 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample1_/bending/2slp/2pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:05:48 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13021
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:05:48 2015
+    submit_args = bend1_TLd_2slp_3.pbs
+    start_time = Tue May 26 12:05:49 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 318.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_SS_1slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 373:41:49
+    resources_used.mem = 289528kb
+    resources_used.vmem = 837188kb
+    resources_used.walltime = 357:23:29
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:07:26 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample2_/bending/1slp/1pln_SS_Clamped_2/pbs.out
+    exec_host = compute-0-12/7
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:07:27 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample2_/bending/1slp/1pln_SS_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:07:26 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13229
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:07:26 2015
+    submit_args = bend2_SS_1slp_2.pbs
+    start_time = Tue May 26 12:07:27 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 319.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_SS_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 380:52:01
+    resources_used.mem = 414048kb
+    resources_used.vmem = 812032kb
+    resources_used.walltime = 357:23:20
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:07:35 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample2_/bending/1slp/1pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-12/8
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:07:36 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample2_/bending/1slp/1pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:07:35 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13301
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:07:35 2015
+    submit_args = bend2_SS_1slp_3.pbs
+    start_time = Tue May 26 12:07:36 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 320.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_1slp_1.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 361:41:40
+    resources_used.mem = 95664kb
+    resources_used.vmem = 320992kb
+    resources_used.walltime = 357:23:12
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue May 26 12:07:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/sample2_/bending/1slp/1pln_TLd_Clamped_1/pbs.out
+    exec_host = compute-0-12/9
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue May 26 12:07:44 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/sample2_/bending/1slp/1pln_TLd_Clamped_1/pbs.out
+    Priority = 0
+    qtime = Tue May 26 12:07:43 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 13390
+    Shell_Path_List = /bin/bash
+    etime = Tue May 26 12:07:43 2015
+    submit_args = bend2_TLd_1slp_1.pbs
+    start_time = Tue May 26 12:07:44 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 521.rng.wfw.wtb.tue.nl
+    Job_Name = bend1_TLd_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 162:21:52
+    resources_used.mem = 269436kb
+    resources_used.vmem = 495008kb
+    resources_used.walltime = 162:45:57
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 14:45:25 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample1_/1slp/1pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-18/0
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 14:45:27 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample1_/1slp/1pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 14:45:25 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 30222
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 14:45:25 2015
+    submit_args = bend1_TLd_1slp_3.pbs
+    start_time = Wed Jun  3 14:45:27 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 525.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_2slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 160:38:59
+    resources_used.mem = 117276kb
+    resources_used.vmem = 341580kb
+    resources_used.walltime = 161:50:57
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 15:40:37 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample2_/2slp/2pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-18/1
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 15:40:38 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample2_/2slp/2pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 15:40:37 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 1286
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 15:40:37 2015
+    submit_args = bend2_TLd_2slp_2.pbs
+    start_time = Wed Jun  3 15:40:38 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 526.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_SS_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 161:13:25
+    resources_used.mem = 308928kb
+    resources_used.vmem = 621384kb
+    resources_used.walltime = 161:49:05
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 15:41:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample2_/2slp/2pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-18/2
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 15:41:45 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample2_/2slp/2pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 15:41:43 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 1400
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 15:41:43 2015
+    submit_args = bend2_SS_2slp_3.pbs
+    start_time = Wed Jun  3 15:41:45 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 527.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 162:41:30
+    resources_used.mem = 255940kb
+    resources_used.vmem = 481504kb
+    resources_used.walltime = 161:48:13
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 15:43:10 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample2_/1slp/1pln_TLd_Clamped_3/pbs.out
+    exec_host = compute-0-18/3
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 15:43:11 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample2_/1slp/1pln_TLd_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 15:43:10 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 1529
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 15:43:10 2015
+    submit_args = bend2_TLd_1slp_3.pbs
+    start_time = Wed Jun  3 15:43:11 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 528.rng.wfw.wtb.tue.nl
+    Job_Name = bend3_SS_1slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 160:23:36
+    resources_used.mem = 294496kb
+    resources_used.vmem = 596748kb
+    resources_used.walltime = 161:44:23
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 15:46:26 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample3_/1slp/1pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-18/6
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 15:46:27 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample3_/1slp/1pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 15:46:26 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 1718
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 15:46:26 2015
+    submit_args = bend3_SS_1slp_3.pbs
+    start_time = Wed Jun  3 15:46:27 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 529.rng.wfw.wtb.tue.nl
+    Job_Name = bend3_SS_2slp_3.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 162:13:19
+    resources_used.mem = 303480kb
+    resources_used.vmem = 593240kb
+    resources_used.walltime = 161:42:41
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 15:48:08 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample3_/2slp/2pln_SS_Clamped_3/pbs.out
+    exec_host = compute-0-18/7
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 15:48:09 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample3_/2slp/2pln_SS_Clamped_3/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 15:48:08 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 1845
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 15:48:08 2015
+    submit_args = bend3_SS_2slp_3.pbs
+    start_time = Wed Jun  3 15:48:09 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 535.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_SS_1slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 160:12:50
+    resources_used.mem = 220980kb
+    resources_used.vmem = 549048kb
+    resources_used.walltime = 160:06:13
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 17:24:36 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample1_/1slp/1pln_SS_Clamped_2/pbs.out
+    exec_host = compute-0-18/4
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 17:24:37 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample1_/1slp/1pln_SS_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 17:24:36 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 6564
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 17:24:36 2015
+    submit_args = bend2_SS_1slp_2.pbs
+    start_time = Wed Jun  3 17:24:37 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 536.rng.wfw.wtb.tue.nl
+    Job_Name = bend2_TLd_1slp_2.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 165:10:03
+    resources_used.mem = 144384kb
+    resources_used.vmem = 369740kb
+    resources_used.walltime = 160:06:33
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun  3 17:24:52 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/restart/sample1_/1slp/1pln_TLd_Clamped_2/pbs.out
+    exec_host = compute-0-17/7
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun  3 17:24:53 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/restart/sample1_/1slp/1pln_TLd_Clamped_2/pbs.out
+    Priority = 0
+    qtime = Wed Jun  3 17:24:52 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 799
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun  3 17:24:52 2015
+    submit_args = bend2_TLd_1slp_2.pbs
+    start_time = Wed Jun  3 17:24:53 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 578.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 136:08:24
+    resources_used.mem = 901356kb
+    resources_used.vmem = 976516kb
+    resources_used.walltime = 137:33:18
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Jun  4 15:57:31 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final/output.out
+    exec_host = compute-0-18/13
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Jun  4 15:57:32 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final/output.out
+    Priority = 0
+    qtime = Thu Jun  4 15:57:31 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 29239
+    Shell_Path_List = /bin/bash
+    etime = Thu Jun  4 15:57:31 2015
+    submit_args = Damage_Shear_intSYM_P12.pbs
+    start_time = Thu Jun  4 15:57:32 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 579.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 137:27:45
+    resources_used.mem = 901644kb
+    resources_used.vmem = 976740kb
+    resources_used.walltime = 137:32:41
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Jun  4 15:58:13 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower/output.out
+    exec_host = compute-0-14/11
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Jun  4 15:58:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower/output.out
+    Priority = 0
+    qtime = Thu Jun  4 15:58:13 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 5041
+    Shell_Path_List = /bin/bash
+    etime = Thu Jun  4 15:58:13 2015
+    submit_args = Damage_Shear_intSYM_P12_slow.pbs
+    start_time = Thu Jun  4 15:58:14 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 580.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow_t.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 137:25:14
+    resources_used.mem = 901268kb
+    resources_used.vmem = 976516kb
+    resources_used.walltime = 137:31:20
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Jun  4 15:59:33 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower_tol/output.out
+    exec_host = compute-0-14/13
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Jun  4 15:59:35 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower_tol/output.out
+    Priority = 0
+    qtime = Thu Jun  4 15:59:34 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 5215
+    Shell_Path_List = /bin/bash
+    etime = Thu Jun  4 15:59:34 2015
+    submit_args = Damage_Shear_intSYM_P12_slow_t.pbs
+    start_time = Thu Jun  4 15:59:35 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 598.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P16_DOp.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 135:12:58
+    resources_used.mem = 350728kb
+    resources_used.vmem = 423916kb
+    resources_used.walltime = 136:23:32
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Jun  4 17:07:17 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_16/Op/MP2/output.out
+    exec_host = compute-0-18/12
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Jun  4 17:07:18 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_16/Op/MP2/output.out
+    Priority = 0
+    qtime = Thu Jun  4 17:07:17 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 32447
+    Shell_Path_List = /bin/bash
+    etime = Thu Jun  4 17:07:17 2015
+    submit_args = ECP_MP2_P16_DOp.pbs
+    start_time = Thu Jun  4 17:07:18 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 602.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 135:44:04
+    resources_used.mem = 350672kb
+    resources_used.vmem = 423908kb
+    resources_used.walltime = 136:10:08
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Thu Jun  4 17:21:17 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_finer/Op/MP2/output.out
+    exec_host = compute-0-17/4
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Thu Jun  4 17:21:18 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_finer/Op/MP2/output.out
+    Priority = 0
+    qtime = Thu Jun  4 17:21:17 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 7702
+    Shell_Path_List = /bin/bash
+    etime = Thu Jun  4 17:21:17 2015
+    submit_args = ECP_MP2_P12_DOp.pbs
+    start_time = Thu Jun  4 17:21:18 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 613.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_contSYM_P12_tol2.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 117:15:05
+    resources_used.mem = 284484kb
+    resources_used.vmem = 328764kb
+    resources_used.walltime = 117:43:42
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 11:47:37 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Continuum_Final_tol2/output.out
+    exec_host = compute-0-17/12
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 11:47:38 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Continuum_Final_tol2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 11:47:37 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 19294
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 11:47:37 2015
+    submit_args = Damage_Shear_contSYM_P12_tol2.pbs
+    start_time = Fri Jun  5 11:47:38 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 615.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow_t2.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 116:56:22
+    resources_used.mem = 901352kb
+    resources_used.vmem = 976516kb
+    resources_used.walltime = 117:42:45
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 11:48:11 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower_tol2/output.out
+    exec_host = compute-0-15/5
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 11:48:12 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower_tol2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 11:48:11 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 17003
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 11:48:11 2015
+    submit_args = Damage_Shear_intSYM_P12_slow_t2.pbs
+    start_time = Fri Jun  5 11:48:12 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 621.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_P12_DOp_tol.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:12:42
+    resources_used.mem = 336516kb
+    resources_used.vmem = 409548kb
+    resources_used.walltime = 112:27:51
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:02:58 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps/Op/MP1/output.out
+    exec_host = compute-0-18/10
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:02:59 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps/Op/MP1/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:02:58 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 21956
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:02:58 2015
+    submit_args = ECP_MP1_P12_DOp_tol.pbs
+    start_time = Fri Jun  5 17:02:59 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 622.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp_tol.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 112:25:37
+    resources_used.mem = 350688kb
+    resources_used.vmem = 423904kb
+    resources_used.walltime = 112:28:21
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:03:02 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps/Op/MP2/output.out
+    exec_host = compute-0-15/8
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:03:03 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps/Op/MP2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:03:02 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 28959
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:03:02 2015
+    submit_args = ECP_MP2_P12_DOp_tol.pbs
+    start_time = Fri Jun  5 17:03:03 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 623.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_P12_DOp_tol2.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:40:07
+    resources_used.mem = 336264kb
+    resources_used.vmem = 409552kb
+    resources_used.walltime = 112:25:42
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:05:14 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps2/Op/MP1/output.out
+    exec_host = compute-0-15/11
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:05:15 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps2/Op/MP1/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:05:14 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 29179
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:05:14 2015
+    submit_args = ECP_MP1_P12_DOp_tol2.pbs
+    start_time = Fri Jun  5 17:05:15 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 624.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp_tol2.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:41:29
+    resources_used.mem = 350676kb
+    resources_used.vmem = 423912kb
+    resources_used.walltime = 112:25:39
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:05:17 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps2/Op/MP2/output.out
+    exec_host = compute-0-15/14
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:05:18 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps2/Op/MP2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:05:17 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 29290
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:05:17 2015
+    submit_args = ECP_MP2_P12_DOp_tol2.pbs
+    start_time = Fri Jun  5 17:05:18 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 625.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_contSYM_P12_smstep.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:28:40
+    resources_used.mem = 297196kb
+    resources_used.vmem = 341512kb
+    resources_used.walltime = 111:32:26
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:58:27 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Continuum_Final_smallStep/output.out
+    exec_host = compute-0-14/7
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:58:29 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Continuum_Final_smallStep/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:58:27 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 32386
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:58:27 2015
+    submit_args = Damage_Shear_contSYM_P12_smstep.pbs
+    start_time = Fri Jun  5 17:58:29 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 627.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow_smstep.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:18:48
+    resources_used.mem = 901268kb
+    resources_used.vmem = 976512kb
+    resources_used.walltime = 111:32:04
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 17:58:48 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower_smallStep/output.out
+    exec_host = compute-0-13/3
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 17:58:49 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower_smallStep/output.out
+    Priority = 0
+    qtime = Fri Jun  5 17:58:48 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 882
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 17:58:48 2015
+    submit_args = Damage_Shear_intSYM_P12_slow_smstep.pbs
+    start_time = Fri Jun  5 17:58:49 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 628.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_P12_DOp_fineb.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:16:43
+    resources_used.mem = 336276kb
+    resources_used.vmem = 409548kb
+    resources_used.walltime = 111:28:44
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 18:02:07 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps3b/Op/MP1/output.out
+    exec_host = compute-0-13/12
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 18:02:09 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps3b/Op/MP1/output.out
+    Priority = 0
+    qtime = Fri Jun  5 18:02:07 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 1185
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 18:02:07 2015
+    submit_args = ECP_MP1_P12_DOp_fineb.pbs
+    start_time = Fri Jun  5 18:02:09 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 629.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp_fineb.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:26:25
+    resources_used.mem = 350888kb
+    resources_used.vmem = 423908kb
+    resources_used.walltime = 111:28:41
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 18:02:11 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps3b/Op/MP2/output.out
+    exec_host = compute-0-13/13
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 18:02:12 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps3b/Op/MP2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 18:02:11 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 1296
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 18:02:11 2015
+    submit_args = ECP_MP2_P12_DOp_fineb.pbs
+    start_time = Fri Jun  5 18:02:12 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 630.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp_tol3.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:29:07
+    resources_used.mem = 350880kb
+    resources_used.vmem = 423904kb
+    resources_used.walltime = 111:27:40
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 18:03:15 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps3/Op/MP2/output.out
+    exec_host = compute-0-12/2
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 18:03:16 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps3/Op/MP2/output.out
+    Priority = 0
+    qtime = Fri Jun  5 18:03:15 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 18227
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 18:03:15 2015
+    submit_args = ECP_MP2_P12_DOp_tol3.pbs
+    start_time = Fri Jun  5 18:03:16 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 631.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_P12_DOp_tol3.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 111:29:21
+    resources_used.mem = 336280kb
+    resources_used.vmem = 409552kb
+    resources_used.walltime = 111:27:37
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Fri Jun  5 18:03:18 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps3/Op/MP1/output.out
+    exec_host = compute-0-12/5
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Fri Jun  5 18:03:19 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps3/Op/MP1/output.out
+    Priority = 0
+    qtime = Fri Jun  5 18:03:18 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 18342
+    Shell_Path_List = /bin/bash
+    etime = Fri Jun  5 18:03:18 2015
+    submit_args = ECP_MP1_P12_DOp_tol3.pbs
+    start_time = Fri Jun  5 18:03:19 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 634.rng.wfw.wtb.tue.nl
+    Job_Name = FShear_NOdisl_NPTmin_rel.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 1078:21:41
+    resources_used.mem = 897504kb
+    resources_used.vmem = 2627336kb
+    resources_used.walltime = 67:50:40
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 13:40:45 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/03_SMALL_
+	NPTmin_rel/NO_Dislo_restart/output.out
+    exec_host = compute-0-20/0+compute-0-20/1+compute-0-20/2+compute-0-20/3+co
+	mpute-0-20/4+compute-0-20/5+compute-0-20/6+compute-0-20/7+compute-0-20
+	/8+compute-0-20/9+compute-0-20/10+compute-0-20/11+compute-0-20/12+comp
+	ute-0-20/13+compute-0-20/14+compute-0-20/15
+    exec_port = 15003+15003+15003+15003+15003+15003+15003+15003+15003+15003+15
+	003+15003+15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 13:40:46 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/MD/07_FINAL_SHEAR/03_SMALL
+	_NPTmin_rel/NO_Dislo_restart/output.out
+    Priority = 0
+    qtime = Sun Jun  7 13:40:45 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=16
+    Resource_List.pmem = 1gb
+    session_id = 31255
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 13:40:45 2015
+    submit_args = FShear_NOdisl_NPTmin_rel.pbs
+    start_time = Sun Jun  7 13:40:46 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 637.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_contSYM_P12_tol3.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 63:26:32
+    resources_used.mem = 172316kb
+    resources_used.vmem = 224492kb
+    resources_used.walltime = 64:23:32
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:07:51 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Continuum_Final_tol3/output.out
+    exec_host = compute-0-18/5
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:07:52 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Continuum_Final_tol3/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:07:51 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 32752
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:07:51 2015
+    submit_args = Damage_Shear_contSYM_P12_tol3.pbs
+    start_time = Sun Jun  7 17:07:52 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 638.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_coarse_tol3.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 63:30:16
+    resources_used.mem = 239776kb
+    resources_used.vmem = 313584kb
+    resources_used.walltime = 64:23:28
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:08:06 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_Coarse_tol3/output.out
+    exec_host = compute-0-18/8
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:08:07 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_Coarse_tol3/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:08:06 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 400
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:08:06 2015
+    submit_args = Damage_Shear_intSYM_P12_coarse_tol3.pbs
+    start_time = Sun Jun  7 17:08:07 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 639.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow_t3.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 63:41:14
+    resources_used.mem = 901336kb
+    resources_used.vmem = 976512kb
+    resources_used.walltime = 64:21:51
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:09:49 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower_tol3/output.out
+    exec_host = compute-0-15/15
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:09:51 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower_tol3/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:09:49 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 8504
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:09:49 2015
+    submit_args = Damage_Shear_intSYM_P12_slow_t3.pbs
+    start_time = Sun Jun  7 17:09:51 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 641.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_coarse_tol3b.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 64:19:59
+    resources_used.mem = 283840kb
+    resources_used.vmem = 328040kb
+    resources_used.walltime = 64:19:54
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:11:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_Coarse_tol3b/output.out
+    exec_host = compute-0-13/6
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:11:44 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_Coarse_tol3b/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:11:43 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 10823
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:11:43 2015
+    submit_args = Damage_Shear_intSYM_P12_coarse_tol3b.pbs
+    start_time = Sun Jun  7 17:11:44 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 642.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_contSYM_P12_tol3b.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 64:18:18
+    resources_used.mem = 151348kb
+    resources_used.vmem = 224492kb
+    resources_used.walltime = 64:18:44
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:12:10 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Continuum_Final_tol3b/output.out
+    exec_host = compute-0-14/1
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:12:11 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Continuum_Final_tol3b/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:12:10 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 10956
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:12:10 2015
+    submit_args = Damage_Shear_contSYM_P12_tol3b.pbs
+    start_time = Sun Jun  7 17:12:11 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 643.rng.wfw.wtb.tue.nl
+    Job_Name = Damage_Shear_intSYM_P12_slow_t3b.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 64:18:50
+    resources_used.mem = 901340kb
+    resources_used.vmem = 976508kb
+    resources_used.walltime = 64:17:59
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:12:56 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMMET
+	RY/PAR12/Interrupted_Final_slower_tol3b/output.out
+    exec_host = compute-0-12/6
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:12:57 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Shear_Failure/SYMME
+	TRY/PAR12/Interrupted_Final_slower_tol3b/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:12:56 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 31658
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:12:56 2015
+    submit_args = Damage_Shear_intSYM_P12_slow_t3b.pbs
+    start_time = Sun Jun  7 17:12:57 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 644.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP2_P12_DOp_tol4.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 64:12:39
+    resources_used.mem = 350668kb
+    resources_used.vmem = 423912kb
+    resources_used.walltime = 64:11:46
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:19:54 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps4/Op/MP2/output.out
+    exec_host = compute-0-12/10
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:19:55 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps4/Op/MP2/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:19:54 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 32142
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:19:54 2015
+    submit_args = ECP_MP2_P12_DOp_tol4.pbs
+    start_time = Sun Jun  7 17:19:55 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 645.rng.wfw.wtb.tue.nl
+    Job_Name = ECP_MP1_P12_DOp_tol4.pbs
+    Job_Owner = FMaresca@rng.wfw.wtb.tue.nl
+    resources_used.cput = 64:12:25
+    resources_used.mem = 336492kb
+    resources_used.vmem = 409548kb
+    resources_used.walltime = 64:11:42
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Sun Jun  7 17:19:58 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/NE
+	W_BCs/PAR_12_small_steps4/Op/MP1/output.out
+    exec_host = compute-0-12/11
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun  7 17:19:59 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/FMaresca/Damage/Parameter_Fitting/N
+	EW_BCs/PAR_12_small_steps4/Op/MP1/output.out
+    Priority = 0
+    qtime = Sun Jun  7 17:19:58 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 1gb
+    session_id = 32255
+    Shell_Path_List = /bin/bash
+    etime = Sun Jun  7 17:19:58 2015
+    submit_args = ECP_MP1_P12_DOp_tol4.pbs
+    start_time = Sun Jun  7 17:19:59 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 681.rng.wfw.wtb.tue.nl
+    Job_Name = TLd.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 12:36:01
+    resources_used.mem = 118404kb
+    resources_used.vmem = 343672kb
+    resources_used.walltime = 15:21:30
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 18:09:18 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/Cons_2/FS_0.5_1/pbs.out
+    exec_host = compute-0-18/11
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jun  9 18:09:20 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/Cons_2/FS_0.5_1/pbs.out
+    Priority = 0
+    qtime = Tue Jun  9 18:09:18 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 15871
+    Shell_Path_List = /bin/bash
+    etime = Tue Jun  9 18:09:18 2015
+    submit_args = TLd.pbs
+    start_time = Tue Jun  9 18:09:20 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 682.rng.wfw.wtb.tue.nl
+    Job_Name = TLd.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 14:22:03
+    resources_used.mem = 98296kb
+    resources_used.vmem = 323568kb
+    resources_used.walltime = 15:22:02
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 18:09:32 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/Cons_2/FS_0.5_2/pbs.out
+    exec_host = compute-0-18/14
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jun  9 18:09:33 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/Cons_2/FS_0.5_2/pbs.out
+    Priority = 0
+    qtime = Tue Jun  9 18:09:32 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 15946
+    Shell_Path_List = /bin/bash
+    etime = Tue Jun  9 18:09:32 2015
+    submit_args = TLd.pbs
+    start_time = Tue Jun  9 18:09:33 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 683.rng.wfw.wtb.tue.nl
+    Job_Name = TLd.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 15:06:36
+    resources_used.mem = 105888kb
+    resources_used.vmem = 331148kb
+    resources_used.walltime = 15:20:57
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 18:09:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/Cons_2/FS_0.5_3/pbs.out
+    exec_host = compute-0-17/11
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jun  9 18:09:44 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/Cons_2/FS_0.5_3/pbs.out
+    Priority = 0
+    qtime = Tue Jun  9 18:09:43 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 632
+    Shell_Path_List = /bin/bash
+    etime = Tue Jun  9 18:09:43 2015
+    submit_args = TLd.pbs
+    start_time = Tue Jun  9 18:09:44 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 685.rng.wfw.wtb.tue.nl
+    Job_Name = TLd.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 15:11:05
+    resources_used.mem = 118160kb
+    resources_used.vmem = 342972kb
+    resources_used.walltime = 15:20:49
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 18:10:07 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/Cons_2/FS_1.0_2/pbs.out
+    exec_host = compute-0-15/0
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jun  9 18:10:08 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/Cons_2/FS_1.0_2/pbs.out
+    Priority = 0
+    qtime = Tue Jun  9 18:10:07 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 24023
+    Shell_Path_List = /bin/bash
+    etime = Tue Jun  9 18:10:07 2015
+    submit_args = TLd.pbs
+    start_time = Tue Jun  9 18:10:08 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 686.rng.wfw.wtb.tue.nl
+    Job_Name = TLd.pbs
+    Job_Owner = nirani@rng.wfw.wtb.tue.nl
+    resources_used.cput = 15:17:38
+    resources_used.mem = 133896kb
+    resources_used.vmem = 359068kb
+    resources_used.walltime = 15:20:43
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 18:10:13 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_st
+	atic/disloc/Cons_2/FS_1.0_3/pbs.out
+    exec_host = compute-0-15/1
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Tue Jun  9 18:10:14 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/nirani/Source/dawn/examples/quasi_s
+	tatic/disloc/Cons_2/FS_1.0_3/pbs.out
+    Priority = 0
+    qtime = Tue Jun  9 18:10:13 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    Resource_List.pmem = 3gb
+    Resource_List.pvmem = 3gb
+    session_id = 24112
+    Shell_Path_List = /bin/bash
+    etime = Tue Jun  9 18:10:13 2015
+    submit_args = TLd.pbs
+    start_time = Tue Jun  9 18:10:14 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 687.rng.wfw.wtb.tue.nl
+    Job_Name = TestLinSPS.pbs
+    Job_Owner = maxime@rng.wfw.wtb.tue.nl
+    resources_used.cput = 47:25:12
+    resources_used.mem = 685752kb
+    resources_used.vmem = 3029888kb
+    resources_used.walltime = 11:52:10
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 21:38:45 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_SPs/T
+	ESTLINSPS
+    exec_host = compute-0-15/3+compute-0-15/4+compute-0-15/6+compute-0-15/7
+    exec_port = 15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = ae
+    Mail_Users = m.delhorme@tue.nl
+    mtime = Tue Jun  9 21:38:47 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_SPs/
+	TESTLINSPS
+    Priority = 0
+    qtime = Tue Jun  9 21:38:45 2015
+    Rerunable = False
+    Resource_List.mem = 6gb
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=4
+    session_id = 32377
+    Shell_Path_List = /bin/ksh
+    etime = Tue Jun  9 21:38:45 2015
+    submit_args = script-furnace.pbs
+    start_time = Tue Jun  9 21:38:47 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 688.rng.wfw.wtb.tue.nl
+    Job_Name = TestLinStep.pbs
+    Job_Owner = maxime@rng.wfw.wtb.tue.nl
+    resources_used.cput = 47:19:37
+    resources_used.mem = 702916kb
+    resources_used.vmem = 3056804kb
+    resources_used.walltime = 11:50:54
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 21:40:02 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_STEP/
+	TESTLINStep
+    exec_host = compute-0-15/9+compute-0-15/10+compute-0-15/12+compute-0-15/13
+	
+    exec_port = 15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = ae
+    Mail_Users = m.delhorme@tue.nl
+    mtime = Tue Jun  9 21:40:03 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_STEP
+	/TESTLINStep
+    Priority = 0
+    qtime = Tue Jun  9 21:40:02 2015
+    Rerunable = False
+    Resource_List.mem = 6gb
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=4
+    session_id = 32506
+    Shell_Path_List = /bin/ksh
+    etime = Tue Jun  9 21:40:02 2015
+    submit_args = script-furnace.pbs
+    start_time = Tue Jun  9 21:40:03 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 689.rng.wfw.wtb.tue.nl
+    Job_Name = TestLinNoDef.pbs
+    Job_Owner = maxime@rng.wfw.wtb.tue.nl
+    resources_used.cput = 46:12:35
+    resources_used.mem = 688076kb
+    resources_used.vmem = 3028284kb
+    resources_used.walltime = 11:32:56
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Tue Jun  9 21:58:43 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_NoDef
+	/TESTLINNoDef
+    exec_host = compute-0-14/0+compute-0-14/2+compute-0-14/3+compute-0-14/5
+    exec_port = 15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = ae
+    Mail_Users = m.delhorme@tue.nl
+    mtime = Tue Jun  9 21:58:44 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/maxime/DIMW_MAXIME/TEST_LINMIN_NoDe
+	f/TESTLINNoDef
+    Priority = 0
+    qtime = Tue Jun  9 21:58:43 2015
+    Rerunable = False
+    Resource_List.mem = 6gb
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=4
+    session_id = 3107
+    Shell_Path_List = /bin/ksh
+    etime = Tue Jun  9 21:58:43 2015
+    submit_args = script-furnace.pbs
+    start_time = Tue Jun  9 21:58:44 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 690.rng.wfw.wtb.tue.nl
+    Job_Name = job.pbs
+    Job_Owner = tdegeus@rng.wfw.wtb.tue.nl
+    resources_used.cput = 00:07:10
+    resources_used.mem = 1397988kb
+    resources_used.vmem = 1635292kb
+    resources_used.walltime = 00:07:13
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun 10 09:24:06 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/tdegeus/paper1403/new/plastic/pbs.ou
+	t
+    exec_host = compute-0-17/0
+    exec_port = 15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Wed Jun 10 09:24:07 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/tdegeus/paper1403/new/plastic/pbs.o
+	ut
+    Priority = 0
+    qtime = Wed Jun 10 09:24:06 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=1
+    session_id = 4383
+    Shell_Path_List = /bin/bash
+    Variable_List = PBS_O_QUEUE=default,PBS_O_HOME=/home/tdegeus,
+	PBS_O_LOGNAME=tdegeus,
+	PBS_O_PATH=/home/tdegeus/lib/bin:/share/apps/extra/python/bin/:/opt/o
+	penmpi/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/loc
+	al/sbin:/usr/sbin:/sbin:/opt/bio/ncbi/bin:/opt/bio/mpiblast/bin:/opt/b
+	io/EMBOSS/bin:/opt/bio/clustalw/bin:/opt/bio/tcoffee/bin:/opt/bio/hmme
+	r/bin:/opt/bio/phylip/exe:/opt/bio/mrbayes:/opt/bio/fasta:/opt/bio/gli
+	mmer/bin:/opt/bio/glimmer/scripts:/opt/bio/gromacs/bin:/opt/bio/gmap/b
+	in:/opt/bio/tigr/bin:/opt/bio/autodocksuite/bin:/opt/bio/wgs/bin:/opt/
+	eclipse:/opt/ganglia/bin:/opt/ganglia/sbin:/usr/java/latest/bin:/opt/m
+	aven/bin:/opt/maui/bin:/opt/torque/bin:/opt/torque/sbin:/opt/pdsh/bin:
+	/opt/rocks/bin:/opt/rocks/sbin:/home/tdegeus/bin,
+	PBS_O_MAIL=/var/spool/mail/tdegeus,PBS_O_SHELL=/bin/bash,
+	PBS_O_LANG=en_US.UTF-8,
+	PBS_O_WORKDIR=/home/tdegeus/paper1403/new/plastic,
+	PBS_O_HOST=rng.wfw.wtb.tue.nl,PBS_O_SERVER=rng.wfw.wtb.tue.nl
+    etime = Wed Jun 10 09:24:06 2015
+    submit_args = job.pbs
+    start_time = Wed Jun 10 09:24:07 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+
+Job Id: 691.rng.wfw.wtb.tue.nl
+    Job_Name = 30_layers_pbc_xy
+    Job_Owner = jim@rng.wfw.wtb.tue.nl
+    resources_used.cput = 00:39:49
+    resources_used.mem = 58201492kb
+    resources_used.vmem = 66863476kb
+    resources_used.walltime = 00:05:35
+    job_state = R
+    queue = default
+    server = rng.wfw.wtb.tue.nl
+    Checkpoint = u
+    ctime = Wed Jun 10 09:24:54 2015
+    Error_Path = rng.wfw.wtb.tue.nl:/home/jim/abaqus/3D/pbc_xy/30_layers_pbc_x
+	y/30_layers_pbc_xy.out
+    exec_host = compute-0-11/0+compute-0-11/1+compute-0-11/2+compute-0-11/3+co
+	mpute-0-11/4+compute-0-11/5+compute-0-11/6+compute-0-11/7+compute-0-11
+	/8+compute-0-11/9+compute-0-11/10+compute-0-11/11+compute-0-11/12+comp
+	ute-0-11/13+compute-0-11/14+compute-0-11/15
+    exec_port = 15003+15003+15003+15003+15003+15003+15003+15003+15003+15003+15
+	003+15003+15003+15003+15003+15003
+    Hold_Types = n
+    Join_Path = oe
+    Keep_Files = n
+    Mail_Points = abe
+    Mail_Users = j.m.j.schormans@tue.nl
+    mtime = Wed Jun 10 09:24:55 2015
+    Output_Path = rng.wfw.wtb.tue.nl:/home/jim/abaqus/3D/pbc_xy/30_layers_pbc_
+	xy/30_layers_pbc_xy.out
+    Priority = 0
+    qtime = Wed Jun 10 09:24:54 2015
+    Rerunable = True
+    Resource_List.nodect = 1
+    Resource_List.nodes = 1:ppn=16
+    session_id = 30331
+    Shell_Path_List = /bin/bash
+    etime = Wed Jun 10 09:24:54 2015
+    submit_args = 30_layers_pbc_xy.pbs
+    start_time = Wed Jun 10 09:24:55 2015
+    start_count = 1
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = rng.wfw.wtb.tue.nl
+

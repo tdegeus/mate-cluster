@@ -1,0 +1,186 @@
+compute-0-0
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921494,varattr=,jobs=,state=free,netload=10498711356,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328340700kb,totmem=330090016kb,idletime=6707984,nusers=0,nsessions=0,uname=Linux compute-0-0.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-1
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921474,varattr=,jobs=,state=free,netload=25677329758,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328355636kb,totmem=330090016kb,idletime=6458116,nusers=0,nsessions=0,uname=Linux compute-0-1.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-2
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921476,varattr=,jobs=,state=free,netload=7866772102,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328365928kb,totmem=330090016kb,idletime=771769,nusers=0,nsessions=0,uname=Linux compute-0-2.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-3
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921458,varattr=,jobs=,state=free,netload=14588675421,gres=,loadave=1.00,ncpus=16,physmem=264554024kb,availmem=328353716kb,totmem=330090016kb,idletime=6455473,nusers=0,nsessions=0,uname=Linux compute-0-3.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-4
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921463,varattr=,jobs=,state=free,netload=114811030263,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328344148kb,totmem=330090016kb,idletime=5350163,nusers=0,nsessions=0,uname=Linux compute-0-4.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-5
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921478,varattr=,jobs=,state=free,netload=73451546338,gres=,loadave=1.00,ncpus=16,physmem=264554024kb,availmem=328345668kb,totmem=330090016kb,idletime=5333925,nusers=0,nsessions=0,uname=Linux compute-0-5.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-6
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921465,varattr=,jobs=,state=free,netload=14351772264,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328350916kb,totmem=330090016kb,idletime=5330924,nusers=0,nsessions=0,uname=Linux compute-0-6.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-7
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921473,varattr=,jobs=,state=free,netload=19835579019,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328328484kb,totmem=330090016kb,idletime=4993929,nusers=0,nsessions=0,uname=Linux compute-0-7.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-8
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921459,varattr=,jobs=,state=free,netload=70006509575,gres=,loadave=0.00,ncpus=16,physmem=264554032kb,availmem=328334056kb,totmem=330090024kb,idletime=4911310,nusers=0,nsessions=0,uname=Linux compute-0-8.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-9
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921494,varattr=,jobs=,state=free,netload=43810679811,gres=,loadave=0.00,ncpus=16,physmem=264554020kb,availmem=328362568kb,totmem=330090012kb,idletime=2022052,nusers=0,nsessions=0,uname=Linux compute-0-9.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-10
+     state = free
+     np = 16
+     ntype = cluster
+     status = rectime=1433921467,varattr=,jobs=,state=free,netload=41799804105,gres=,loadave=0.00,ncpus=16,physmem=264554024kb,availmem=328323160kb,totmem=330090016kb,idletime=4981731,nusers=0,nsessions=0,uname=Linux compute-0-10.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-11
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 0/691.rng.wfw.wtb.tue.nl,1/691.rng.wfw.wtb.tue.nl,2/691.rng.wfw.wtb.tue.nl,3/691.rng.wfw.wtb.tue.nl,4/691.rng.wfw.wtb.tue.nl,5/691.rng.wfw.wtb.tue.nl,6/691.rng.wfw.wtb.tue.nl,7/691.rng.wfw.wtb.tue.nl,8/691.rng.wfw.wtb.tue.nl,9/691.rng.wfw.wtb.tue.nl,10/691.rng.wfw.wtb.tue.nl,11/691.rng.wfw.wtb.tue.nl,12/691.rng.wfw.wtb.tue.nl,13/691.rng.wfw.wtb.tue.nl,14/691.rng.wfw.wtb.tue.nl,15/691.rng.wfw.wtb.tue.nl
+     status = rectime=1433921474,varattr=,jobs=691.rng.wfw.wtb.tue.nl,state=free,netload=59949402774,gres=,loadave=1.28,ncpus=16,physmem=264554024kb,availmem=269939052kb,totmem=330090016kb,idletime=4981510,nusers=1,nsessions=1,sessions=30331,uname=Linux compute-0-11.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-12
+     state = free
+     np = 16
+     ntype = cluster
+     jobs = 14/316.rng.wfw.wtb.tue.nl,7/318.rng.wfw.wtb.tue.nl,8/319.rng.wfw.wtb.tue.nl,9/320.rng.wfw.wtb.tue.nl,2/630.rng.wfw.wtb.tue.nl,5/631.rng.wfw.wtb.tue.nl,6/643.rng.wfw.wtb.tue.nl,10/644.rng.wfw.wtb.tue.nl,11/645.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=316.rng.wfw.wtb.tue.nl 318.rng.wfw.wtb.tue.nl 319.rng.wfw.wtb.tue.nl 320.rng.wfw.wtb.tue.nl 630.rng.wfw.wtb.tue.nl 631.rng.wfw.wtb.tue.nl 643.rng.wfw.wtb.tue.nl 644.rng.wfw.wtb.tue.nl 645.rng.wfw.wtb.tue.nl,state=free,netload=62574183260,gres=,loadave=8.79,ncpus=16,physmem=264554032kb,availmem=324011932kb,totmem=330090024kb,idletime=424306,nusers=2,nsessions=9,sessions=13021 13229 13301 13390 18227 18342 31658 32142 32255,uname=Linux compute-0-12.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-13
+     state = free
+     np = 16
+     ntype = cluster
+     jobs = 9/314.rng.wfw.wtb.tue.nl,15/315.rng.wfw.wtb.tue.nl,3/627.rng.wfw.wtb.tue.nl,12/628.rng.wfw.wtb.tue.nl,13/629.rng.wfw.wtb.tue.nl,6/641.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=314.rng.wfw.wtb.tue.nl 315.rng.wfw.wtb.tue.nl 627.rng.wfw.wtb.tue.nl 628.rng.wfw.wtb.tue.nl 629.rng.wfw.wtb.tue.nl 641.rng.wfw.wtb.tue.nl,state=free,netload=94879508740,gres=,loadave=6.92,ncpus=16,physmem=264554032kb,availmem=325069920kb,totmem=330090024kb,idletime=82469,nusers=2,nsessions=6,sessions=882 1185 1296 10823 11172 11247,uname=Linux compute-0-13.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-14
+     state = free
+     np = 16
+     ntype = cluster
+     jobs = 4/312.rng.wfw.wtb.tue.nl,10/313.rng.wfw.wtb.tue.nl,11/579.rng.wfw.wtb.tue.nl,13/580.rng.wfw.wtb.tue.nl,7/625.rng.wfw.wtb.tue.nl,1/642.rng.wfw.wtb.tue.nl,0/689.rng.wfw.wtb.tue.nl,2/689.rng.wfw.wtb.tue.nl,3/689.rng.wfw.wtb.tue.nl,5/689.rng.wfw.wtb.tue.nl
+     status = rectime=1433921499,varattr=,jobs=312.rng.wfw.wtb.tue.nl 313.rng.wfw.wtb.tue.nl 579.rng.wfw.wtb.tue.nl 580.rng.wfw.wtb.tue.nl 625.rng.wfw.wtb.tue.nl 642.rng.wfw.wtb.tue.nl 689.rng.wfw.wtb.tue.nl,state=free,netload=646536130722,gres=,loadave=9.98,ncpus=16,physmem=264554024kb,availmem=322458964kb,totmem=330090016kb,idletime=41448,nusers=3,nsessions=8,sessions=3107 3276 5041 5215 10956 12392 12482 32386,uname=Linux compute-0-14.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-15
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 2/310.rng.wfw.wtb.tue.nl,5/615.rng.wfw.wtb.tue.nl,8/622.rng.wfw.wtb.tue.nl,11/623.rng.wfw.wtb.tue.nl,14/624.rng.wfw.wtb.tue.nl,15/639.rng.wfw.wtb.tue.nl,0/685.rng.wfw.wtb.tue.nl,1/686.rng.wfw.wtb.tue.nl,3/687.rng.wfw.wtb.tue.nl,4/687.rng.wfw.wtb.tue.nl,6/687.rng.wfw.wtb.tue.nl,7/687.rng.wfw.wtb.tue.nl,9/688.rng.wfw.wtb.tue.nl,10/688.rng.wfw.wtb.tue.nl,12/688.rng.wfw.wtb.tue.nl,13/688.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=310.rng.wfw.wtb.tue.nl 615.rng.wfw.wtb.tue.nl 622.rng.wfw.wtb.tue.nl 623.rng.wfw.wtb.tue.nl 624.rng.wfw.wtb.tue.nl 639.rng.wfw.wtb.tue.nl 685.rng.wfw.wtb.tue.nl 686.rng.wfw.wtb.tue.nl 687.rng.wfw.wtb.tue.nl 688.rng.wfw.wtb.tue.nl,state=free,netload=540524143011,gres=,loadave=15.97,ncpus=16,physmem=264554032kb,availmem=320364032kb,totmem=330090024kb,idletime=3439783,nusers=3,nsessions=10,sessions=5053 8504 17003 24023 24112 28959 29179 29290 32377 32506,uname=Linux compute-0-15.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-16
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 0/149.rng.wfw.wtb.tue.nl,1/149.rng.wfw.wtb.tue.nl,2/149.rng.wfw.wtb.tue.nl,3/149.rng.wfw.wtb.tue.nl,4/149.rng.wfw.wtb.tue.nl,5/149.rng.wfw.wtb.tue.nl,6/149.rng.wfw.wtb.tue.nl,7/149.rng.wfw.wtb.tue.nl,8/149.rng.wfw.wtb.tue.nl,9/149.rng.wfw.wtb.tue.nl,10/149.rng.wfw.wtb.tue.nl,11/149.rng.wfw.wtb.tue.nl,12/149.rng.wfw.wtb.tue.nl,13/149.rng.wfw.wtb.tue.nl,14/149.rng.wfw.wtb.tue.nl,15/149.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=149.rng.wfw.wtb.tue.nl,state=free,netload=8404925038,gres=,loadave=16.12,ncpus=16,physmem=264554116kb,availmem=327315500kb,totmem=330090108kb,idletime=172532,nusers=1,nsessions=1,sessions=23934,uname=Linux compute-0-16.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-17
+     state = free
+     np = 16
+     ntype = cluster
+     jobs = 1/198.rng.wfw.wtb.tue.nl,3/199.rng.wfw.wtb.tue.nl,13/204.rng.wfw.wtb.tue.nl,14/205.rng.wfw.wtb.tue.nl,5/306.rng.wfw.wtb.tue.nl,8/308.rng.wfw.wtb.tue.nl,7/536.rng.wfw.wtb.tue.nl,4/602.rng.wfw.wtb.tue.nl,12/613.rng.wfw.wtb.tue.nl,11/683.rng.wfw.wtb.tue.nl,0/690.rng.wfw.wtb.tue.nl
+     status = rectime=1433921486,varattr=,jobs=198.rng.wfw.wtb.tue.nl 199.rng.wfw.wtb.tue.nl 204.rng.wfw.wtb.tue.nl 205.rng.wfw.wtb.tue.nl 306.rng.wfw.wtb.tue.nl 308.rng.wfw.wtb.tue.nl 536.rng.wfw.wtb.tue.nl 602.rng.wfw.wtb.tue.nl 613.rng.wfw.wtb.tue.nl 683.rng.wfw.wtb.tue.nl 690.rng.wfw.wtb.tue.nl,state=free,netload=367633984392,gres=,loadave=11.81,ncpus=16,physmem=264554096kb,availmem=323068428kb,totmem=330090088kb,idletime=232888,nusers=3,nsessions=11,sessions=632 799 4383 7702 13462 13537 13955 14027 19294 28607 28769,uname=Linux compute-0-17.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-18
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 15/105.rng.wfw.wtb.tue.nl,9/193.rng.wfw.wtb.tue.nl,0/521.rng.wfw.wtb.tue.nl,1/525.rng.wfw.wtb.tue.nl,2/526.rng.wfw.wtb.tue.nl,3/527.rng.wfw.wtb.tue.nl,6/528.rng.wfw.wtb.tue.nl,7/529.rng.wfw.wtb.tue.nl,4/535.rng.wfw.wtb.tue.nl,13/578.rng.wfw.wtb.tue.nl,12/598.rng.wfw.wtb.tue.nl,10/621.rng.wfw.wtb.tue.nl,5/637.rng.wfw.wtb.tue.nl,8/638.rng.wfw.wtb.tue.nl,11/681.rng.wfw.wtb.tue.nl,14/682.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=105.rng.wfw.wtb.tue.nl 193.rng.wfw.wtb.tue.nl 521.rng.wfw.wtb.tue.nl 525.rng.wfw.wtb.tue.nl 526.rng.wfw.wtb.tue.nl 527.rng.wfw.wtb.tue.nl 528.rng.wfw.wtb.tue.nl 529.rng.wfw.wtb.tue.nl 535.rng.wfw.wtb.tue.nl 578.rng.wfw.wtb.tue.nl 598.rng.wfw.wtb.tue.nl 621.rng.wfw.wtb.tue.nl 637.rng.wfw.wtb.tue.nl 638.rng.wfw.wtb.tue.nl 681.rng.wfw.wtb.tue.nl 682.rng.wfw.wtb.tue.nl,state=free,netload=291741084787,gres=,loadave=17.00,ncpus=16,physmem=264554116kb,availmem=320784992kb,totmem=330090108kb,idletime=41574,nusers=2,nsessions=16,sessions=32752 400 1286 1400 1529 1718 1845 2158 6564 15871 15946 19791 21956 29239 30222 32447,uname=Linux compute-0-18.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-19
+     state = down
+     np = 16
+     ntype = cluster
+     status = rectime=1432371414,varattr=,jobs=170.rng.wfw.wtb.tue.nl 171.rng.wfw.wtb.tue.nl 172.rng.wfw.wtb.tue.nl 173.rng.wfw.wtb.tue.nl 174.rng.wfw.wtb.tue.nl 175.rng.wfw.wtb.tue.nl 176.rng.wfw.wtb.tue.nl 177.rng.wfw.wtb.tue.nl 178.rng.wfw.wtb.tue.nl 179.rng.wfw.wtb.tue.nl 180.rng.wfw.wtb.tue.nl 181.rng.wfw.wtb.tue.nl 182.rng.wfw.wtb.tue.nl 183.rng.wfw.wtb.tue.nl 184.rng.wfw.wtb.tue.nl 185.rng.wfw.wtb.tue.nl,state=free,netload=14759323803,gres=,loadave=16.12,ncpus=16,physmem=264554116kb,availmem=325591776kb,totmem=330090108kb,idletime=161690,nusers=1,nsessions=16,sessions=7359 7448 7537 7609 7682 7754 7861 7936 8008 8083 8156 8244 8354 8427 8515 8587,uname=Linux compute-0-19.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-20
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 0/634.rng.wfw.wtb.tue.nl,1/634.rng.wfw.wtb.tue.nl,2/634.rng.wfw.wtb.tue.nl,3/634.rng.wfw.wtb.tue.nl,4/634.rng.wfw.wtb.tue.nl,5/634.rng.wfw.wtb.tue.nl,6/634.rng.wfw.wtb.tue.nl,7/634.rng.wfw.wtb.tue.nl,8/634.rng.wfw.wtb.tue.nl,9/634.rng.wfw.wtb.tue.nl,10/634.rng.wfw.wtb.tue.nl,11/634.rng.wfw.wtb.tue.nl,12/634.rng.wfw.wtb.tue.nl,13/634.rng.wfw.wtb.tue.nl,14/634.rng.wfw.wtb.tue.nl,15/634.rng.wfw.wtb.tue.nl
+     status = rectime=1433921485,varattr=,jobs=634.rng.wfw.wtb.tue.nl,state=free,netload=23559513509,gres=,loadave=16.00,ncpus=16,physmem=264554032kb,availmem=327447552kb,totmem=330090024kb,idletime=243225,nusers=1,nsessions=1,sessions=31255,uname=Linux compute-0-20.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+
+compute-0-21
+     state = job-exclusive
+     np = 16
+     ntype = cluster
+     jobs = 0/148.rng.wfw.wtb.tue.nl,1/148.rng.wfw.wtb.tue.nl,2/148.rng.wfw.wtb.tue.nl,3/148.rng.wfw.wtb.tue.nl,4/148.rng.wfw.wtb.tue.nl,5/148.rng.wfw.wtb.tue.nl,6/148.rng.wfw.wtb.tue.nl,7/148.rng.wfw.wtb.tue.nl,8/148.rng.wfw.wtb.tue.nl,9/148.rng.wfw.wtb.tue.nl,10/148.rng.wfw.wtb.tue.nl,11/148.rng.wfw.wtb.tue.nl,12/148.rng.wfw.wtb.tue.nl,13/148.rng.wfw.wtb.tue.nl,14/148.rng.wfw.wtb.tue.nl,15/148.rng.wfw.wtb.tue.nl
+     status = rectime=1433921484,varattr=,jobs=148.rng.wfw.wtb.tue.nl,state=free,netload=7000777955,gres=,loadave=16.00,ncpus=16,physmem=264554020kb,availmem=327288448kb,totmem=330090012kb,idletime=770965,nusers=1,nsessions=1,sessions=915,uname=Linux compute-0-21.local 2.6.32-431.11.2.el6.x86_64 #1 SMP Tue Mar 25 19:59:55 UTC 2014 x86_64,opsys=linux
+     mom_service_port = 15002
+     mom_manager_port = 15003
+

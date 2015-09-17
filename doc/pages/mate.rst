@@ -19,8 +19,6 @@ MaTe clusters
 
     - `MaTeCluster@tue.nl <MaTeCluster@tue.nl>`_
 
-  * For questions concerning a specific programming language, other :ref:`page-people` can be consulted.
-
 
 There are several clusters available in the MaTe group, and many more will come at some point after writing this document. Therefore, this manual uses the ``furnace`` cluster as an example. The ``furnace`` cluster consists of the following resources:
 
@@ -54,7 +52,7 @@ Basic cluster layout
 
 The basic layout of a cluster is shown in the image below. The cluster consists of a *head-node* and several *compute-nodes*. The head-node is the "computer" you log in to from your own PC. From the head-node, jobs are distributed to the compute-nodes by a scheduler: the *queuing system*. The scheduler sends the job to a compute-node when a free spot with the requested resources is available. Running a job thus corresponds to submitting a special (Bash-)script to the scheduler. You don't know a-priori when, or on which compute-node, your job will be handled.
 
-.. figure:: images/cluster.svg
+.. figure:: ../images/cluster.svg
   :width: 500 px
   :align: center
   :alt: cluster architecture: head-node and compute-nodes
@@ -91,22 +89,22 @@ Connecting
 
 To log-in to the cluster, open the software (either the SSH Secure Shell Client or the SSH Secure File Transfer Client) and hit the *Quick Connect* button.
 
-.. image:: images/cm1.png
+.. image:: ../images/cm1.png
   :width: 500 px
 
 In the pop-up menu the *Host Name* and the *User Name* should be set, then press *Connect*.
 
-.. image:: images/cm2.png
+.. image:: ../images/cm2.png
   :width: 500 px
 
 The first time, the software asks to confirm that this computer you are connecting to is the one you expect, confirm the question with *Yes*.
 
-.. image:: images/cm3.png
+.. image:: ../images/cm3.png
   :width: 500 px
 
 Finally enter your password
 
-.. image:: images/cm4.png
+.. image:: ../images/cm4.png
   :width: 500 px
 
 File transfer
@@ -114,7 +112,7 @@ File transfer
 
 The SSH-Client comes with two window types the SSH Secure Shell Client or the SSH Secure File Transfer Client. The Shell Client is useful for running commands on the cluster, i.e. as a Command Line Interface. The Transfer Client is useful to copy files between your computer and the cluster. Moreover, these two windows can be quickly accessed from the two buttons in the toolbar:
 
-.. image:: images/cm5.png
+.. image:: ../images/cm5.png
   :width: 500 px
 
 Disconnecting
@@ -122,7 +120,7 @@ Disconnecting
 
 Note the *disconnect* button in the toolbar.
 
-.. image:: images/cm6.png
+.. image:: ../images/cm6.png
   :width: 500 px
 
 .. note::
@@ -217,15 +215,15 @@ Here, some basic examples are given to edit files/scripts, often located on the 
 
      [username@furnace ~]$  nano myfile.txt
 
-   .. image:: images/cm7.png
+   .. image:: ../images/cm7.png
      :width: 500 px
 
    When done, press ``Ctrl-X`` to exit, upon which the program ask to save the changes (``Y``) or not (``N``)
 
-   .. image:: images/cm8.png
+   .. image:: ../images/cm8.png
      :width: 500 px
 
-   .. image:: images/cm9.png
+   .. image:: ../images/cm9.png
      :width: 500 px
 
 

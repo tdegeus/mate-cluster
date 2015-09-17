@@ -6,20 +6,13 @@
   Add ``pmem`` and ``pvmem`` options at the language specific scripts.
 
 
-.. topic:: Updates
-
-  * :ref:`tips-downloads`
-
-  * :ref:`page-people`
-
 .. topic:: Disclaimer
 
    Any questions, suggestions, additions, comments, bugs, etc. are most welcome. Please contact us (MaTeCluster@tue.nl). Or directly:
 
-   * Bart Vossen, b.g.vossen@tue.nl, GEM-Z 4.21
-   * Jeroen van Beeck, j.v.beeck@tue.nl, GEM-Z 4.09
    * Leo Wouters, l.h.g.wouters@tue.nl, GEM-Z 4.17
    * Tom de Geus, t.w.j.d.geus@tue.nl, GEM-Z 4.21
+   * Jim Schormans, j.m.j.schormans@tue.nl, GEM-Z 4.13
 
    The content presented here is meant as example, some adaptation to a specific application is usually needed. We take no responsibility for the loss of data or damage caused by using any of the matter discussed here.
 
@@ -34,12 +27,12 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   mate.rst
-   queuing.rst
-   etiquette.rst
-   tips.rst
-   linux_bash.rst
-   languages.rst
+   pages/mate.rst
+   pages/queuing.rst
+   pages/etiquette.rst
+   pages/tips.rst
+   pages/linux_bash.rst
+   pages/languages.rst
 
 ==================
 Indices and tables
@@ -47,16 +40,6 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`search`
-
-========
-Appendix
-========
-
-.. toctree::
-   :maxdepth: 1
-
-   people.rst
-   gpbs.rst
 
 ===============
 Acknowledgement

@@ -127,18 +127,30 @@ Calculate the column width based on the content and the window size.
   # calculate field size
   # --------------------
 
+  # list columns to include
+  include = []
+
   # calculate the (maximum) width of the header and the body for each column
-  for column in columns:
+  for icol,column in enumerate(columns):
     # header
     column['whead'] = len(column['head'])
     # body (the rows with data)
     wmax = 0
+    emax = 0
     for row in rows:
-      wmax = max(wmax,len(row[column['key']]))
+      wmax = max(wmax,len(row[column['key']]        ))
+      emax = max(emax,len(row[column['key']].strip()))
     # set column with as maximum of the header/body
     column['wmax' ] = max(wmax,column['whead'])
     column['width'] = max(wmax,column['whead'])
+    # check if information is present
+    if emax:
+      include.append(icol)
 
+  # remove empty columns
+  columns = [column for col,column in enumerate(columns) if col in include]
+
+  # return if nothing has to be done
   if not fit_screen:
     return columns
 
@@ -174,7 +186,7 @@ Calculate the column width based on the content and the window size.
   # delete fields that are no longer included, and update the list of fields
   # in order of importance
   if len(include)!=len(cols):
-    columns   = [column for col,column in enumerate(columns) if col in include]
+    columns = [column for col,column in enumerate(columns) if col in include]
 
   # extend each of the columns as far as needed, maximum to the screen width
   # ------------------------------------------------------------------------
@@ -504,11 +516,11 @@ Print the output for the ``myqstat -N`` command.
         free    += [cfmt%(sum([node.cpufree           for node in nodes if node.ctype==ctype and node.state     in ['free','job-exclusive']]),ctype)]
 
     # convert to text
-    total   = 'number of CPUs total    : '+total  [0]+' ( '+' / '.join(total  [1:])+' )'
-    offline = 'number of CPUs offline  : '+offline[0]+' ( '+' / '.join(offline[1:])+' )'
-    online  = 'number of CPUs online   : '+online [0]+' ( '+' / '.join(online [1:])+' )'
-    working = 'number of CPUs working  : '+working[0]+' ( '+' / '.join(working[1:])+' )'
-    free    = 'number of CPUs free     : '+free   [0]+' ( '+' / '.join(free   [1:])+' )'
+    total   = 'number of CPUs total    : '+total  [0]+(' ( '+' / '.join(total  [1:])+' )' if len(total  )>1 else '')
+    offline = 'number of CPUs offline  : '+offline[0]+(' ( '+' / '.join(offline[1:])+' )' if len(offline)>1 else '')
+    online  = 'number of CPUs online   : '+online [0]+(' ( '+' / '.join(online [1:])+' )' if len(online )>1 else '')
+    working = 'number of CPUs working  : '+working[0]+(' ( '+' / '.join(working[1:])+' )' if len(working)>1 else '')
+    free    = 'number of CPUs free     : '+free   [0]+(' ( '+' / '.join(free   [1:])+' )' if len(free   )>1 else '')
 
     # print
     print '-'*len(total)

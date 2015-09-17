@@ -400,15 +400,3 @@ The following MaTe-TU/e websites provide more information regarding the clusters
 Other references:
 
 * `Linux cheat sheet <http://overapi.com/linux/>`_
-
-.. _tips-downloads:
-
-Downloads
-=========
-
-* :download:`Cluster-user meeting: slides, 13 May 2014, general introduction <presentations/1405_introduction/cluster-user.pdf>`
-
-* :download:`Cluster-user meeting: slides, 3 September 2014, second cluster-user meeting <presentations/1409_meeting-2/2014_09_meet2_JEROEN.pdf>`
-
-* :download:`myqstat <myqstat/myqstat>` + :download:`gpbs.py <myqstat/gpbs.py>`
-

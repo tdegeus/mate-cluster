@@ -149,17 +149,7 @@ For the example above
 
 .. note::
 
-  The ``myqstat`` command is available for all users, and by default in the "path" (i.e. "installed"). If the ``myqstat`` command does not work, try
-
-  .. code-block:: bash
-
-    export PATH="/usr/local/bin":$PATH
-
-  (to make this default add this to the ``~/.bashrc`` file).
-
-  :download:`source: myqstat <myqstat/myqstat>`
-
-  :download:`source: gpbs.py <myqstat/gpbs.py>`
+  The ``myqstat`` command is available for all users, and by default in the "path" (i.e. "installed").
 
 .. _etiquette-monitor-jobs-top:
 
