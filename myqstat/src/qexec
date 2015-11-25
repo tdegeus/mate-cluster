@@ -150,33 +150,34 @@ running = []
 # loop over files to submit
 for name in args['files']:
 
-  # check the number of running jobs against a maximum
+  # wait until the number of running jobs is smaller than the maximum
   while len(running)>=args['max']:
     time.sleep(60)
     jobs    = gpbs.read_qstat()
     jobs    = [int(job.id) for job in jobs    if job.state=='R']
     running = [job         for job in running if job in jobs   ]
 
-  # execute a command: (1) create a PBS-file, (2) submit the job
+  # get the path and the filename without extension
+  path     = os.path.dirname (os.path.abspath (name))
+  base,ext = os.path.splitext(os.path.basename(name))
+
+  # execute a command: create a PBS-file
   if args['command'] is not None:
-
-    # get the path and the filename without extension
-    path   = os.path.dirname(os.path.abspath(name))
-    base,_ = os.path.splitext(os.path.basename(name))
-
-    # read PBS-script from library
+    # - update extension of the submit script
+    ext = '.pbs'
+    # - read PBS-script from library
     if args['temporary']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
     else                : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
-    # store PBS-script
-    open(path+'/'+base+'.pbs','w').write(script)
+    # - store PBS-script
+    open(path+'/'+base+ext,'w').write(script)
 
-    # submit the job, optionally with the supplied options
-    # - create the commands
-    if   args['pbsopt'] is None          :  cmd = 'cd %s; qsub -N %s %s.pbs'   %(path,               name,base)
-    elif re.match('-N .*',args['pbsopt']):  cmd = 'cd %s; qsub %s %s.pbs'      %(path,args['pbsopt'],     base)
-    else                                 :  cmd = 'cd %s; qsub %s -N %s %s.pbs'%(path,args['pbsopt'],name,base)
-    # - submit
-    jid = commands.getoutput(cmd)
-    jid = jid.split('.')[0]
-    # - update list with running jobs
-    running.append(int(jid))
+  # submit the job, optionally with the supplied options
+  # - create the commands
+  if   args['pbsopt'] is None          :  cmd = 'cd %s; qsub -N %s %s%s'   %(path,               name,base,ext)
+  elif re.match('-N .*',args['pbsopt']):  cmd = 'cd %s; qsub %s %s%s'      %(path,args['pbsopt'],     base,ext)
+  else                                 :  cmd = 'cd %s; qsub %s -N %s %s%s'%(path,args['pbsopt'],name,base,ext)
+  # - submit
+  jid = commands.getoutput(cmd)
+  jid = jid.split('.')[0]
+  # - update list with running jobs
+  running.append(int(jid))
