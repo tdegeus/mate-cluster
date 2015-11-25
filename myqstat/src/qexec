@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+
+import argparse,time
+import commands,os,pwd,sys,re
+import gpbs
+
+# ==============================================================================
+
+def version():
+  print '''
+Version 0.1
+  '''
+  sys.exit(0)
+
+
+def help():
+  print '''
+NAME
+
+  qexec - automatically submit a group of jobs
+
+USAGE
+
+  $ qexec [-c COMMAND] [-t] [-n MAX] [-f FILES]
+
+DESCRIPTION
+
+  Automatically submit a group of jobs. This function can:
+
+  - submit a group of PBS-files, or
+  - execute a batch of commands by automatically generating PBS-files.
+
+  NB: the job is always submitted from the folder in which the file (PBS-script
+      or command) is stored. For example for "-f sim/test.pbs", the function
+      executes "cd sim; qsub test.pbs; cd .."
+
+OPTIONS
+
+  -h --help
+    Print help
+
+  -v --version
+    Print version
+
+  -n --max [N]
+    Maximum number of jobs to run in parallel
+
+  -c --command [STR]
+    Command to use (e.g.: "python %s")
+
+  -t --temporary
+    Use temporary working directory on the compute-node
+
+  -p --pbsopt [STR]
+    Specify PBS-options to use with submitting (these command-line options will
+    overwrite options specified in the PBS-script). Common options:
+
+    "-l nodes=1:ppn=1"
+    "-l pmem=3gb"
+    "-l pvmem=3gb"
+
+EXAMPLE 1
+
+  $ qexec -n 72 -t -c "python %s" -f sim*/run.py
+
+  Breakdown of the options:
+
+    -f sim*/run.py
+        runs the files "run.py" in all folders starting with "sim"
+
+    -c "python %s"
+        executes the command "python run.py", from each of the folders "sim*",
+        the function automatically creates a PBS-script
+
+    -t
+        use a PBS-script that uses a temporary working directory on the
+        compute-node
+
+    -n 72
+        run maximum 72 jobs in parallel (NB: the script applies this maximum
+        only to jobs submitted by this script, it does not check for other jobs
+        that the user is running)
+
+  Command executed by the script (for example):
+
+    $ cd sim1
+    $ echo "..." > run.pbs
+    $ qsub -N sim1 run.pbs
+    $ cd ..
+
+    $ cd sim2
+    ...
+
+RELEASE
+
+  Version 0.1, November 2015
+
+COPYRIGHT
+
+  T.W.J. de Geus
+  '''
+  sys.exit(0)
+
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+
+# set options/arguments
+opts = [\
+  (('-h','--help'     ),dict(action='store_true'           )),
+  (('-v','--version'  ),dict(action='store_true'           )),
+  (('-t','--temporary'),dict(action='store_true'           )),
+  (('-c','--command'  ),dict(nargs=1  ,type=str            )),
+  (('-n','--max'      ),dict(nargs=1  ,type=int ,default=72)),
+  (('-p','--pbsopt'   ),dict(nargs='*',type=str            )),
+  (('-f','--files'    ),dict(nargs='+',type=str            )),
+]
+
+# parse command-line arguments
+# - create parser
+parser = argparse.ArgumentParser(add_help=False)
+for (arg,opt) in opts:
+  if type(arg)==tuple:
+    parser.add_argument(*arg,**opt)
+  else:
+    parser.add_argument(arg,**opt)
+# - execute parser / convert to "<dict>"
+args = vars(parser.parse_args())
+# - convert to list
+for key in ['pbsopt','files']:
+  if type(args[key])!=list:
+    if args[key] is not None:
+      args[key] = [args[key]]
+# - convert from string
+for key in ['command','max']:
+  if type(args[key])==list:
+    args[key] = args[key][0]
+
+# print help and exit
+if args['help']:
+  help()
+if args['version']:
+  version()
+
+# ------------------------------------------------------------------------------
+
+# initiate list of running jobs
+running = []
+
+# loop over files to submit
+for name in args['files']:
+
+  # check the number of running jobs against a maximum
+  while len(running)>=args['max']:
+    time.sleep(60)
+    jobs    = gpbs.read_qstat()
+    jobs    = [int(job.id) for job in jobs    if job.state=='R']
+    running = [job         for job in running if job in jobs   ]
+
+  # execute a command: (1) create a PBS-file, (2) submit the job
+  if args['command'] is not None:
+
+    # get the path and the filename without extension
+    path   = os.path.dirname(os.path.abspath(name))
+    base,_ = os.path.splitext(os.path.basename(name))
+
+    # read PBS-script from library
+    if args['temporary']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
+    else                : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
+    # store PBS-script
+    open(path+'/'+base+'.pbs','w').write(script)
+
+    # submit the job, optionally with the supplied options
+    # - create the commands
+    if   args['pbsopt'] is None          :  cmd = 'cd %s; qsub -N %s %s.pbs'   %(path,               name,base)
+    elif re.match('-N .*',args['pbsopt']):  cmd = 'cd %s; qsub %s %s.pbs'      %(path,args['pbsopt'],     base)
+    else                                 :  cmd = 'cd %s; qsub %s -N %s %s.pbs'%(path,args['pbsopt'],name,base)
+    # - submit
+    jid = commands.getoutput(cmd)
+    jid = jid.split('.')[0]
+    # - update list with running jobs
+    running.append(int(jid))

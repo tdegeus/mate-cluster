@@ -14,7 +14,7 @@
 import sys, os
 import sphinx_bootstrap_theme
 
-sys.path.insert(0,os.path.abspath('myqstat'))
+sys.path.insert(0,os.path.abspath('myqstat/src'))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -51,8 +51,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Cluster manual'
-copyright = u'2014, Tom de Geus'
+project = u'cluster manual'
+copyright = u'2015, Tom de Geus'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -188,7 +188,7 @@ html_theme_options = {
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = 'MateLogo.png'
+html_logo = 'images/MateLogo.png'
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32

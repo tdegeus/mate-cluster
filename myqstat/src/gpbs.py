@@ -23,7 +23,9 @@ print a list of jobs in columns (namely: "id", "host" and "pmem")::
 
 :copyright:
 
-  `T.W.J. de Geus <http://www.geus.me>`_ (`tom@geus.me <mailto:tom@geus.me>`_)
+  | T.W.J. de Geus
+  | http://www.geus.me
+  | tom@geus.me
 '''
 
 import re
@@ -1982,7 +1984,7 @@ of jobs.
   # read output `qstat -f` command
   if qstat is None:
     import commands
-    (stat,qstat) = commands.getstatusoutput('qstat -f')
+    (stat,qstat) = commands.getstatusoutput('/opt/torque/bin/qstat -f')
     if stat:
       raise RuntimeError('Command "qstat -f" failed:\n %s'%qstat)
 
@@ -2028,7 +2030,7 @@ converted to a list of compute-nodes.
   # read the `pbsnodes` command
   if pbsnodes is None:
     import commands
-    (stat,pbsnodes) = commands.getstatusoutput('pbsnodes')
+    (stat,pbsnodes) = commands.getstatusoutput('/opt/torque/bin/pbsnodes')
     if stat:
       raise RuntimeError('Command "pbsnodes" failed:\n %s'%pbsnodes)
   # split the `pbsnodes` output in different nodes
@@ -2166,8 +2168,145 @@ Summary per user.
 
   return sorted(summary,key=lambda owner: owner.cpus)
 
-# ==============================================================================
-# designated for testing
+# ##############################################################################
+
+class script:
+  '''
+Return common PBS-scripts as string. The following scripts are implemented:
+
+* ``heavyio``: uses a temporary working directory on the compute-node.
+  '''
+
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def simple(pbsopt=[],command=None):
+    '''
+Simple PBS-script.
+
+:options:
+
+  **pbsopt** (``<list>``)
+    List with PBS options.
+
+  **command** (``<str>``)
+    Commands to execute.
+    '''
+
+    import re
+
+    pbsopt = [pbsopt] if type(pbsopt)==str else pbsopt
+    pbsdef = []
+
+    # set default options
+    defaults = (
+      ('-S .*'     ,'-S /bin/bash'    ),
+      ('-j .*'     ,'-j oe'           ),
+      ('-o .*'     ,'-o pbs.out'      ),
+      ('-l nodes.*','-l nodes=1:ppn=1'),
+    )
+    for check,default in defaults:
+      if len([opt for opt in pbsopt if re.match(check,opt)])==0:
+        pbsdef.append(default)
+    pbsopt = pbsdef+pbsopt
+
+    # create script
+    return '\n'.join([
+      '#!/bin/bash',
+      '#PBS '+'\n#PBS '.join(pbsopt),
+      '''
+# change current directory, to location of qsub command
+cd ${PBS_O_WORKDIR}
+      ''',
+      'echo "Commands go here"' if command is None else command])
+
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def heavyio(pbsopt=[],command=None):
+    '''
+Create a heavy-io PBS-script to use a temporary working directory on the
+compute-node.
+
+:options:
+
+  **pbsopt** (``<list>``)
+    List with PBS options.
+
+  **command** (``<str>``)
+    Commands to execute.
+    '''
+
+    import re
+
+    pbsopt = [pbsopt] if type(pbsopt)==str else pbsopt
+    pbsdef = []
+
+    # set default options
+    defaults = (
+      ('-S .*'     ,'-S /bin/bash'    ),
+      ('-j .*'     ,'-j oe'           ),
+      ('-o .*'     ,'-o pbs.out'      ),
+      ('-l nodes.*','-l nodes=1:ppn=1'),
+    )
+    for check,default in defaults:
+      if len([opt for opt in pbsopt if re.match(check,opt)])==0:
+        pbsdef.append(default)
+    pbsopt = pbsdef+pbsopt
+
+    # create script
+    return '\n'.join([
+      '#!/bin/bash',
+      '#PBS '+'\n#PBS '.join(pbsopt),
+      '''
+# store my username
+username=`whoami`
+
+# set the name of the temporary directory on the compute-node
+# the name is a combination of the username and the job-id
+# assigned by the queuing system
+computedir="/state/partition1/$username/${PBS_JOBID%%.*}"
+
+# 1. Transfer to node
+# ===================
+
+# create temp directory
+if [ ! -d "$computedir" ]; then
+   # if it does not exist, create
+   mkdir -p "$computedir"
+else
+   # else, empty the directory
+   rm -rf "${computedir}"/*
+fi
+
+# change current directory, to location of qsub command
+# typically in the home directory on the head-node
+cd ${PBS_O_WORKDIR}
+# copy input files
+cp -prf * $computedir
+# change directory to the temporary directory on the compute-node
+cd $computedir
+
+# 2. Execute
+# ==========
+      ''',
+      'echo "Commands go here"' if command is None else command,
+      '''
+# 3. Transfer back to the head-node
+# =================================
+
+# change to directory to the home directory (on the head-node)
+cd "${PBS_O_WORKDIR}"
+# copy everything from the compute-node
+cp -prf "${computedir}"/* .
+# erase the temp directory on compute-node
+rm -rf "$computedir"
+      '''])
+
+
+
+
+
 # ==============================================================================
 
 if __name__=='__main__':
