@@ -2217,6 +2217,7 @@ Simple PBS-script.
       '''
 # change current directory, to location of qsub command
 cd ${PBS_O_WORKDIR}
+
       ''',
       'echo "Commands go here"' if command is None else command])
 
@@ -2301,6 +2302,7 @@ cd "${PBS_O_WORKDIR}"
 cp -prf "${computedir}"/* .
 # erase the temp directory on compute-node
 rm -rf "$computedir"
+
       '''])
 
 

@@ -21,13 +21,13 @@ NAME
 
 USAGE
 
-  $ qexec [-c COMMAND] [-t] [-n MAX] [-f FILES]
+  $ qexec [-c COMMAND] [-t] [-n MAX] [-i input]
 
 DESCRIPTION
 
   Automatically submit a group of jobs. This function can:
 
-  - submit a group of PBS-files, or
+  - submit a group of PBS-input, or
   - execute a batch of commands by automatically generating PBS-files.
 
   NB: the job is always submitted from the folder in which the file (PBS-script
@@ -42,13 +42,16 @@ OPTIONS
   -v --version
     Print version
 
+  -f --free [N]
+    Number of CPUs to leave free for others to use.
+
   -n --max [N]
     Maximum number of jobs to run in parallel
 
   -c --command [STR]
     Command to use (e.g.: "python %s")
 
-  -t --temporary
+  -t --temp
     Use temporary working directory on the compute-node
 
   -p --pbsopt [STR]
@@ -61,11 +64,11 @@ OPTIONS
 
 EXAMPLE 1
 
-  $ qexec -n 72 -t -c "python %s" -f sim*/run.py
+  $ qexec -n 72 -t -c "python %s" -i sim*/run.py
 
   Breakdown of the options:
 
-    -f sim*/run.py
+    -i sim*/run.py
         runs the files "run.py" in all folders starting with "sim"
 
     -c "python %s"
@@ -107,13 +110,14 @@ COPYRIGHT
 
 # set options/arguments
 opts = [\
-  (('-h','--help'     ),dict(action='store_true'           )),
-  (('-v','--version'  ),dict(action='store_true'           )),
-  (('-t','--temporary'),dict(action='store_true'           )),
-  (('-c','--command'  ),dict(nargs=1  ,type=str            )),
-  (('-n','--max'      ),dict(nargs=1  ,type=int ,default=72)),
-  (('-p','--pbsopt'   ),dict(nargs='*',type=str            )),
-  (('-f','--files'    ),dict(nargs='+',type=str            )),
+  (('-h','--help'   ),dict(action='store_true'           )),
+  (('-v','--version'),dict(action='store_true'           )),
+  (('-t','--temp'   ),dict(action='store_true'           )),
+  (('-c','--command'),dict(nargs=1  ,type=str            )),
+  (('-f','--free'   ),dict(nargs=1  ,type=int            )),
+  (('-n','--max'    ),dict(nargs=1  ,type=int ,default=72)),
+  (('-p','--pbsopt' ),dict(nargs='*',type=str            )),
+  (('-i','--input'  ),dict(nargs='+',type=str            )),
 ]
 
 # parse command-line arguments
@@ -127,12 +131,16 @@ for (arg,opt) in opts:
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
 # - convert to list
-for key in ['pbsopt','files']:
+for key in ['pbsopt','input']:
   if type(args[key])!=list:
     if args[key] is not None:
       args[key] = [args[key]]
+# - convert to single string
+for key in ['pbsopt']:
+  if args[key] is not None:
+    args[key] = ' '.join(args[key])
 # - convert from string
-for key in ['command','max']:
+for key in ['command','max','free']:
   if type(args[key])==list:
     args[key] = args[key][0]
 
@@ -148,14 +156,23 @@ if args['version']:
 running = []
 
 # loop over files to submit
-for name in args['files']:
+for name in args['input']:
 
   # wait until the number of running jobs is smaller than the maximum
   while len(running)>=args['max']:
     time.sleep(60)
     jobs    = gpbs.read_qstat()
-    jobs    = [int(job.id) for job in jobs    if job.state=='R']
-    running = [job         for job in running if job in jobs   ]
+    jobs    = [int(job.id) for job in jobs    if job.state in ['R','Q']]
+    running = [job         for job in running if job       in jobs     ]
+
+  # wait until enough CPUs are free
+  if args['free'] is not None:
+    while True:
+      time.sleep(1)
+      nodes = gpbs.read_pbs()
+      nodes = sum([node.cpufree for node in nodes if node.state in ['free','job-exclusive']])
+      if nodes<args['free']: time.sleep(60)
+      else                 : break
 
   # get the path and the filename without extension
   path     = os.path.dirname (os.path.abspath (name))
@@ -166,16 +183,17 @@ for name in args['files']:
     # - update extension of the submit script
     ext = '.pbs'
     # - read PBS-script from library
-    if args['temporary']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
-    else                : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
+    if args['temp']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
+    else           : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
     # - store PBS-script
     open(path+'/'+base+ext,'w').write(script)
 
   # submit the job, optionally with the supplied options
+  info = {'path':path,'name':name,'base':base,'ext':ext,'pbsopt':args['pbsopt']}
   # - create the commands
-  if   args['pbsopt'] is None          :  cmd = 'cd %s; qsub -N %s %s%s'   %(path,               name,base,ext)
-  elif re.match('-N .*',args['pbsopt']):  cmd = 'cd %s; qsub %s %s%s'      %(path,args['pbsopt'],     base,ext)
-  else                                 :  cmd = 'cd %s; qsub %s -N %s %s%s'%(path,args['pbsopt'],name,base,ext)
+  if args['pbsopt'] is None            : cmd = 'cd "{path:s}"; qsub -N "{name:s}" "{base:s}{ext:s}"'           .format(**info)
+  elif re.match('-N .*',args['pbsopt']): cmd = 'cd "{path:s}"; qsub {pbsopt:s} "{base:s}{ext:s}"'              .format(**info)
+  else                                 : cmd = 'cd "{path:s}"; qsub {pbsopt:s} -N "{name:s}" "{base:s}{ext:s}"'.format(**info)
   # - submit
   jid = commands.getoutput(cmd)
   jid = jid.split('.')[0]
