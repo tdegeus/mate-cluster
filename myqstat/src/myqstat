@@ -235,6 +235,7 @@ the defaults/options.
       (('-h','--help'        ),dict(action='store_true'              )),
       (('-v','--version'     ),dict(action='store_true'              )),
       (('-u','--user'        ),dict(nargs='*',type=str               )),
+      (('-w','--exclude-user'),dict(nargs='*',type=str               )),
       (('-j','--jobname'     ),dict(nargs='+',type=str               )),
       (('-n','--node'        ),dict(nargs='+',type=str               )),
       (('-i','--id'          ),dict(nargs='+',type=str               )),
@@ -300,12 +301,13 @@ the defaults/options.
         raise parser.error(msg%tuple([i.replace('_','-') for i in opt]))
 
     # set defaults, other than assigned by parser
-    if args['user'] is not None:
-      if len(args['user'])==0:
-        args['user'] = [pwd.getpwuid(os.getuid())[0]]
+    for key in ['user','exclude_user']:
+      if args[key] is not None:
+        if len(args[key])==0:
+          args[key] = [pwd.getpwuid(os.getuid())[0]]
 
     # for filters that are specified but not as regular expressions: convert
-    for field in ['user','jobname','id']:
+    for field in ['user','exclude_user','jobname','id']:
       if args[field] is not None:
         args[field] = [re.compile(i) for i in args[field]]
 
@@ -376,6 +378,23 @@ Print the output for the ``myqstat`` command.
             incl[ijob] = any([i.match(job[columns[alias[name]]['key']])   for i in getattr(self,name)])
           else:
             incl[ijob] = any([getattr(job,columns[alias[name]]['key'])==i for i in getattr(self,name)])
+        # select jobs
+        jobs = [job for job,i in zip(jobs,incl) if i]
+    # reduce the list of jobs by applying the different filters: exclude argument
+    for key in ['exclude_user']:
+      name = key.split('exclude_')[1]
+      # proceed with filter only if the filter is specified
+      if getattr(self,key) is not None:
+        # set color
+        columns[alias[name]]['color'] = 'selection'
+        # initiate to include or not
+        incl = [False for i in jobs]
+        # loop over jobs
+        for (ijob,job) in enumerate(jobs):
+          if name in ['user','jobname','id']:
+            incl[ijob] = len([i for i in getattr(self,key) if i.match(job[columns[alias[name]]['key']])  ])==0
+          else:
+            incl[ijob] = len([i for i in getattr(self,key) if getattr(job,columns[alias[name]]['key'])==i])==0
         # select jobs
         jobs = [job for job,i in zip(jobs,incl) if i]
 
@@ -636,73 +655,74 @@ DESCRIPTION
 OPTIONS
 
   General options
-   -h --help          print help
-   -v --version       print version number
+   -h --help               print help
+   -v --version            print version number
 
   Filter options
-   -u --user    [opt] user filter (default `whoami`)
-   -j --jobname [arg] job-name filter
-   -i --id      [arg] job-id filter
-   -t --time    [arg] walltime filter, e.g. ">10d"
-   -m --memory  [arg] memory filter, e.g. ">100mb"
-   -n --node    [arg] host filter, e.g. "10"
+   -u --user         [opt] user filter (default `whoami`)
+   -w --exclude-user [opt] user filter (default `whoami`)
+   -j --jobname      [arg] job-name filter
+   -i --id           [arg] job-id filter
+   -t --time         [arg] walltime filter, e.g. ">10d"
+   -m --memory       [arg] memory filter, e.g. ">100mb"
+   -n --node         [arg] host filter, e.g. "10"
 
   Ouput options
-   -c --columns [arg] specify output columns explicitly (see below)
-   -a --add-col [arg] add columns at the end of the default list
-   -d --del-col [arg] remove columns from default list
-   -s --sort    [arg] sort the output along a certain column (see below)
-      --order   [arg] sort the output (a)scending or (d)escending
-   -o --output  [arg] output style: (s)hort, (l)ong, (c)omputer readable
-      --noheader      do not display header
-      --nocolor       do not use color coding
-      --ifs           set symbol to separate the columns (default: " ")
-      --trunc         set symbol to truncate information (default: "...")
+   -c --columns      [arg] specify output columns explicitly (see below)
+   -a --add-col      [arg] add columns at the end of the default list
+   -d --del-col      [arg] remove columns from default list
+   -s --sort         [arg] sort the output along a certain column (see below)
+      --order        [arg] sort the output (a)scending or (d)escending
+   -o --output       [arg] output style: (s)hort, (l)ong, (c)omputer readable
+      --noheader           do not display header
+      --nocolor            do not use color coding
+      --ifs                set symbol to separate the columns (default: " ")
+      --trunc              set symbol to truncate information (default: "...")
 
  Summary options
-   -U --user-summary  summary per user
-   -N --node-summary  summary per node (wrapper around pbsnodes)
-      --long          additional node information (slow, as it scans nodes)
+   -U --user-summary       summary per user
+   -N --node-summary       summary per node (wrapper around pbsnodes)
+      --long               additional node information (slow, as it scans nodes)
 
   Output columns (default: -c ionhcmpstr)
-   i   id             -
-   o   owner          -
-   n   job name       -
-   h   host           compute-node number
-   c   cpus           CPU resources claimed
-   m   mem            memory currently used by the job
-   p   pmem           requested memory
-   s   S              state (Q=queued, R=running, E=quiting)
-   t   time           walltime (elapsed time since the job has started)
-   r   score          score: CPU-time / ( walltime * #CPUs )
-   a   submit_args    submit arguments
+   i   id                  -
+   o   owner               -
+   n   job name            -
+   h   host                compute-node number
+   c   cpus                CPU resources claimed
+   m   mem                 memory currently used by the job
+   p   pmem                requested memory
+   s   S                   state (Q=queued, R=running, E=quiting)
+   t   time                walltime (elapsed time since the job has started)
+   r   score               score: CPU-time / ( walltime * #CPUs )
+   a   submit_args         submit arguments
 
   Output columns [--node-summary] (default: nstcfrmp)
-   n   node           compute-node number
-   s   state          status (free,job-exclusive,offline,down)
-   t   type           CPU-type (amd,intel)
-   c   Ctot           #CPUs
-   u   Cused          #CPUs in use by jobs
-   f   Cfree          #CPUs free
-   l   score          load (~job score)
-   m   Mtot           physical memory present in the node
-   w   Mused          memory currently used by jobs
-   r   Mrel           ratio of memory used by jobs (>1: swapping, avoid!)
+   n   node                compute-node number
+   s   state               status (free,job-exclusive,offline,down)
+   t   type                CPU-type (amd,intel)
+   c   Ctot                #CPUs
+   u   Cused               #CPUs in use by jobs
+   f   Cfree               #CPUs free
+   l   score               load (~job score)
+   m   Mtot                physical memory present in the node
+   w   Mused               memory currently used by jobs
+   r   Mrel                ratio of memory used by jobs (>1: swapping, avoid!)
 
   Output columns [--node-summary --long] (default: nstcfrmphxb)
-   h   HDtot          total amount of disk-space in the node
-   e   HDused         amount of disk-space currently used
-   x   HDratio        ratio of disk-space used by jobs (>1 jobs get killed)
-   b   Network        total network traffic
+   h   HDtot               total amount of disk-space in the node
+   e   HDused              amount of disk-space currently used
+   x   HDratio             ratio of disk-space used by jobs (>1 jobs get killed)
+   b   Network             total network traffic
 
   Output columns [--user-summary] (default: ocmtr)
-   o   owner          -
-   c   cpus           total number of CPUs in use by the owner
-   a   amd            total number of AMDs in use by the owner
-   i   intel          total number of Intels in use by the owner
-   m   mem            total memory used by the owner
-   t   time           total walltime of all owner's jobs
-   s   score          average score of all owner's jobs
+   o   owner                -
+   c   cpus                 total number of CPUs in use by the owner
+   a   amd                  total number of AMDs in use by the owner
+   i   intel                total number of Intels in use by the owner
+   m   mem                  total memory used by the owner
+   t   time                 total walltime of all owner's jobs
+   s   score                average score of all owner's jobs
 
 RELEASE
 
