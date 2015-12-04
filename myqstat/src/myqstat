@@ -309,7 +309,7 @@ the defaults/options.
     # for filters that are specified but not as regular expressions: convert
     for field in ['user','exclude_user','jobname','id']:
       if args[field] is not None:
-        args[field] = [re.compile(i) for i in args[field]]
+        args[field] = [re.compile('^'+i+'$') for i in args[field]]
 
     # store the command-line arguments
     for key in args:
