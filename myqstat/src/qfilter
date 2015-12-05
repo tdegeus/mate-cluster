@@ -1,0 +1,136 @@
+#!/usr/bin/env python
+
+import argparse,time
+import commands,os,pwd,sys,re,socket
+import gpbs
+
+# ==============================================================================
+
+def version():
+  print '''
+Version 0.1
+  '''
+  sys.exit(0)
+
+
+def help():
+  print '''
+NAME
+
+  qfilter - remove running/completed jobs from a list of (PBS-)files
+
+USAGE
+
+  $ qfilter [-o EXTENSION]
+
+DESCRIPTION
+
+  Filter a list of (PBS-)files with running jobs and completed jobs. For each
+  file the function searches the same file with the ".out" extension in the
+  list of running jobs, and in the supplied locations. If the out-file exists
+  the file is removed from the list.
+
+OPTIONS
+
+  -h --help
+    Print help
+
+  -v --version
+    Print version
+
+  -o --out=EXT
+    Specify the extension of the output- file. Default: ".out"
+
+EXAMPLE
+
+  $ find . -iname 'run.py' | qfind
+
+  Breakdown of the command:
+
+    find . -iname 'run.py'
+        find all files "run.py" from the current location downwards, outputs a
+        list "path/run.py"
+
+    | qfind
+        pipe the output of the find command, and remove those files from the
+        list for which the file "path/run.out" exists or will be written by
+        currently running jobs
+
+SEE ALSO
+
+  gpbs - PBS-wrapper in Python
+
+RELEASE
+
+  Version 0.1, December 2015
+
+COPYRIGHT
+
+  T.W.J. de Geus
+  '''
+  sys.exit(0)
+
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# parse command-line arguments
+# ------------------------------------------------------------------------------
+
+# set options/arguments
+opts = [\
+  (('-h','--help'   ),dict(action='store_true'               )),
+  (('-v','--version'),dict(action='store_true'               )),
+  (('-o','--out'    ),dict(nargs=1  ,type=str,default='.out' )),
+  (      'files'     ,dict(nargs='*',type=str                )),
+]
+
+# parse command-line arguments
+# - create parser
+parser = argparse.ArgumentParser(add_help=False)
+for (arg,opt) in opts:
+  if type(arg)==tuple:
+    parser.add_argument(*arg,**opt)
+  else:
+    parser.add_argument(arg,**opt)
+# - execute parser / convert to "<dict>"
+args = vars(parser.parse_args())
+# - convert to string
+for key in ['out']:
+  if type(args[key])==list:
+    args[key] = args[key][0]
+
+# if interactive mode (pipe-command): read input
+if not sys.stdin.isatty():
+  args['files'] += [i.strip() for i in sys.stdin.readlines()]
+
+# print help and exit
+if args['help']:
+  help()
+if args['version']:
+  version()
+
+# ------------------------------------------------------------------------------
+# main program
+# ------------------------------------------------------------------------------
+
+# get files to search and extension of the output-file
+files = args['files']
+out   = args['out'  ]
+if out[0]!='.': out = '.'+out
+
+# get the output-files of all running jobs
+user  = pwd.getpwuid(os.getuid())[0]
+host  = socket.gethostname()+':'
+jobs  = [job.output_path.split(host)[1] for job in gpbs.read_qstat() if job.owner==user]
+
+# reduce files for running jobs
+files = [i for i in files if os.path.splitext(os.path.abspath(i))[0]+out not in jobs]
+
+# reduce files for existing out-files
+files = [i for i in files if not os.path.isfile(os.path.splitext(os.path.abspath(i))[0]+out)]
+
+# print output
+print os.linesep.join(sorted(files))
+
+
+

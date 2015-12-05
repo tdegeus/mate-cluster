@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+
+import argparse,time
+import commands,os,pwd,sys,re
+import gpbs
+
+# ==============================================================================
+
+def version():
+  print '''
+Version 0.1
+  '''
+  sys.exit(0)
+
+
+def help():
+  print '''
+NAME
+
+  qdelall - delete a group of PBS-jobs
+
+USAGE
+
+  $ qdel [-n NAME] [-i ID]
+
+DESCRIPTION
+
+  Delete a group of -- or all -- PBS-jobs.
+
+OPTIONS
+
+  -h --help
+    Print help
+
+  -v --version
+    Print version
+
+  -n --name=STR
+    Filter by name, may be regular expression.
+
+  -i --id=STR
+    Filter by job-id, may be regular expression.
+
+  -t --tempdir=STR
+    Remove temporary working directory.
+
+SEE ALSO
+
+  gpbs - PBS-wrapper in Python
+
+RELEASE
+
+  Version 0.1, December 2015
+
+COPYRIGHT
+
+  T.W.J. de Geus
+  '''
+  sys.exit(0)
+
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# parse command-line arguments
+# ------------------------------------------------------------------------------
+
+# set options/arguments
+opts = [\
+  (('-h','--help'   ),dict(action='store_true'           )),
+  (('-v','--version'),dict(action='store_true'           )),
+  (('-t','--tempdir'),dict(action='store_true'           )),
+  (('-n','--name'   ),dict(nargs=1  ,type=str            )),
+  (('-i','--id'     ),dict(nargs=1  ,type=str            )),
+]
+
+# parse command-line arguments
+# - create parser
+parser = argparse.ArgumentParser(add_help=False)
+for (arg,opt) in opts:
+  if type(arg)==tuple:
+    parser.add_argument(*arg,**opt)
+  else:
+    parser.add_argument(arg,**opt)
+# - execute parser / convert to "<dict>"
+args = vars(parser.parse_args())
+# - convert to string
+for key in ['name','id']:
+  if type(args[key])==list:
+    args[key] = re.compile('^'+args[key][0]+'$')
+
+# print help and exit
+if args['help']:
+  help()
+if args['version']:
+  version()
+
+# ------------------------------------------------------------------------------
+# main program
+# ------------------------------------------------------------------------------
+
+# read all of the user's jobs
+user = pwd.getpwuid(os.getuid())[0]
+jobs = [job for job in gpbs.read_qstat() if job.owner==user]
+
+# filter the jobs by name/id
+if args['name'] is not None: jobs = [job for job in jobs if re.match(args['name'],job.name)]
+if args['id'  ] is not None: jobs = [job for job in jobs if re.match(args['id']  ,job.id  )]
+
+# delete jobs
+for job in jobs[::-1]:
+
+  # delete job
+  commands.getoutput('qdel '+job.id)
+
+  # remove temporary working directory
+  if args['tempdir'] and re.match('[0-9]+',str(job.host)):
+
+    commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
+      node = 'compute-0-'+str(job.host),
+      temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
+    ))

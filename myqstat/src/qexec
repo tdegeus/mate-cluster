@@ -8,7 +8,7 @@ import gpbs
 
 def version():
   print '''
-Version 0.1
+Version 0.2
   '''
   sys.exit(0)
 
@@ -21,7 +21,7 @@ NAME
 
 USAGE
 
-  $ qexec [-c COMMAND] [-t] [-p PBSOPT] [-n MAX] [-f FREE] [-i input]
+  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-f FREE] [-i input]
 
 DESCRIPTION
 
@@ -48,19 +48,19 @@ OPTIONS
     Write the PBS-scripts, do not submit the jobs.
     Ignored options: "-f", "-n", and "-p".
 
-  -f --free [N]
+  -f --free=N
     Minimum number of CPUs to leave free for other jobs/users.
 
-  -n --max [N]
+  -n --max=N
     Maximum number of jobs to run in parallel
 
-  -c --command [STR]
+  -c --command=STR
     Command to execute (e.g.: "python %s")
 
   -t --temp
     Use temporary working directory on the compute-node.
 
-  -p --pbsopt [STR]
+  -p --pbsopt=STR
     Command-line PBS-options. These options overwrite equivalent options
     specified in the PBS-script. Common options:
 
@@ -101,13 +101,23 @@ EXAMPLE 1 - run a batch of Python scripts
     $ cd sim2                 # proceed to the next directory in "sim*"
     ...
 
+EXAMPLE 2 - resume "EXAMPLE 1", without rerunning/resubmitting jobs
+
+  $ qexec -n 72 -t -c "python %s" -i `ls sim*/run.py | qfilter`
+
+  Breakdown of the difference with respect to EXAMPLE 1:
+
+    -i `ls sim*/run.py | qfilter`
+          lists all files "sim*/run.py" and then filters this list with existing
+          (or running) "sim*/run.out"
+
 SEE ALSO
 
   gpbs - PBS-wrapper in Python (includes the template PBS-scripts).
 
 RELEASE
 
-  Version 0.1, November 2015
+  Version 0.2, December 2015
 
 COPYRIGHT
 

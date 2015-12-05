@@ -1165,6 +1165,7 @@ For example::
       self.walltime    = csplit(text,'resources_used.walltime',dtype='Time'   )
       self.host        = csplit(text,'exec_host'              ,dtype='Host'   )
       self.submit_args = csplit(text,'submit_args'                            )
+      self.output_path = csplit(text,'Output_Path'                            )
 
     # (b) store from input (overwrites read data)
     for key in kwargs:
@@ -1206,6 +1207,7 @@ For example::
       'score'       : '{:>4.2f}',
       'name'        : '{:s}'    ,
       'submit_args' : '{:s}'    ,
+      'output_path' : '{:s}'    ,
     }
 
     return fmt[key].format(getattr(self,key))
@@ -2176,6 +2178,8 @@ Return common PBS-scripts as string. The following scripts are implemented:
 
 * ``heavyio``: uses a temporary working directory on the compute-node.
   '''
+
+  tempdir = '/state/partition1/{user:s}/{jobid:s}'
 
   # ----------------------------------------------------------------------------
 
