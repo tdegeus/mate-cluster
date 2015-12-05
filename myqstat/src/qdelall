@@ -36,7 +36,7 @@ OPTIONS
     Print version
 
   -n --name=STR
-    Filter by name, may be regular expression.
+    Filter by name, may be regular expression (e.g. "dir.*file.ext").
 
   -i --id=STR
     Filter by job-id, may be regular expression.
@@ -98,24 +98,29 @@ if args['version']:
 # main program
 # ------------------------------------------------------------------------------
 
-# read all of the user's jobs
-user = pwd.getpwuid(os.getuid())[0]
-jobs = [job for job in gpbs.read_qstat() if job.owner==user]
+for ipass in range(2):
 
-# filter the jobs by name/id
-if args['name'] is not None: jobs = [job for job in jobs if re.match(args['name'],job.name)]
-if args['id'  ] is not None: jobs = [job for job in jobs if re.match(args['id']  ,job.id  )]
+  # read all of the user's jobs
+  user = pwd.getpwuid(os.getuid())[0]
+  jobs = [job for job in gpbs.read_qstat() if job.owner==user]
 
-# delete jobs
-for job in jobs[::-1]:
+  if ipass==0:
+    jobs = [job for job in jobs if job.state=='Q']
 
-  # delete job
-  commands.getoutput('qdel '+job.id)
+  # filter the jobs by name/id
+  if args['name'] is not None: jobs = [job for job in jobs if re.match(args['name'],job.name)]
+  if args['id'  ] is not None: jobs = [job for job in jobs if re.match(args['id']  ,job.id  )]
 
-  # remove temporary working directory
-  if args['tempdir'] and re.match('[0-9]+',str(job.host)):
+  # delete jobs
+  for job in jobs[::-1]:
 
-    commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
-      node = 'compute-0-'+str(job.host),
-      temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
-    ))
+    # delete job
+    commands.getoutput('qdel '+job.id)
+
+    # remove temporary working directory
+    if args['tempdir'] and re.match('[0-9]+',str(job.host)) and ipass==1:
+
+      commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
+        node = 'compute-0-'+str(job.host),
+        temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
+      ))
