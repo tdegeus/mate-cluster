@@ -41,6 +41,9 @@ OPTIONS
   -i --id=STR
     Filter by job-id, may be regular expression.
 
+  -s --state=STR
+    Filter by state, e.g.: 'Q', 'R'.
+
   -t --tempdir=STR
     Remove temporary working directory.
 
@@ -70,6 +73,7 @@ opts = [\
   (('-v','--version'),dict(action='store_true'           )),
   (('-t','--tempdir'),dict(action='store_true'           )),
   (('-n','--name'   ),dict(nargs=1  ,type=str            )),
+  (('-s','--state'  ),dict(nargs=1  ,type=str            )),
   (('-i','--id'     ),dict(nargs=1  ,type=str            )),
 ]
 
@@ -98,29 +102,32 @@ if args['version']:
 # main program
 # ------------------------------------------------------------------------------
 
-for ipass in range(2):
+# read all of the user's jobs
+user = pwd.getpwuid(os.getuid())[0]
+jobs = [job for job in gpbs.read_qstat() if job.owner==user]
 
-  # read all of the user's jobs
-  user = pwd.getpwuid(os.getuid())[0]
-  jobs = [job for job in gpbs.read_qstat() if job.owner==user]
+# filter the jobs by name/id
+if args['id'   ] is not None: jobs = [job for job in jobs if re.match(args['id']   , job.id   )]
+if args['name' ] is not None: jobs = [job for job in jobs if re.match(args['name'] , job.name )]
+if args['state'] is not None: jobs = [job for job in jobs if          args['state']==job.state ]
 
-  if ipass==0:
-    jobs = [job for job in jobs if job.state=='Q']
+# split queued and not-queued jobs
+queued = [job for job in jobs if job.state=='Q']
+jobs   = [job for job in jobs if job.state!='Q']
 
-  # filter the jobs by name/id
-  if args['name'] is not None: jobs = [job for job in jobs if re.match(args['name'],job.name)]
-  if args['id'  ] is not None: jobs = [job for job in jobs if re.match(args['id']  ,job.id  )]
+# delete queued jobs at once
+commands.getoutput('qdel '+' '.join(queued))
 
-  # delete jobs
-  for job in jobs[::-1]:
+# delete jobs
+for job in jobs:
 
-    # delete job
-    commands.getoutput('qdel '+job.id)
+  # delete job
+  commands.getoutput('qdel '+job.id)
 
-    # remove temporary working directory
-    if args['tempdir'] and re.match('[0-9]+',str(job.host)) and ipass==1:
+  # remove temporary working directory
+  if args['tempdir'] and re.match('[0-9]+',str(job.host)) and ipass==1:
 
-      commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
-        node = 'compute-0-'+str(job.host),
-        temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
-      ))
+    commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
+      node = 'compute-0-'+str(job.host),
+      temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
+    ))

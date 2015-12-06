@@ -21,7 +21,7 @@ NAME
 
 USAGE
 
-  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-f FREE] [-i input]
+  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-f FREE] [-q] [-i input]
 
 DESCRIPTION
 
@@ -46,13 +46,14 @@ OPTIONS
 
   -w --write
     Write the PBS-scripts, do not submit the jobs.
-    Ignored options: "-f", "-n", and "-p".
-
-  -f --free=N
-    Minimum number of CPUs to leave free for other jobs/users.
+    Ignored options: "-f", "-n", "q", and "-p".
 
   -n --max=N
     Maximum number of jobs to run in parallel
+
+  -q --current-queue
+    Only check the queue that of the jobs submitted with this script. Otherwise
+    all the user's jobs are taken into account.
 
   -c --command=STR
     Command to execute (e.g.: "python %s")
@@ -133,15 +134,15 @@ COPYRIGHT
 
 # set options/arguments
 opts = [\
-  (('-h','--help'   ),dict(action='store_true'           )),
-  (('-v','--version'),dict(action='store_true'           )),
-  (('-w','--write'  ),dict(action='store_true'           )),
-  (('-t','--temp'   ),dict(action='store_true'           )),
-  (('-c','--command'),dict(nargs=1  ,type=str            )),
-  (('-f','--free'   ),dict(nargs=1  ,type=int            )),
-  (('-n','--max'    ),dict(nargs=1  ,type=int ,default=72)),
-  (('-p','--pbsopt' ),dict(nargs='*',type=str            )),
-  (('-i','--input'  ),dict(nargs='+',type=str            )),
+  (('-h','--help'         ),dict(action='store_true'           )),
+  (('-v','--version'      ),dict(action='store_true'           )),
+  (('-w','--write'        ),dict(action='store_true'           )),
+  (('-t','--temp'         ),dict(action='store_true'           )),
+  (('-q','--current-queue'),dict(action='store_true'           )),
+  (('-c','--command'      ),dict(nargs=1  ,type=str            )),
+  (('-n','--max'          ),dict(nargs=1  ,type=int ,default=72)),
+  (('-p','--pbsopt'       ),dict(nargs='*',type=str            )),
+  (('-i','--input'        ),dict(nargs='+',type=str            )),
 ]
 
 # parse command-line arguments
@@ -164,7 +165,7 @@ for key in ['pbsopt']:
   if args[key] is not None:
     args[key] = ' '.join(args[key])
 # - convert from string
-for key in ['command','max','free']:
+for key in ['command','max']:
   if type(args[key])==list:
     args[key] = args[key][0]
 
@@ -185,6 +186,11 @@ if args['version']:
 # initiate list of running jobs: updated with submitted/completed jobs
 running = []
 
+# read the amount of other jobs to take into account
+user   = pwd.getpwuid(os.getuid())[0]
+jobs   = [job for job in gpbs.read_qstat() if job.state in ['R','Q']]
+nother = len([job for job in jobs if job.owner==user]) if not args['current_queue'] else 0
+
 # loop over files to submit
 for name in args['input']:
 
@@ -194,20 +200,12 @@ for name in args['input']:
   if not args['write']:
 
     # wait until the number of running jobs is smaller than the maximum
-    while len(running)>=args['max']:
+    while (len(running)+nother)>=args['max']:
       time.sleep(60)
-      jobs    = gpbs.read_qstat()
-      jobs    = [int(job.id) for job in jobs    if job.state in ['R','Q']]
-      running = [job         for job in running if job       in jobs     ]
-
-    # wait until enough CPUs are free
-    if args['free'] is not None:
-      while True:
-        time.sleep(1)
-        nodes = gpbs.read_pbs()
-        nodes = sum([node.cpufree for node in nodes if node.state in ['free','job-exclusive']])
-        if nodes<args['free']: time.sleep(60)
-        else                 : break
+      jobs    = [job for job in gpbs.read_qstat() if job.state in ['R','Q']]
+      nother  = len([job for job in jobs if job.owner==user and int(job.id) not in running]) if not args['current_queue'] else 0
+      jobs    = [int(job.id) for job in jobs]
+      running = [job for job in running if job in jobs]
 
   # interpret file-input
   # --------------------
