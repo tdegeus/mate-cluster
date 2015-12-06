@@ -91,6 +91,9 @@ args = vars(parser.parse_args())
 for key in ['name','id']:
   if type(args[key])==list:
     args[key] = re.compile('^'+args[key][0]+'$')
+for key in ['state']:
+  if type(args[key])==list:
+    args[key] = args[key][0].upper()
 
 # print help and exit
 if args['help']:
