@@ -115,8 +115,8 @@ if args['name' ] is not None: jobs = [job for job in jobs if re.match(args['name
 if args['state'] is not None: jobs = [job for job in jobs if          args['state']==job.state ]
 
 # split queued and not-queued jobs
-queued = [job for job in jobs if job.state=='Q']
-jobs   = [job for job in jobs if job.state!='Q']
+queued = [job.id for job in jobs if job.state=='Q']
+jobs   = [job    for job in jobs if job.state!='Q']
 
 # delete queued jobs at once
 commands.getoutput('qdel '+' '.join(queued))
