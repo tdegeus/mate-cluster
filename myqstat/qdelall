@@ -25,7 +25,7 @@ USAGE
 
 DESCRIPTION
 
-  Delete a group of -- or all -- PBS-jobs.
+  Delete a group of PBS-jobs (or all the user's jobs).
 
 OPTIONS
 

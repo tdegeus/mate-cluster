@@ -21,7 +21,7 @@ NAME
 
 USAGE
 
-  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-f FREE] [-q] [-i input]
+  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-q] [-i input]
 
 DESCRIPTION
 
@@ -111,6 +111,13 @@ EXAMPLE 2 - resume "EXAMPLE 1", without rerunning/resubmitting jobs
     -i `ls sim*/run.py | qfilter`
           lists all files "sim*/run.py" and then filters this list with existing
           (or running) "sim*/run.out"
+
+TIPS
+
+  * Use the "nohup" command keep the script running also after the sessions
+    (i.e. the terminal is closed). For example:
+
+    $ nohup qexec -c "python %s" -i sim*/run.py > nohup.out &
 
 SEE ALSO
 
