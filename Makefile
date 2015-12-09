@@ -44,6 +44,9 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+	if [ ! -d ".static" ]; then mkdir .static; fi
+
+all: html
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

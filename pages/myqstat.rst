@@ -1,20 +1,114 @@
 :tocdepth: 2
 
-.. _gpbs:
+**************************
+Job monitoring and control
+**************************
 
-****************
-Custom PBS tools
-****************
+.. topic:: Use default versions on MaTe-clusters
+
+  All scripts below are available on the MaTe-clusters in the ``/share/apps/extra/bin``-folder. They can be readily used by including the following line in the ``~/.bashrc``:
+
+  .. code-block:: bash
+
+    export PATH=/share/apps/extra/bin:$PATH
+
+  **NB** this includes selecting the (newer) Python installation in ``/share/apps/extra``` over the default Python-executable
+
+.. topic:: "Installation" for custom use
+
+  Downloads:
+
+  * :download:`gpbs.py <../myqstat/gpbs.py>`
+  * :download:`myqstat <../myqstat/myqstat>`
+  * :download:`qdelall <../myqstat/qdelall>`
+  * :download:`qexec <../myqstat/qexec>`
+  * :download:`qfilter <../myqstat/qfilter>`
+
+  All of the shell-scripts below are written in Python, but can be used as any shell-script. However, they all belong on the (custom) ``gpbs``-module. This module must be made available before the scripts can be used. The steps below "install" ``myqstat``, the same steps hold for the other scripts.
+
+  1.  Store the file ``myqstat`` somewhere, and make sure that it is executable. For example:
+
+      .. code-block:: bash
+
+        [user@pc     ] $ scp myqstat user@furnace:~/bin/
+        [user@pc     ] $ ssh user@furnace
+        [user@furnace] $ cd ~/bin
+        [user@furnace] $ chmod u+x myqstat
+
+  2.  Make sure that the folder in which ``myqstat`` is in the ``PATH`` in which Bash looks for executables. Following the above example:
+
+      .. code-block:: bash
+
+        [user@furnace] $ export PATH=$HOME/bin:$PATH
+
+      To avoid having to do this more than once, add this line to the ``~/.bashrc`` file, which is executed upon login.
+
+  3.  Store the ``gpbs.py`` module in the same folder as ``myqstat``, or otherwise make sure that Python can find it in the ``PYTHONPATH``. For example:
+
+      .. code-block:: bash
+
+        [user@furnace] $ export PYTHONPATH=$HOME/bin:$PYTHONPATH
+
+      To avoid having to do this more than once, add this line to the ``~/.bashrc`` file, which is executed upon login.
+
+  The command can now be used. Try:
+
+  .. code-block:: bash
+
+    [user@furnace] $ myqstat --help
+
+  or
+
+  .. code-block:: bash
+
+    [user@furnace] $ myqstat
+
+``myqstat``
+===========
+
+``qdelall``
+===========
+
+``qexec``
+=========
+
+``qfilter``
+===========
+
+
+
+
+
+.. _implemenation:
+
+**********************
+Implementation details
+**********************
+
+
+``myqstat``
+===========
+
+By calling ``Main()`` the command-line argument parser is invoked. This parser
+deals with all the input options, and at the end of the ``__init__()`` function
+calls one of the following functions, before exiting:
+
+* ``help``        : acts on ``myqstat -h``
+* ``version``     : acts on ``myqstat -v``
+* ``myqstat``     : acts on ``myqstat``
+* ``myqstat_node``: acts on ``myqstat -N``
+* ``myqstat_user``: acts on ``myqstat -U``
+
+The latter three functions use the ``gpbs`` module to read, convert, and print
+the data of the relevant commands. The local ``getTerminalSize`` and
+``column_width`` functions are used to adapt the output to the size available
+in the current window.
+
+
+``gpbs.py``
+===========
 
 .. contents:: **Outline**
-  :local:
-  :depth: 1
-  :backlinks: top
-
-``gpbs`` - PBS-status module for Python
-=======================================
-
-.. contents::
   :local:
   :depth: 1
   :backlinks: top
@@ -178,70 +272,4 @@ Module details
 .. automodule:: gpbs
    :members:
 
-``myqstat`` - show status of jobs and nodes
-===========================================
-
-Installation
-------------
-
-1.  Store the file ``myqstat`` somewhere, and make sure that it is executable.
-    For example:
-
-    .. code-block:: bash
-
-      [user@pc     ] $ scp myqstat user@furnace:~/bin/
-      [user@pc     ] $ ssh user@furnace
-      [user@furnace] $ cd ~/bin
-      [user@furnace] $ chmod u+x myqstat
-
-2.  Make sure that the folder in which ``myqstat`` is in the ``PATH`` in which
-    Bash looks for executables. Following the above example:
-
-    .. code-block:: bash
-
-      [user@furnace] $ export PATH=$HOME/bin:$PATH
-
-    To avoid having to do this more than once, add this line to the
-    ``~/.bashrc`` file, which is executed upon login.
-
-3.  Store the ``gpbs.py`` module in the same folder as ``myqstat``, or otherwise
-    make sure that Python can find it in the ``PYTHONPATH``. For example:
-
-    .. code-block:: bash
-
-      [user@furnace] $ export PYTHONPATH=$HOME/bin:$PYTHONPATH
-
-    To avoid having to do this more than once, add this line to the
-    ``~/.bashrc`` file, which is executed upon login.
-
-The command can now be used. Try:
-
-.. code-block:: bash
-
-  [user@furnace] $ myqstat
-
-To get more information on the options:
-
-.. code-block:: bash
-
-  [user@furnace] $ myqstat -h
-  [user@furnace] $ myqstat --help
-
-Implementation details
-----------------------
-
-By calling ``Main()`` the command-line argument parser is invoked. This parser
-deals with all the input options, and at the end of the ``__init__()`` function
-calls one of the following functions, before exiting:
-
-* ``help``        : acts on ``myqstat -h``
-* ``version``     : acts on ``myqstat -v``
-* ``myqstat``     : acts on ``myqstat``
-* ``myqstat_node``: acts on ``myqstat -N``
-* ``myqstat_user``: acts on ``myqstat -U``
-
-The latter three functions use the ``gpbs`` module to read, convert, and print
-the data of the relevant commands. The local ``getTerminalSize`` and
-``column_width`` functions are used to adapt the output to the size available
-in the current window.
 

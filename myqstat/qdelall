@@ -128,7 +128,7 @@ for job in jobs:
   commands.getoutput('qdel '+job.id)
 
   # remove temporary working directory
-  if args['tempdir'] and re.match('[0-9]+',str(job.host)) and ipass==1:
+  if args['tempdir'] and re.match('[0-9]+',str(job.host)):
 
     commands.getoutput("ssh {node:s} 'rm -r {temp:s}'".format(
       node = 'compute-0-'+str(job.host),

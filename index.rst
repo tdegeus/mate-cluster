@@ -1,11 +1,4 @@
 
-.. todolist::
-
-.. todo::
-
-  Add ``pmem`` and ``pvmem`` options at the language specific scripts.
-
-
 .. topic:: Disclaimer
 
    Any questions, suggestions, additions, comments, bugs, etc. are most welcome. Please contact us (MaTeCluster@tue.nl). Or directly:
@@ -34,6 +27,15 @@ Contents
    pages/linux_bash.rst
    pages/languages.rst
 
+====================
+Advanced job control
+====================
+
+.. toctree::
+   :maxdepth: 1
+
+   pages/myqstat.rst
+
 ==================
 Indices and tables
 ==================
@@ -41,9 +43,9 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`search`
 
-===============
-Acknowledgement
-===============
+==============
+Acknowledgment
+==============
 
 Over time the following people have contributed to the content as presented here:
 
