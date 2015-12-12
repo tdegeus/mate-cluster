@@ -1,0 +1,181 @@
+#!/usr/bin/env python
+
+import argparse,time
+import commands,os,pwd,sys,re
+import gpbs
+
+# ==============================================================================
+
+def version():
+  print '''
+Version 0.1
+  '''
+  sys.exit(0)
+
+def help():
+  print '''
+NAME
+
+  qgrep - print lines matching a pattern
+
+USAGE
+
+  $ qgrep [-i] [-u STR] [-v]
+
+DESCRIPTION
+
+  Print lines matching a pattern.
+
+OPTIONS
+
+  -h --help
+    Print help
+
+  -V --version
+    Print version
+
+  -i, --job-id
+    Use job-id as matching pattern.
+
+  -u, --user=STR
+    Filter jobs for a specific user.
+
+  -v, --invert-match
+    Invert the sense of matching, to select non-matching lines.
+
+EXAMPLE
+
+  $ find . -mindepth 1 -type d | qgrep -v
+
+  Breakdown of the command:
+
+    find . -mindepth 1 -type d
+        find all sub-directories in the current directory
+
+    qgrep -v
+        limit the selection to those directories that have a name that is not
+        equal to the id of any of the currently running jobs
+
+SEE ALSO
+
+  gpbs - PBS-wrapper in Python
+
+RELEASE
+
+  Version 0.1, December 2015
+
+COPYRIGHT
+
+  T.W.J. de Geus
+  '''
+  sys.exit(0)
+
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# parse command-line arguments
+# ------------------------------------------------------------------------------
+
+# set options/arguments
+opts = [\
+  (('-h','--help'        ),dict(action='store_true'               )),
+  (('-V','--version'     ),dict(action='store_true'               )),
+  (('-v','--invert-match'),dict(action='store_true'               )),
+  (('-i','--job-id'      ),dict(action='store_true'               )),
+  (('-u','--user'        ),dict(nargs='*',type=str                )),
+]
+
+# parse command-line arguments
+# - create parser
+parser = argparse.ArgumentParser(add_help=False)
+for (arg,opt) in opts:
+  if type(arg)==tuple:
+    parser.add_argument(*arg,**opt)
+  else:
+    parser.add_argument(arg,**opt)
+# - execute parser / convert to "<dict>"
+args = vars(parser.parse_args())
+# - set defaults, other than assigned by parser
+for key in ['user']:
+  if args[key] is not None:
+    if len(args[key])==0:
+      args[key] = [pwd.getpwuid(os.getuid())[0]]
+# - for filters that are specified but not as regular expressions: convert
+for field in ['user']:
+  if args[field] is not None:
+    args[field] = [re.compile('^'+i+'$') for i in args[field]]
+
+# if interactive mode (pipe-command): read input
+if not sys.stdin.isatty(): lines = [i.strip() for i in sys.stdin.readlines()]
+else                     : lines = []
+
+# print help and exit
+if args['help']:
+  help()
+if args['version']:
+  version()
+
+# ------------------------------------------------------------------------------
+# main program
+# ------------------------------------------------------------------------------
+
+# get list with jobs
+jobs = [job for job in gpbs.read_qstat()]
+
+# apply filters
+if args['user'] is not None:
+  for name in args['user']:
+    jobs = [job for job in jobs if re.match(name,job.owner)]
+
+# convert to list of strings
+if args['job_id']: patterns = [re.compile('^.*'+job.id+'.*$') for job in jobs]
+else             : patterns = [re.compile('^.*'+job.id+'.*$') for job in jobs]
+
+# initiate match
+match = [False for line in lines]
+
+# check for match
+for iline,line in enumerate(lines):
+  for pattern in patterns:
+    if re.match(pattern,line):
+      match[iline] = True
+      break
+
+# optionally invert
+if args['invert_match']:
+  match = [not i for i in match]
+
+# select/print lines based on match
+print '\n'.join([line for line,test in zip(lines,match) if test])
+
+sys.exit(0)
+
+
+
+
+
+
+
+
+
+# # get files to search and extension of the output-file
+# files = args['files']
+# out   = args['out'  ]
+# if out[0]!='.': out = '.'+out
+
+# # get the output-files of all running jobs
+# user  = pwd.getpwuid(os.getuid())[0]
+# host  = socket.gethostname()+':'
+# jobs  = [job.output_path.split(host)[1] for job in gpbs.read_qstat() if job.owner==user]
+
+# # reduce files for running jobs
+# files = [i for i in files if os.path.splitext(os.path.abspath(i))[0]+out not in jobs]
+
+# # reduce files for existing out-files
+# files = [i for i in files if not os.path.isfile(os.path.splitext(os.path.abspath(i))[0]+out)]
+
+# # print output
+# print os.linesep.join(sorted(files))
+
+
+
