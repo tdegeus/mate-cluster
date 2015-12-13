@@ -130,7 +130,7 @@ files = [i for i in files if os.path.splitext(os.path.abspath(i))[0]+out not in 
 files = [i for i in files if not os.path.isfile(os.path.splitext(os.path.abspath(i))[0]+out)]
 
 # print output
-print os.linesep.join(sorted(files))
+print os.linesep.join(files)
 
 
 
