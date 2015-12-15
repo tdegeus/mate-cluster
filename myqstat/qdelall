@@ -44,7 +44,7 @@ OPTIONS
   -s --state=STR
     Filter by state, e.g.: 'Q', 'R'.
 
-  -t --tempdir=STR
+  -t --tempdir
     Remove temporary working directory.
 
 SEE ALSO
