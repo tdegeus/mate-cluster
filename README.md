@@ -6,4 +6,3 @@ The cluster is hosted on
 To upload the site
 
   ssh cluster@wfwweb
-  with: matecluster
