@@ -32,8 +32,11 @@ OPTIONS
   -h --help
     Print help
 
-  -v --version
+  --version
     Print version
+
+  -v --verbose
+    Verbose operations, ask for conformation.
 
   -n --name=STR
     Filter by name, may be regular expression (e.g. "dir.*file.ext").
@@ -59,9 +62,49 @@ COPYRIGHT
 
   T.W.J. de Geus
   '''
+
   sys.exit(0)
 
 # ==============================================================================
+
+# ------------------------------------------------------------------------------
+# prompt user configuration
+# ------------------------------------------------------------------------------
+
+def confirm(prompt):
+  '''
+Prompt the user for confirmation.
+
+:arguments:
+
+  **prompt** (``<str>``)
+    Message to prompt the user.
+
+:return:
+
+  **response** (``True`` | ``False``)
+    The user's answer.
+  '''
+
+  prompt = '%s\ny/n?\n'%prompt
+
+  while True:
+
+    user = raw_input(prompt)
+
+    if not user:
+      print 'please enter y or n.'
+      continue
+
+    if user not in ['y', 'Y', 'n', 'N']:
+      print 'please enter y or n.'
+      continue
+
+    if user == 'y' or user == 'Y':
+      return True
+
+    if user == 'n' or user == 'N':
+      return False
 
 # ------------------------------------------------------------------------------
 # parse command-line arguments
@@ -70,8 +113,9 @@ COPYRIGHT
 # set options/arguments
 opts = [\
   (('-h','--help'   ),dict(action='store_true'           )),
-  (('-v','--version'),dict(action='store_true'           )),
+  ((     '--version'),dict(action='store_true'           )),
   (('-t','--tempdir'),dict(action='store_true'           )),
+  (('-v','--verbose'),dict(action='store_true'           )),
   (('-n','--name'   ),dict(nargs=1  ,type=str            )),
   (('-s','--state'  ),dict(nargs=1  ,type=str            )),
   (('-i','--id'     ),dict(nargs=1  ,type=str            )),
@@ -113,6 +157,10 @@ jobs = [job for job in gpbs.read_qstat() if job.owner==user]
 if args['id'   ] is not None: jobs = [job for job in jobs if re.match(args['id']   , job.id   )]
 if args['name' ] is not None: jobs = [job for job in jobs if re.match(args['name'] , job.name )]
 if args['state'] is not None: jobs = [job for job in jobs if          args['state']==job.state ]
+
+if args['verbose']:
+  if not confirm('qdel '+' '.join([job.id for job in jobs])):
+    sys.exit(0)
 
 # split queued and not-queued jobs
 queued = [job.id for job in jobs if job.state=='Q']
