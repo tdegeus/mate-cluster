@@ -29,26 +29,31 @@ DESCRIPTION
 
 OPTIONS
 
-  -h --help
+  -h, --help
     Print help
 
   --version
     Print version
 
-  -v --verbose
+  -v, --verbose
     Verbose operations, ask for conformation.
 
-  -n --name=STR
+  -n, --name=STR
     Filter by name, may be regular expression (e.g. "dir.*file.ext").
 
-  -i --id=STR
+  -i, --id=STR
     Filter by job-id, may be regular expression.
 
-  -s --state=STR
+  -s, --state=STR
     Filter by state, e.g.: 'Q', 'R'.
 
-  -t --tempdir
+  -t, --tempdir
     Remove temporary working directory.
+
+  -c, --copy=DIR
+    Copy the data from the temporary directory before deleting the job (and
+    removing it, if the option "-t" is also used). If no directory is specified
+    the directory of the output-file is used.
 
 SEE ALSO
 
@@ -112,13 +117,14 @@ Prompt the user for confirmation.
 
 # set options/arguments
 opts = [\
-  (('-h','--help'   ),dict(action='store_true'           )),
-  ((     '--version'),dict(action='store_true'           )),
-  (('-t','--tempdir'),dict(action='store_true'           )),
-  (('-v','--verbose'),dict(action='store_true'           )),
-  (('-n','--name'   ),dict(nargs=1  ,type=str            )),
-  (('-s','--state'  ),dict(nargs=1  ,type=str            )),
-  (('-i','--id'     ),dict(nargs=1  ,type=str            )),
+  (('-h','--help'   ),dict(action='store_true'             )),
+  ((     '--version'),dict(action='store_true'             )),
+  (('-t','--tempdir'),dict(action='store_true'             )),
+  (('-v','--verbose'),dict(action='store_true'             )),
+  (('-c','--copy'   ),dict(nargs='?',type=str,default=False)),
+  (('-n','--name'   ),dict(nargs=1  ,type=str              )),
+  (('-s','--state'  ),dict(nargs=1  ,type=str              )),
+  (('-i','--id'     ),dict(nargs=1  ,type=str              )),
 ]
 
 # parse command-line arguments
@@ -174,6 +180,19 @@ for job in jobs:
 
   # delete job
   commands.getoutput('qdel '+job.id)
+
+  # copy the data from the temporary working directory
+  if args['copy']!=False and re.match('[0-9]+',str(job.host)):
+
+    if   type(args['copy'])==str    : dest = args['copy']
+    elif job.output_path is not None: dest = os.path.dirname(job.output_path)
+    else                            : print '--copy: unknown destination'; sys.exit(1)
+
+    commands.getoutput("scp -r {node:s}:{temp:s}/* {dest:s}/".format(
+      node = 'compute-0-'+str(job.host),
+      temp = gpbs.script.tempdir.format(user=user,jobid=job.id),
+      dest = dest,
+    ))
 
   # remove temporary working directory
   if args['tempdir'] and re.match('[0-9]+',str(job.host)):
