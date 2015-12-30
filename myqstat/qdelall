@@ -122,9 +122,9 @@ opts = [\
   (('-t','--tempdir'),dict(action='store_true'             )),
   (('-v','--verbose'),dict(action='store_true'             )),
   (('-c','--copy'   ),dict(nargs='?',type=str,default=False)),
-  (('-n','--name'   ),dict(nargs=1  ,type=str              )),
-  (('-s','--state'  ),dict(nargs=1  ,type=str              )),
-  (('-i','--id'     ),dict(nargs=1  ,type=str              )),
+  (('-n','--name'   ),dict(nargs='+',type=str              )),
+  (('-s','--state'  ),dict(nargs='+',type=str              )),
+  (('-i','--id'     ),dict(nargs='+',type=str              )),
 ]
 
 # parse command-line arguments
@@ -140,10 +140,10 @@ args = vars(parser.parse_args())
 # - convert to string
 for key in ['name','id']:
   if type(args[key])==list:
-    args[key] = re.compile('^'+args[key][0]+'$')
+    args[key] = [re.compile('^'+item+'$') for item in args[key]]
 for key in ['state']:
   if type(args[key])==list:
-    args[key] = args[key][0].upper()
+    args[key] = [item.upper() for item in args[key]]
 
 # print help and exit
 if args['help']:
@@ -159,11 +159,21 @@ if args['version']:
 user = pwd.getpwuid(os.getuid())[0]
 jobs = [job for job in gpbs.read_qstat() if job.owner==user]
 
-# filter the jobs by name/id
-if args['id'   ] is not None: jobs = [job for job in jobs if re.match(args['id']   , job.id   )]
-if args['name' ] is not None: jobs = [job for job in jobs if re.match(args['name'] , job.name )]
-if args['state'] is not None: jobs = [job for job in jobs if          args['state']==job.state ]
+# filter the jobs by
+# - id
+if args['id'] is not None:
+  for item in args['id']:
+    jobs = [job for job in jobs if re.match(item,job.id)]
+# - name
+if args['name' ] is not None:
+  for item in args['name']:
+    jobs = [job for job in jobs if re.match(item,job.name)]
+# - state
+if args['state'] is not None:
+  for item in args['state']:
+    jobs = [job for job in jobs if item==job.state]
 
+# optionally ask for confirmation
 if args['verbose']:
   if not confirm('qdel '+' '.join([job.id for job in jobs])):
     sys.exit(0)
