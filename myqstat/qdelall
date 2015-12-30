@@ -143,7 +143,7 @@ for key in ['name','id']:
     args[key] = [re.compile('^'+item+'$') for item in args[key]]
 for key in ['state']:
   if type(args[key])==list:
-    args[key] = [item.upper() for item in args[key]]
+    args[key] = [re.compile('^'+item.upper()+'$') for item in args[key]]
 
 # print help and exit
 if args['help']:
@@ -159,19 +159,10 @@ if args['version']:
 user = pwd.getpwuid(os.getuid())[0]
 jobs = [job for job in gpbs.read_qstat() if job.owner==user]
 
-# filter the jobs by
-# - id
-if args['id'] is not None:
-  for item in args['id']:
-    jobs = [job for job in jobs if re.match(item,job.id)]
-# - name
-if args['name' ] is not None:
-  for item in args['name']:
-    jobs = [job for job in jobs if re.match(item,job.name)]
-# - state
-if args['state'] is not None:
-  for item in args['state']:
-    jobs = [job for job in jobs if item==job.state]
+# filter the jobs by: id, name, state
+if args['id'   ] is not None: jobs =[[job for job in jobs if re.match(item,job.id   )] for item in args['id'   ]]; jobs = [job for sub in jobs for job in sub]
+if args['name' ] is not None: jobs =[[job for job in jobs if re.match(item,job.name )] for item in args['name' ]]; jobs = [job for sub in jobs for job in sub]
+if args['state'] is not None: jobs =[[job for job in jobs if re.match(item,job.state)] for item in args['state']]; jobs = [job for sub in jobs for job in sub]
 
 # optionally ask for confirmation
 if args['verbose']:
