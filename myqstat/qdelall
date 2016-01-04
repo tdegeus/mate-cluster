@@ -155,6 +155,9 @@ if args['version']:
 # main program
 # ------------------------------------------------------------------------------
 
+# select the jobs
+# ---------------
+
 # read all of the user's jobs
 user = pwd.getpwuid(os.getuid())[0]
 jobs = [job for job in gpbs.read_qstat() if job.owner==user]
@@ -165,9 +168,23 @@ if args['name' ] is not None: jobs =[[job for job in jobs if re.match(item,job.n
 if args['state'] is not None: jobs =[[job for job in jobs if re.match(item,job.state)] for item in args['state']]; jobs = [job for sub in jobs for job in sub]
 
 # optionally ask for confirmation
+# -------------------------------
+
 if args['verbose']:
-  if not confirm('qdel '+' '.join([job.id for job in jobs])):
+  # calculate width of the columns to align
+  keys = ['id','owner','name']
+  N    = [0 for key in keys]
+  for ikey,key in enumerate(keys):
+    for job in jobs:
+      N[ikey] = max(N[ikey],len(str(getattr(job,key))))
+  fmt  = '{id:%ds} {owner:%ds} {name:%ds}'%tuple(N)
+  # create message
+  message = 'Delete the following jobs?\n'+'\n'.join([fmt.format(**vars(job)) for job in jobs])
+  if not confirm(message):
     sys.exit(0)
+
+# delete the jobs
+# ---------------
 
 # split queued and not-queued jobs
 queued = [job.id for job in jobs if job.state=='Q']
