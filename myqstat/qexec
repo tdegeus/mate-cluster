@@ -104,13 +104,15 @@ EXAMPLE 1 - run a batch of Python scripts
 
 EXAMPLE 2 - resume "EXAMPLE 1", without rerunning/resubmitting jobs
 
-  $ qexec -n 72 -t -c "python %s" -i `ls sim*/run.py | qfilter`
+  $ qexec -n 72 -t -c "python %s" -i `ls config*/sim*/run.py | qfilter`
+  $ qexec -n 72 -t -c "python %s" -i `printf "%s\n" config1/sim*/run.py config2/sim*/run.py | qfilter`
 
   Breakdown of the difference with respect to EXAMPLE 1:
 
-    -i `ls sim*/run.py | qfilter`
-          lists all files "sim*/run.py" and then filters this list with existing
-          (or running) "sim*/run.out"
+    -i `ls config*/sim*/run.py | qfilter`
+          lists all files "config*/sim*/run.py" and then filters this list with
+          existing (or running) "config*/sim*/run.out". The "printf" command can
+          be used to preserve the order of the arguments.
 
 TIPS
 
