@@ -1,6 +1,6 @@
 '''
 This module provides functions to read the ``qstat``, ``pbsnodes`` and
-``ganglia`` command, and store:
+``ganglia`` commands, and store:
 
 * ``myqstat``     : a list of ``<gpbs.Job>``
 * ``myqstat_user``: a list of ``<gpbs.Owner>``
@@ -131,30 +131,22 @@ Compare two instances of the ``<Host>``-class.
     '''
 
     # catch None arguments
-    if type(other)==type(None):
-      return -1
-    if len(self.node)==0:
-      return -1
+    if type(other)    == type(None): return -1
+    if len(self.node) == 0         : return -1
 
     # allow for several comparison types
-    if type(other)==str:
-      other = Host(other)
-    elif type(other)==int:
-      other = Host(node=[other])
-    elif type(other)==list:
-      other = Host(node= other )
+    if   type(other)==str : other = Host(      other )
+    elif type(other)==int : other = Host(node=[other])
+    elif type(other)==list: other = Host(node= other )
 
     # check if any of the nodes match
     if len([True for i in self.node if i in other.node])>0:
       return 0
 
     # compare not matching host
-    if min(self.node) < min(other.node):
-      return -1
-    elif min(self.node) > min(other.node):
-      return +1
-    else:
-      return  0
+    if   min(self.node) < min(other.node): return -1
+    elif min(self.node) > min(other.node): return +1
+    else                                 : return  0
 
   # ----------------------------------------------------------------------------
   # number of CPUs
@@ -176,10 +168,8 @@ Compare two instances of the ``<Host>``-class.
   def __format__(self,fmt):
 
     # break up print format in pieces / set default
-    if len(fmt)>0:
-      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
-    else:
-      fmt = ['','','','','','','']
+    if len(fmt)>0: fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else         : fmt = ['','','','','','','']
 
     # set default precision
     precision = '0'
@@ -281,20 +271,14 @@ of nodes, the amount of CPUs, and the type of CPU.
       if args[0] is not None and args[0] is not '':
         # extract node information from other resources
         text = args[0]
-        if   len(text.split('nodes='))>1:
-          text = 'nodes='+text.split('nodes=')[1].split(',')[0]
-        elif len(text.split('ppn='))>1:
-          text = 'ppn='  +text.split('ppn='  )[1].split(',')[0]
-        else:
-          text = text.split(',')[0]
+        if   len(text.split('nodes='))>1: text = 'nodes='+text.split('nodes=')[1].split(',')[0]
+        elif len(text.split('ppn='  ))>1: text = 'ppn='  +text.split('ppn='  )[1].split(',')[0]
+        else                            : text =          text.split(','     )[0]
         # read node information
         for arg in text.split(':'):
-          if   len(arg.split('nodes='))>1:
-            self.nodes = int(arg.split('nodes=')[1])
-          elif len(arg.split('ppn='  ))>1:
-            self.ppn   = int(arg.split('ppn='  )[1])
-          else:
-            self.ctype = arg
+          if   len(arg.split('nodes='))>1: self.nodes = int(arg.split('nodes=')[1])
+          elif len(arg.split('ppn='  ))>1: self.ppn   = int(arg.split('ppn='  )[1])
+          else                           : self.ctype =     arg
 
     # optional overwrite with options
     self.nodes = kwargs.pop( 'nodes' , getattr(self,'nodes',1   ) )
@@ -318,12 +302,9 @@ Compare two arguments of the "ResNode" class.
     '''
     default = lambda x: 1 if x is None else x
 
-    if   default(self.nodes)*default(self.ppn) < default(other.nodes)*default(other.ppn):
-      return -1
-    elif default(self.nodes)*default(self.ppn) > default(other.nodes)*default(other.ppn):
-      return +1
-    else:
-      return  0
+    if   default(self.nodes)*default(self.ppn) < default(other.nodes)*default(other.ppn): return -1
+    elif default(self.nodes)*default(self.ppn) > default(other.nodes)*default(other.ppn): return +1
+    else                                                                                : return  0
 
   # ----------------------------------------------------------------------------
   # convert to string
@@ -354,12 +335,9 @@ Compare two arguments of the "ResNode" class.
     # print short-hand
     if not pbs:
       text = ''
-      if self.nodes is not None:
-        text +=     str(self.nodes)
-      if self.ppn is not None:
-        text += ':'+str(self.ppn)
-      if self.ctype is not None:
-        text += ':'+self.ctype[0]
+      if self.nodes is not None: text +=     str(self.nodes)
+      if self.ppn   is not None: text += ':'+str(self.ppn  )
+      if self.ctype is not None: text += ':'+    self.ctype[0]
       return fmt.format(text)
 
     # print long
@@ -398,22 +376,17 @@ specified:
 
   def __init__(self,arg):
 
-    if arg is None or arg is '':
-      self.arg = None
-    elif type(arg)==str:
-      self.arg = self.str2float(arg)
-    else:
-      self.arg = arg
+    if   arg is None or arg is '': self.arg = None
+    elif type(arg)==str          : self.arg = self.str2float(arg)
+    else                         : self.arg = arg
 
   # ----------------------------------------------------------------------------
   # functions to convert to float or string, makes comparison easy
   # ----------------------------------------------------------------------------
 
   def __float__(self):
-    if self.arg is None:
-      return 0.0
-    else:
-      return self.arg
+    if self.arg is None: return 0.0
+    else               : return self.arg
 
   def __int__(self):
     return int(float(self))
@@ -480,10 +453,8 @@ and is converted to a float to do the comparison.
 
     # act on other None
     if other is None:
-      if self.arg is None:
-        return 0
-      else:
-        return -1
+      if self.arg is None: return  0
+      else               : return -1
 
     # convert string to float
     # - if the comparison is embedded in the string (e.g. ">10d") the comparison
@@ -499,25 +470,18 @@ and is converted to a float to do the comparison.
 
       # perform comparison, the '-1' is arbitrarily unequal to 0
       if len(compare)>0:
-        if eval('float(self) %s other' % compare):
-          return 0
-        else:
-          return -1
+        if eval('float(self) %s other' % compare): return  0
+        else                                     : return -1
 
     # act on None
     if self.arg is None:
-      if type(other)==float:
-        return 0
-      else:
-        return -1
+      if type(other)==float: return  0
+      else                 : return -1
 
     # compare to other values: class/float/int
-    if float(self) < float(other):
-      return -1
-    elif float(self) > float(other):
-      return +1
-    else:
-      return  0
+    if   float(self) < float(other): return -1
+    elif float(self) > float(other): return +1
+    else                           : return  0
 
 
 # ==============================================================================
@@ -597,10 +561,8 @@ Class to store time, and print in an easily readable format.
       return float(arg.split(unit)[0])*ratio[unit]
 
     # final possibility: string without a unit
-    try:
-      return float(arg)
-    except:
-      raise IOError('Unknown input string "%s"' % arg)
+    try   : return float(arg)
+    except: raise IOError('Unknown input string "%s"' % arg)
 
   # ----------------------------------------------------------------------------
   # convert to string
@@ -610,16 +572,12 @@ Class to store time, and print in an easily readable format.
 
     # print seconds as float (in different representations)
     if len(fmt)>0:
-      if fmt[-1] in ['f','F','e','E']:
-        return ('{:%s}'%fmt).format(float(self))
-      if fmt[-1] in ['m','s']:
-        fmt = fmt[:-1]+'%'
+      if fmt[-1] in ['f','F','e','E']: return ('{:%s}'%fmt).format(float(self))
+      if fmt[-1] in ['m','s'        ]: fmt = fmt[:-1]+'%'
 
     # break up print format in pieces / set default
-    if len(fmt)>0:
-      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
-    else:
-      fmt = ['','','','','','','']
+    if len(fmt)>0: fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else         : fmt = ['','','','','','','']
 
     # set defaults: misuse percent print to append unit
     fmt[-2] = '%'
@@ -735,10 +693,8 @@ Class to store data, and print in an easily readable format.
           return float(arg.split(unit)[0])*ratio[unit]
 
     # final possibility: string without a unit
-    try:
-      return float(arg)
-    except:
-      raise IOError('Unknown input string "%s"' % arg)
+    try   : return float(arg)
+    except: raise IOError('Unknown input string "%s"' % arg)
 
   # ----------------------------------------------------------------------------
   # convert to string
@@ -748,16 +704,12 @@ Class to store data, and print in an easily readable format.
 
     # print seconds as float (in different representations)
     if len(fmt)>0:
-      if fmt[-1] in ['f','F','e','E']:
-        return ('{:%s}'%fmt).format(float(self))
-      if fmt[-1] in ['m','s']:
-        fmt = fmt[:-1]+'%'
+      if fmt[-1] in ['f','F','e','E']: return ('{:%s}'%fmt).format(float(self))
+      if fmt[-1] in ['m','s'        ]: fmt = fmt[:-1]+'%'
 
     # break up print format in pieces / set default
-    if len(fmt)>0:
-      fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
-    else:
-      fmt = ['','','','','','','']
+    if len(fmt)>0: fmt = re.split('([><^=+-]?)([0-9]*)(\.?)([0-9]*)(.*)',fmt)
+    else         : fmt = ['','','','','','','']
 
     # set defaults: misuse percent print to append unit
     fmt[-2] = '%'
@@ -827,10 +779,8 @@ to a string results in an empty string.
   # ----------------------------------------------------------------------------
 
   def __init__(self,arg):
-    try:
-      self.arg = float(arg)
-    except:
-      self.arg = None
+    try   : self.arg = float(arg)
+    except: self.arg = None
 
   # ----------------------------------------------------------------------------
   # formatted print

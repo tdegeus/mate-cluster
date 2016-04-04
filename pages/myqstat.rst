@@ -23,8 +23,9 @@ Job monitoring and control
   * :download:`qdelall <../myqstat/qdelall>`
   * :download:`qexec <../myqstat/qexec>`
   * :download:`qfilter <../myqstat/qfilter>`
+  * :download:`qcp <../myqstat/qcp>`
 
-  All of the shell-scripts below are written in Python, but can be used as any shell-script. However, they all belong on the (custom) ``gpbs``-module. This module must be made available before the scripts can be used. The steps below "install" ``myqstat``, the same steps hold for the other scripts.
+  All of the shell-scripts below are written in Python, but can be used as any shell-script. However, they all depend on the (custom) ``gpbs``-module. This module must be made available before the scripts can be used. The steps below "install" ``myqstat``, the same steps hold for the other scripts.
 
   1.  Store the file ``myqstat`` somewhere, and make sure that it is executable. For example:
 
@@ -66,18 +67,80 @@ Job monitoring and control
 ``myqstat``
 ===========
 
+The ``myqstat``-command prints prints the output of the ``qstat -f``, ``pbsnodes`` and/or ``ganglia`` command in an easy to understand output.
+
+For example:
+
+.. code-block:: bash
+
+  $ myqstat
+
+  ID   Owner    Job name  Host  CPUs  Mem  S  Time  Score
+  ===  =======  ========  ====  ====  ===  =  ====  =====
+  690  tdegeus  job.pbs     17   1:1  1gb  R  7.2m   0.99
+
+  $ myqstat -U
+
+  owner     cpus  mem    time  score
+  ========  ====  =====  ====  =====
+  tdegeus      1    1gb    7m   0.99
+
+  $ myqstat -N
+
+  Node  State          Ctot  Cfree  Score  Mtot   Mem%
+  ====  =============  ====  =====  =====  =====  ====
+     0  free             16     16   1.00  265gb  0.01
+     1  free             16     15   0.99  265gb  0.01
+  -----------------------------
+  number of CPUs total    :  32
+  number of CPUs offline  :   0
+  number of CPUs online   :  32
+  number of CPUs working  :   1
+  number of CPUs free     :  31
+
+Popular options include:
+
+* ``myqstat -u``: limit output to that belonging to the current user
+* ``myqstat -u NAME``: limit output to specific user
+* ``myqstat -w``: limit output to all other users except the current user
+* ``myqstat -w NAME``: limit output to all other users except the specified user
+* ``myqstat -U``: print a summary per user
+* ``myqstat -N``: print a summary per node
+
 ``qdelall``
 ===========
+
+The ``qdelall``-command can delete a group of jobs using simple filters. For example:
+
+.. code-block:: bash
+
+  # delete all of the user's jobs
+  $ qdelall
+
+  # delete all of the user's jobs,
+  # but ask for confirmation before deleting the jobs
+  $ qdelall -v
+
+  # delete all of the user's jobs and try to remove the temporary directory
+  # on the compute-node
+  $ qdelall -t
 
 ``qexec``
 =========
 
-``qfilter``
-===========
+The ``qexec``-command can submit a group of jobs using a single commands. It can also be used to submit a very large batch of jobs, whereby only a prespecified number of jobs is run in parallel. For example:
 
 
+.. code-block:: bash
 
+  $ qexec -i sim*/*.pbs
 
+To remove the running jobs from the input list of (PBS-)files use the ``qfilter``-command.
+
+``qcp``
+=======
+
+The ``qcp``-command copies data from a temporary working directory on the compute-node to the job's directory on the head-node.
 
 .. _implemenation:
 
@@ -99,11 +162,10 @@ calls one of the following functions, before exiting:
 * ``myqstat_node``: acts on ``myqstat -N``
 * ``myqstat_user``: acts on ``myqstat -U``
 
-The latter three functions use the ``gpbs`` module to read, convert, and print
+The latter three functions use the ``gpbs``-module to read, convert, and print
 the data of the relevant commands. The local ``getTerminalSize`` and
 ``column_width`` functions are used to adapt the output to the size available
 in the current window.
-
 
 ``gpbs.py``
 ===========
@@ -133,6 +195,17 @@ also some custom classes discussed below.
     gpbs.Job
     gpbs.Node
     gpbs.Owner
+
+All these classes have the customized functionality to obtain a field as data or
+as string (with a certain formatting default). Consider the following example:
+
+.. code-block:: python
+
+  >>> type(job.cputime)
+  <class 'gpbs.Time'>
+
+  >>> type(job['cputime'])
+  <str>
 
 Formatted print
 ---------------

@@ -234,6 +234,12 @@ the defaults/options.
     opts = [\
       (('-h','--help'        ),dict(action='store_true'              )),
       (('-v','--version'     ),dict(action='store_true'              )),
+      ((     '--noheader'    ),dict(action='store_true'              )),
+      (('-U','--user-summary'),dict(action='store_true'              )),
+      (('-N','--node-summary'),dict(action='store_true'              )),
+      ((     '--long'        ),dict(action='store_true'              )),
+      ((     '--debug'       ),dict(action='store_true'              )),
+      ((     '--nocolor'     ),dict(action='store_true'              )),
       (('-u','--user'        ),dict(nargs='*',type=str               )),
       (('-w','--exclude-user'),dict(nargs='*',type=str               )),
       (('-j','--jobname'     ),dict(nargs='+',type=str               )),
@@ -248,12 +254,6 @@ the defaults/options.
       (('-d','--del-col'     ),dict(nargs=1  ,type=str,dest='delcol' )),
       ((     '--ifs'         ),dict(nargs=1  ,type=str,default='  '  )),
       ((     '--trunc'       ),dict(nargs=1  ,type=str,default='...' )),
-      ((     '--noheader'    ),dict(action='store_true'              )),
-      (('-U','--user-summary'),dict(action='store_true'              )),
-      (('-N','--node-summary'),dict(action='store_true'              )),
-      ((     '--long'        ),dict(action='store_true'              )),
-      ((     '--debug'       ),dict(action='store_true'              )),
-      ((     '--nocolor'     ),dict(action='store_true'              )),
     ]
 
     # parse command-line arguments
@@ -262,18 +262,14 @@ the defaults/options.
     # create argument parser
     parser = argparse.ArgumentParser(add_help=False)
     for (arg,opt) in opts:
-      if type(arg)==tuple:
-        parser.add_argument(*arg,**opt)
-      else:
-        parser.add_argument(arg,**opt)
+      if type(arg)==tuple: parser.add_argument(*arg,**opt)
+      else               : parser.add_argument( arg,**opt)
     # read arguments from command-line, convert to "<dict>"
     args = vars(parser.parse_args())
 
     # print help and exit
-    if args['help']:
-      self.help()
-    if args['version']:
-      self.version()
+    if args['help'   ]: self.help()
+    if args['version']: self.version()
 
     # additional checking and defaults
     # --------------------------------
@@ -315,17 +311,10 @@ the defaults/options.
     for key in args:
       setattr(self,key,args[key])
 
-    # select the mode in which to print the output
-    mode = 'qstat'
-    if args['user_summary']: mode = 'user'
-    if args['node_summary']: mode = 'node'
-    # print the output in one of the differnt modes
-    if mode=='qstat':
-      self.myqstat()
-    elif mode=='user':
-      self.myqstat_user()
-    elif mode=='node':
-      self.myqstat_node()
+    # read output / print
+    if   args['user_summary']: self.myqstat_user()
+    elif args['node_summary']: self.myqstat_node()
+    else                     : self.myqstat()
 
   # ----------------------------------------------------------------------------
   # print myqstat
@@ -337,7 +326,7 @@ Print the output for the ``myqstat`` command.
     '''
 
     # define column settings, based on alias [options: -s/-c]
-    columns = {}
+    columns      = {}
     columns['i'] = dict(key='id'         ,head='ID'      ,wmin= 6,rel= 0)
     columns['o'] = dict(key='owner'      ,head='Owner'   ,wmin= 7,rel= 2)
     columns['u'] = dict(key='owner'      ,head='Owner'   ,wmin= 7,rel= 2)
@@ -357,7 +346,7 @@ Print the output for the ``myqstat`` command.
     )
 
     # set list with command-line argument aliases [options: -u/-j/-i/-n/-t]
-    alias = {}
+    alias            = {}
     alias['user'   ] = 'o'
     alias['jobname'] = 'n'
     alias['id'     ] = 'i'
@@ -425,16 +414,13 @@ Print the output for the ``myqstat`` command.
     columns = column_width(jobs,columns,ifs=self.ifs,fit_screen=not self.long)
 
     # set the colors
-    if self.nocolor:
-      color = gpbs.ColorNone
-    else:
-      color = gpbs.ColorDefault
+    if self.nocolor: color = gpbs.ColorNone
+    else           : color = gpbs.ColorDefault
 
+    # print output
     if len(jobs)>0:
-      # print header
       if not self.noheader:
         print jobs[0].print_header(columns,line='=',ifs=self.ifs,trunc=self.trunc).format(color=color)
-      # print jobs
       for job in jobs:
         print job.print_column(columns,ifs=self.ifs,trunc=self.trunc).format(color=color)
 
@@ -448,7 +434,7 @@ Print the output for the ``myqstat -N`` command.
     '''
 
     # define column settings, based on alias [options: -s/-c]
-    columns = {}
+    columns      = {}
     columns['n'] = dict(key='node'       ,head='Node'   ,wmin=4,rel= 0)
     columns['s'] = dict(key='state'      ,head='State'  ,wmin=6,rel= 1)
     columns['t'] = dict(key='ctype'      ,head='Type'   ,wmin=5,rel= 2)
@@ -499,16 +485,13 @@ Print the output for the ``myqstat -N`` command.
     columns = column_width(nodes,columns,ifs=self.ifs,fit_screen=not self.long)
 
     # set the colors
-    if self.nocolor:
-      color = gpbs.ColorNone
-    else:
-      color = gpbs.ColorDefault
+    if self.nocolor: color = gpbs.ColorNone
+    else           : color = gpbs.ColorDefault
 
+    # print output
     if len(nodes)>0:
-      # print header
       if not self.noheader:
         print nodes[0].print_header(columns,line='=',ifs=self.ifs,trunc=self.trunc).format(color=color)
-      # print nodes
       for job in nodes:
         print job.print_column(columns,ifs=self.ifs,trunc=self.trunc).format(color=color)
 
@@ -561,7 +544,7 @@ Print the output for the ``myqstat -U`` command.
     '''
 
     # define column settings, based on alias [options: -s/-c]
-    columns = {}
+    columns      = {}
     columns['o'] = dict(key='owner'      ,head='owner'   ,wmin= 7,rel= 0)
     columns['u'] = dict(key='owner'      ,head='owner'   ,wmin= 7,rel= 0)
     columns['c'] = dict(key='cpus'       ,head='cpus'    ,wmin= 3,rel= 1)
@@ -602,16 +585,13 @@ Print the output for the ``myqstat -U`` command.
     columns = column_width(owners,columns,ifs=self.ifs,fit_screen=not self.long)
 
     # set the colors
-    if self.nocolor:
-      color = gpbs.ColorNone
-    else:
-      color = gpbs.ColorDefault
+    if self.nocolor: color = gpbs.ColorNone
+    else           : color = gpbs.ColorDefault
 
+    # print output
     if len(owners)>0:
-      # print header
       if not self.noheader:
         print owners[0].print_header(columns,line='=',ifs=self.ifs,trunc=self.trunc).format(color=color)
-      # print owners
       for owner in owners:
         print owner.print_column(columns,ifs=self.ifs,trunc=self.trunc).format(color=color)
 

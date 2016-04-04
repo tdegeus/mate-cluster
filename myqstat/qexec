@@ -55,6 +55,9 @@ OPTIONS
     Only check the queue that of the jobs submitted with this script. Otherwise
     all the user's jobs are taken into account.
 
+  -i --input=STR
+    List with input (PBS-)files.
+
   -c --command=STR
     Command to execute (e.g.: "python %s")
 

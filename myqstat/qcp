@@ -21,7 +21,7 @@ NAME
 
 USAGE
 
-  $ qcp [-n NAME] [-i ID]
+  $ qcp [-n NAME] [-i ID] [-s STATE]
 
 DESCRIPTION
 
@@ -37,6 +37,15 @@ OPTIONS
 
   -v, --verbose
     Verbose operations, ask for conformation.
+
+  -n, --name=STR
+    Filter by name, may be regular expression (e.g. "dir.*file.ext").
+
+  -i, --id=STR
+    Filter by job-id, may be regular expression.
+
+  -s, --state=STR
+    Filter by state, e.g.: 'Q', 'R'.
 
 SEE ALSO
 

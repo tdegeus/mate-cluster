@@ -21,7 +21,7 @@ NAME
 
 USAGE
 
-  $ qdel [-n NAME] [-i ID]
+  $ qdelall [-n NAME] [-i ID] [-s STATE] [-t] [-v] [-c]
 
 DESCRIPTION
 
@@ -136,10 +136,8 @@ opts = [\
 # - create parser
 parser = argparse.ArgumentParser(add_help=False)
 for (arg,opt) in opts:
-  if type(arg)==tuple:
-    parser.add_argument(*arg,**opt)
-  else:
-    parser.add_argument(arg,**opt)
+  if type(arg)==tuple: parser.add_argument(*arg,**opt)
+  else               : parser.add_argument( arg,**opt)
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
 # - convert to string
