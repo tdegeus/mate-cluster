@@ -45,7 +45,7 @@ Monitoring the job is done with the ``qstat`` command. To get all information av
 
 .. note::
 
-  The customized ``myqstat`` script which is available on the furnace cluster. This script generates more readable reports of the currently running jobs. See also:
+  The customized :ref:`monitoring_myqstat` script which is available on the furnace cluster. This script generates more readable reports of the currently running jobs. See also:
 
   * ``myqstat -h``
 
@@ -177,13 +177,13 @@ Consider this example ``.pbs`` script (which is executed (only) on the compute-n
 
 Let us examine several lines of this script:
 
-8.  the username is stored in the variable ``username`` (the used quotes are called back-quotes)
+9.  the username is stored in the variable ``username`` (the used quotes are called back-quotes)
 
-13. the path of a temporary directory is constructed using the username and the unique job id
+15. the path of a temporary directory is constructed using the username and the unique job id
 
-19. test if the ``$computedir`` location exists or not
+21. test if the ``$computedir`` location exists or not
 
-21. if it does not exist, create it including any necessary parent directories (``-p`` option)
+22. if it does not exist, create it including any necessary parent directories (``-p`` option)
 
 24. if it does exist, then a previous job (with the same name) accidentally left it lingering, clean the contents and it is ready for re-use
 
@@ -193,37 +193,46 @@ Let us examine several lines of this script:
 
 33. change to the temporary directory
 
-42-44. the execute part, the reason why we issued this job, typically some heavy MSC-Marc, Matlab, Fortan, C program
+28-43. the execute part, the reason why we issued this job, typically some heavy MSC-Marc, Matlab, Fortan, C program
 
-50. change back to the qsub directory (on the head node)
+49. change back to the qsub directory (on the head node)
 
-52. copy everything from the temporary directory to here (the ``.`` means here)
+51. copy everything from the temporary directory to here (the ``.`` means here)
 
-54. delete the temporary directory
+53. delete the temporary directory
 
 .. warning::
 
   If your job fails in any way it will leave your data on the compute-node, please remember to clean it manually (see :ref:`etiquette-monitor-resources-rocks`).
 
+.. note::
+
+    As any other PBS-script, the entire script runs on the compute-node. The only thing that used from the head-node is the hard-drive (mounted on :file:`/home/username/`), specifically before executing the computations (line 38-43) and after completing the computations (line 49-53).
+
+
 Common pitfalls
 ---------------
 
-1.  This script:
+* This script copies all files, folders, and sub-folders in the directory where the ``qsub``-command is executed. It is therefore important that the command is executed in the right directory. It should be as far down as possible, otherwise the script copies too many files.
 
-    (a) creates a temporary folder on the compute-node,
-    (b) copies all files (and sub-folders) in a certain location on the head-node,
-    (c) executes the computations,
-    (d) copies all files (and sub-folders) back from the temporary folder to the original location on the head-node.
+  For example the simulation is located in ``~/thesis/sim``. It consists of a Python-script ``main.py`` and a similar PBS-script as above in ``job.pbs``. To submit the job:
 
+  .. code-block:: bash
 
-    .. note::
+    $ cd ~/thesis/sim
+    $ qsub job.pbs
 
-      As any other PBS-script, the entire script runs on the compute-node. The only thing that used from the head-node is the hard-drive (mounted on :file:`/home/username/`), specifically before executing the computations (line 27-33) and after completing the computations (line 49-54).
+  The script now creates a temporary folder on the relevant compute-node and copies the files ``main.py`` and ``job.pbs`` to it. It then executes and copies all files (including the output-files) back to ``~/thesis/sim``.
 
-.. todo::
+  If one would use
 
-  * Copy the entire home directory.
+  .. code-block:: bash
 
-  * Absolute path in input file.
+    $ cd ~
+    $ qsub job.pbs
+
+  The script would copy the entire home-folder to the compute-node. This is highly unwanted as it can result in a gigantic file-transfer. Also, it is likely that the script will not run at all.
+
+* Since the file-path is different on the compute-node (because a temporary directory is used) it is essential the relative file-paths are used everywhere in the simulation (see :ref:`sec-bash`). This is always a good idea, but in the case of a temporary directory on the compute-node things may go wrong otherwise.
 
 

@@ -1,5 +1,7 @@
 :tocdepth: 2
 
+.. _monitoring:
+
 **************************
 Job monitoring and control
 **************************
@@ -64,6 +66,8 @@ Job monitoring and control
 
     [user@furnace] $ myqstat
 
+.. _monitoring_myqstat:
+
 ``myqstat``
 ===========
 
@@ -71,7 +75,7 @@ The ``myqstat``-command prints prints the output of the ``qstat -f``, ``pbsnodes
 
 For example:
 
-.. code-block:: bash
+.. code-block:: none
 
   $ myqstat
 
@@ -147,7 +151,6 @@ The ``qcp``-command copies data from a temporary working directory on the comput
 **********************
 Implementation details
 **********************
-
 
 ``myqstat``
 ===========

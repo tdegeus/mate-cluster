@@ -2,7 +2,7 @@
 #PBS -S /bin/bash
 #PBS -j oe
 #PBS -o pbs.out
-#PBS -l nodes=1:ppn=4:intel
+#PBS -l nodes=1:ppn=4
 
 # set number of CPUs as environment variable
 # the library uses this amount of CPUs

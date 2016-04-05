@@ -69,7 +69,7 @@ For each user a personal "home" folder is created on the head-node at ``/home/us
 
 .. note::
 
-  Your personal disk usage can be checked by issuing ``du -sh`` in your home folder, the total disk usage can be checked with ``df -h`` (i.e. the line starting with ``/dev/sdb1``). Further reference:
+  Your personal disk usage can be checked by issuing ``du -sh`` in your home folder, the total disk usage can be checked with ``df -h`` (the line with ``/state/partition1``). Further reference:
 
   * :ref:`sec-bash`
 
@@ -145,7 +145,7 @@ Almost all Linux/Mac distributions have a ssh-client installed. To login to the 
 
   .. code-block:: bash
 
-    [username@mypc ~]$  ssh username@furnace
+    [username@mypc ~]$  ssh username@furnace.wfw.wtb.tue.nl
 
 If this is the first time, ssh will ask you to confirm the identity of the computer you are connecting to. Confirm the question, and enter your password to log-in on the furnace.
 

@@ -91,35 +91,35 @@ The ``myqstat`` command provides the most relevant information about running (or
 
   [username@furnace ~]$ myqstat
 
-  id    , owner    , job name       , host, cpus  , mem  , pmem, S, time, score
-  ------, ---------, ---------------, ----, ------, -----, ----, -, ----, -----
-  188370, tdegeus  , myjob          ,   11,  1:1:i,  10mb,  1gb, R,   2m,  1.00
+  ID   Owner    Job name  Host  CPUs  Mem pmem  S  Time  Score
+  ===  =======  ========  ====  ====  === ====  =  ====  =====
+  690  tdegeus  job.pbs     17   1:1  1gb  2gb  R  7.2m   0.99
 
 Each row in the output corresponds to an individual job, in this example only one job is running. The columns provide information about the job:
 
-* ``id``: the unique job-identifier.
+* ``ID``: the unique job-identifier.
 
-* ``owner``: the owner of the job (the username of the user that has submitted the job).
+* ``Owner``: the owner of the job (the username of the user that has submitted the job).
 
-* ``job name``: the name of the job:
+* ``Job name``: the name of the job:
 
   * set by the ``-N`` option (in this example ``-N "myjob"``),
 
   * if this option was not used, it corresponds to the name of the PBS-file.
 
-* ``host``: the compute-node on which the job is running.
+* ``Host``: the compute-node on which the job is running.
 
-* ``cpus``: the amount of CPU-resources reserved by the ``-l`` option (in this example  ``-l nodes=1:ppn=1:intel``).
+* ``CPUs``: the amount of CPU-resources reserved by the ``-l`` option (in this example  ``-l nodes=1:ppn=1:intel``).
 
-* ``mem``: the amount of memory currently used by the job.
+* ``Mem``: the amount of memory currently used by the job.
 
 * ``pmem``: the amount of memory requested by the ``-l`` option (in this example ``-l pmem=1gb``).
 
 * ``S``: status of the job, can be ``R`` for running or ``Q`` for queued.
 
-* ``time``: the time that the job has been running (i.e. the "walltime").
+* ``Time``: the time that the job has been running (i.e. the "walltime").
 
-* ``score``: the ratio between the time that the reserved processors have been in use and the time that these processes where claimed for the job.
+* ``Score``: the ratio between the time that the reserved processors have been in use and the time that these processes where claimed for the job.
 
 From this output to most important things to monitor are:
 
@@ -145,7 +145,7 @@ For the example above
 
 .. code-block:: bash
 
-  [username@furnace ~]$ myqstat -f 188370
+  [username@furnace ~]$ myqstat -f 690
 
 .. note::
 
@@ -199,7 +199,7 @@ An important part of monitoring jobs is to monitor the status (or "health") of t
 
 * Logging in to the compute-node, and for example:
 
-  .. code-block:: bash
+  .. code-block:: none
 
     [username@furnace ~]$ ssh compute-0-11
 
@@ -214,21 +214,19 @@ myqstat -N
 
 The ``myqstat -N`` command is a wrapper of the ``pbsnodes`` command. It lists the state and the total, used, and available resources of each of the compute-nodes. A typical output is as follows:
 
-.. code-block:: bash
+.. code-block:: none
 
   [username@furnace ~]$ myqstat -N
 
-  Node, State        , Type , Ctot, Cused, Cfree, Score, Mtot , Mused, Mem%
-  ----, -------------, -----, ----, -----, -----, -----, -----, -----, ----
-     0, job-exclusive,   amd,   24,    24,     0,  0.06, 132gb,  19gb, 0.10
-     1, job-exclusive,   amd,   24,    24,     0,  0.06, 132gb,  20gb, 0.10
-  ...
-  -----------------------------------------------------
-  number of CPUs total    : 416 ( 240 amd / 176 intel )
-  number of CPUs offline  :   8 (   0 amd /   8 intel )
-  number of CPUs online   : 408 ( 240 amd / 168 intel )
-  number of CPUs working  : 299 ( 198 amd / 101 intel )
-  number of CPUs free     : 109 (  42 amd /  67 intel )
+  Node  State          Ctot  Cfree  Score  Mtot   Mem%
+  ====  =============  ====  =====  =====  =====  ====
+     0  free             16     16   1.00  265gb  0.01
+     1  free             16     15   0.99  265gb  0.01
+  -----------------------------
+  number of CPUs total    :  32
+  number of CPUs offline  :   0
+  number of CPUs online   :  32
+  number of CPUs working  :   1
 
 The rows correspond to individual compute-nodes. The columns denote:
 
@@ -244,7 +242,7 @@ The rows correspond to individual compute-nodes. The columns denote:
 
   * ``offline``: down for maintenance.
 
-* ``Type``: CPU-type, on ``furnace``: ``amd`` or ``intel``.
+* ``Type``: CPU-type (on ``furnace``: ``amd`` or ``intel``, on ``rng`` the type does not exist).
 
 * ``Ctot``: total number of CPUs in the node.
 
@@ -252,7 +250,7 @@ The rows correspond to individual compute-nodes. The columns denote:
 
 * ``Cfree``: number of CPUs available for new jobs.
 
-* ``Score``: the ratio of time that the reserved processors have been in use and the time that these processes where claimed by jobs. Should be around 1, otherwise there is potential mis-use, see :ref:`etiquette-monitor-jobs-myqstat`.
+* ``Score``: the ratio of time that the reserved processors have been in use and the time that these processes where claimed by jobs. Should be around 1, otherwise there is potential misuse, see :ref:`etiquette-monitor-jobs-myqstat`.
 
 * ``Mtot``: total amount of memory in the node.
 
@@ -264,13 +262,14 @@ Below the list of nodes an overall summary is available, that can be used to com
 
 This give a lot of important information about the jobs. It **does not** list the amount of hard-disk space still available, or the amount of data sent over the internal network by jobs. Therefore information from the ``ganglia`` command can be included in the output as follows:
 
-.. code-block:: bash
+.. code-block:: none
 
   [username@furnace ~]$ myqstat -N --long
 
-  Node, State        , Type , Ctot, Cused, Cfree, Score, Mtot , Mused, Mem%, HDtot, HDused, HD% , Network
-  ----, -------------, -----, ----, -----, -----, -----, -----, -----, ----, -----, ------, ----, -------
-     0, job-exclusive,   amd,   24,    24,     0,  0.05, 132gb,  19gb, 0.10, 177gb,   81gb, 0.46,     8kb
+  Node  State          Ctot  Cfree  Score  Mtot   Mem%  HDtot  HD%   Network
+  ====  =============  ====  =====  =====  =====  ====  =====  ====  =======
+     0  free             16     16   1.00  265gb  0.01    1tb  0.28    316b
+     1  free             16     15   0.99  265gb  0.01    1tb  0.09    263b
   ...
 
 This list the additional columns:
@@ -322,23 +321,15 @@ Besides the "home" folder on the head-node, user-data can be located on the hard
 
     [username@furnace ~]$ rocks run host "ls /state/partition1/`whoami`" | grep -v "Warning" | grep -v "xauth" | grep -v "No such file or directory"
 
-  The output (in case temporary data is left behind on ``compute-0-16``):
+  The output shows any left behind data. If no jobs are running, it should therefore be empty.
 
-  .. code-block:: bash
+  .. warning::
 
-    compute-0-23:
-    compute-0-19:
-    compute-0-16: 188370
-    compute-0-32:
-    compute-0-22:
-    compute-0-25:
-    ...
+    Please make sure that all files that are no longer in use are removed. For the example above the following command could be used:
 
-  Any files remaining on the compute-nodes (*also including currently running jobs*) will be listed behind the compute-node name. Please make sure that all files that are no longer in use are removed. For the example above the following command could be used:
+    .. code-block:: bash
 
-  .. code-block:: bash
-
-    [username@furnace ~]$ ssh compute-0-16 'rm -r /state/partition1/`whoami`/188370'
+      [username@furnace ~]$ ssh compute-0-16 'rm -r /state/partition1/`whoami`/188370'
 
 
 

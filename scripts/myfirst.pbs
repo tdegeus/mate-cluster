@@ -2,7 +2,7 @@
 #PBS -S /bin/bash
 #PBS -j oe
 #PBS -o pbs.out
-#PBS -l nodes=1:ppn=1:intel
+#PBS -l nodes=1:ppn=1
 
 # print the working directory
 pwd

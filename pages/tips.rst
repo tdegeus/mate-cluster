@@ -23,21 +23,21 @@ I want to stop my job, what should I do?
 
 1. Obtain the job-id using the ``myqstat`` (or ``qstat``) command. For example:
 
-   .. code-block:: bash
+   .. code-block:: none
 
       [username@furnace ~]$ myqstat
 
-      jid    , owner     , jobname       , host , cpus   , mem  , S , time , score
-      ------ , --------- , ------------- , ---- , ------ , ---- , — , ---- , -----
-      202169 , username  , myjob.pbs     ,   11 ,  1:1:i ,  1mb , R ,  10s ,  1.00
+      ID   Owner    Job name  Host  CPUs  Mem pmem  S  Time  Score
+      ===  =======  ========  ====  ====  === ====  =  ====  =====
+      690  tdegeus  job.pbs     17   1:1  1gb  2gb  R  7.2m   0.99
 
-   The job to be cancelled has job-id ``202169``.
+   The job to be cancelled has job-id ``690``.
 
 2. Delete the job
 
    .. code-block:: bash
 
-      [username@furnace ~]$ qdel 202169
+      [username@furnace ~]$ qdel 690
 
 3. Are you using a temporary folder on the compute-node (e.g. :ref:`page-queuing-heavyio`)? Be sure to delete all files on the compute node.
 
@@ -52,10 +52,10 @@ I want to stop my job, what should I do?
       # list all files/directories: shows the temporary directory
       [username@compute-0-11 /state/partition1/username]$ ls
 
-        202169
+        690
 
       # remove the temporary directory
-      [username@compute-0-11 /state/partition1/username]$ rm -r 202169
+      [username@compute-0-11 /state/partition1/username]$ rm -r 690
 
       # logout of the compute-node
       [username@compute-0-11 /state/partition1/username]$ exit
@@ -69,6 +69,10 @@ I want to stop my job, what should I do?
     [username@furnace ~] $ rocks run host "ls /state/partition1/`whoami`"
 
   This scans all the nodes. See also: :ref:`etiquette-monitor-resources-rocks`
+
+.. note::
+
+  To delete a job, a batch of jobs, or all the user's jobs using the ``qdelall``-command. See: :ref:`monitoring`, and ``qdelall --help``.
 
 What happens if a node runs out of memory?
 ------------------------------------------
@@ -91,7 +95,7 @@ The PBS-directive reserving nodes, for example:
 
 helps the scheduler to assign jobs to nodes such that there are enough resources available (in this example 4 CPUs on on Intel-node). However:
 
-1. These CPUs are not neccessarily used.
+1. These CPUs are not necessarily used.
 
    * Parallelization is not trivial, and highly problem dependent. Some hints:
 
@@ -157,6 +161,8 @@ Command                   Description
 ``myqstat``               list the most important information for the ``qstat -f`` command
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``myqstat -N``            list the most important information for the ``pbsnodes`` command
+------------------------- -------------------------------------------------------------------------------------------------------
+``myqstat -U``            summarize the users' jobs
 ========================= =======================================================================================================
 
 Monitor processes and resources
@@ -327,6 +333,16 @@ To submit all the jobs:
 
 * The ``cd``-command is used to proceed to the simulation sub-directory, after which the simulation is submitted. Then ``cd`` is used again to go back to the original directory.
 
+.. note::
+
+  The ``qexec``-command can do this automatically:
+
+  .. code-block:: bash
+
+    qexec -i `find . -iname 'job.pbs'`
+
+  This command has much more options. See: :ref:`monitoring`, and ``qexec --help``.
+
 Submit part of a batch job
 --------------------------
 
@@ -387,6 +403,16 @@ Let us study the command that lists all folders **not** containing a specific fi
 
   ``-print``
     print the full file name on the standard output, followed by a newline.
+
+.. note::
+
+  The ``qexec``-command can do this automatically:
+
+  .. code-block:: bash
+
+    qexec -i `find . -iname 'job.pbs' | qfilter`
+
+  This command has much more options. See: :ref:`monitoring`, and ``qexec --help``.
 
 Further reading
 ===============

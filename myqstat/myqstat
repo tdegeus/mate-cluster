@@ -254,6 +254,7 @@ the defaults/options.
       (('-d','--del-col'     ),dict(nargs=1  ,type=str,dest='delcol' )),
       ((     '--ifs'         ),dict(nargs=1  ,type=str,default='  '  )),
       ((     '--trunc'       ),dict(nargs=1  ,type=str,default='...' )),
+      (('-f','--full-status' ),dict(nargs='+',type=str               )),
     ]
 
     # parse command-line arguments
@@ -312,7 +313,8 @@ the defaults/options.
       setattr(self,key,args[key])
 
     # read output / print
-    if   args['user_summary']: self.myqstat_user()
+    if   args['full_status' ]: print(gpbs.myqstat_full(*args['full_status']))
+    elif args['user_summary']: self.myqstat_user()
     elif args['node_summary']: self.myqstat_node()
     else                     : self.myqstat()
 

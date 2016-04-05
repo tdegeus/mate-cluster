@@ -871,14 +871,14 @@ Print the column header, including a separator line.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** ((``<dict>``,``<dict>``,...))
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
-    * ``key``  (mandatory): the name of the field (see class-constructor),
-    * ``width``(mandatory): the desired output-width,
-    * ``head`` (mandatory): the header text,
-    * ``color``           : the color of the column (see ``<gpbs.Color>``).
+    * ``key``   (mandatory): the name of the field (see class-constructor),
+    * ``width`` (mandatory): the desired output-width,
+    * ``head``  (mandatory): the header text,
+    * ``color``            : the color of the column (see ``<gpbs.Color>``).
 
     Note that if a color was specified, print the string using::
 
@@ -2018,6 +2018,21 @@ converted to a list of compute-nodes.
       pbsnodes[ipbs] = Node(pbs)
 
   return pbsnodes
+
+# ==============================================================================
+# full status
+# ==============================================================================
+
+def myqstat_full(*args):
+  r'''
+Print the output of the ``qstat -f JOBID`` command.
+  '''
+
+  import commands
+
+  (stat,qstat) = commands.getstatusoutput('/opt/torque/bin/qstat -f '+' '.join(args))
+
+  return qstat
 
 # ==============================================================================
 # list of jobs

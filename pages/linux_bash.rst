@@ -150,6 +150,8 @@ Command           Description
 :command:`chmod`  change file mode bits (permissions)
 ================= ==============================================================
 
+.. _sec-bash_cd:
+
 :command:`cd` -- change directory
 ---------------------------------
 
