@@ -72,12 +72,12 @@ I want to stop my job, what should I do?
 
 .. note::
 
-  To delete a job, a batch of jobs, or all the user's jobs using the ``qdelall``-command. See: :ref:`monitoring`, and ``qdelall --help``.
+  To delete a job, a batch of jobs, or all the user's jobs, the ``qdelall``-command is available. This script can also remove the temporary directory on the compute-node. See: :ref:`monitoring`, and ``qdelall --help``.
 
 What happens if a node runs out of memory?
 ------------------------------------------
 
-The node will use the hard-disk as additional memory (`swap`). This is such a slow process that it effectively kills the node. A manual reset by the system administrator is needed.
+The node will use the hard-disk as additional memory (`swap`). This is such a slow process that it effectively kills the node. A manual reset by the system administrator is needed. All jobs on the node (also those of other users) are killed in the process.
 
 What happens if a node runs out of disk space?
 ----------------------------------------------
@@ -91,9 +91,9 @@ The PBS-directive reserving nodes, for example:
 
 .. code-block:: bash
 
-  #PBS -l nodes=1:ppn=4:intel
+  #PBS -l nodes=1:ppn=4
 
-helps the scheduler to assign jobs to nodes such that there are enough resources available (in this example 4 CPUs on on Intel-node). However:
+helps the scheduler to assign jobs to nodes such that there are enough resources available (in this example 4 CPUs). However:
 
 1. These CPUs are not necessarily used.
 
@@ -126,6 +126,8 @@ helps the scheduler to assign jobs to nodes such that there are enough resources
 
      * :ref:`languages-matlab`: use the ``singleCompThread`` option
 
+     * Include ``export OMP_NUM_THREADS=1`` in the ``~/.bashrc``-file to set the default number of threads for OpenMPI programs to one. This default can be overwritten per process (job).
+
 .. note::
 
   Parallellization is accompanied with overhead. If not parallellized properly the computational costs of this additional overhead can out-weigh the benefit of the additional computational power: in the worst case your job can even slow down.
@@ -148,7 +150,7 @@ Command                   Description
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``qdel "job-id"``         delete the job with identifier ``"job-id"``
 ------------------------- -------------------------------------------------------------------------------------------------------
-``qpeek "job-id"``        live-monitor of the PBS-out-file, for the job with identifier ``"job-id"``
+``qpeek "job-id"``        monitor of the PBS-out-file, for the job with identifier ``"job-id"`` (NB some delay)
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``qstat``                 list basic information of all jobs
 ------------------------- -------------------------------------------------------------------------------------------------------
@@ -158,9 +160,9 @@ Command                   Description
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``pbsnodes``              list detailed information of all compute-nodes
 ------------------------- -------------------------------------------------------------------------------------------------------
-``myqstat``               list the most important information for the ``qstat -f`` command
+``myqstat``               list the most important information from the ``qstat -f`` command in an easy to read format
 ------------------------- -------------------------------------------------------------------------------------------------------
-``myqstat -N``            list the most important information for the ``pbsnodes`` command
+``myqstat -N``            list the most important information for the ``pbsnodes`` command in an easy to read format
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``myqstat -U``            summarize the users' jobs
 ========================= =======================================================================================================
@@ -198,7 +200,7 @@ Command                   Description
 ------------------------- -------------------------------------------------------------------------------------------------------
 ``ls``                    list files
 ------------------------- -------------------------------------------------------------------------------------------------------
-``ls -lh``                detailed file information
+``ls -lh``                list files, with detailed file information
 ========================= =======================================================================================================
 
 File-operations
@@ -256,163 +258,6 @@ Command                   Description
 ------------------------- -------------------------------------------------------------------------------------------------------
 :kbd:`Ctrl+d`             exit terminal
 ========================= =======================================================================================================
-
-Advanced job submit
-===================
-
-.. contents::
-    :local:
-    :depth: 2
-    :backlinks: top
-
-Submit a batch job
-------------------
-
-Consider the following example:
-
-* Each job is a sub-directory of the current path, in this example ``sim0``, ``sim1``, and ``sim2``.
-
-* The job has the ``job.pbs`` file to control the job.
-
-To submit all the jobs:
-
-.. code-block:: bash
-
-  # store the current directory
-  froot=$(pwd);
-  # loop over all files "job.pbs"
-  for name in `find . -iname 'job.pbs'`;
-  do
-    # separate the name of the PBS-file "p" and the directory "f"
-    f=`echo $name | rev | cut -d"/" f2- | rev`
-    p=`echo $name | rev | cut -d"/" f1  | rev`
-    # go the the proper directory, submit, and go back to current directory
-    cd $f;
-    qsub job.pbs;
-    cd $froot;
-  done
-
-* The Bash-``for``-loop is used to loop over space separated list of names:
-
-  .. code-block:: bash
-
-    for name in "sim0" "sim1" "sim2";
-    do
-      echo $name;
-    done
-
-  would display:
-
-  .. code-block:: bash
-
-    sim0
-    sim1
-    sim2
-
-* The list of jobs to submit is generate using the ``find``-command:
-
-  .. code-block:: bash
-
-    find . -iname 'job.pbs'
-
-  lists
-
-  .. code-block:: bash
-
-    sim0/job.pbs
-    sim1/job.pbs
-    sim2/job.pbs
-
-* The ``cut``-command is used to split the output of the ``find``-command in the name of the directory
-
-  .. code-block:: bash
-
-    echo $name | rev | cut -d"/" f2- | rev
-
-  by reversing the string, including everything from the first ``/`` onward, and reversing the resulting string to it's original order. This corresponds to including everything up to the last ``/``. In the same way the name of the PBS-file is extracted from the output of the ``find``-command.
-
-* The ``cd``-command is used to proceed to the simulation sub-directory, after which the simulation is submitted. Then ``cd`` is used again to go back to the original directory.
-
-.. note::
-
-  The ``qexec``-command can do this automatically:
-
-  .. code-block:: bash
-
-    qexec -i `find . -iname 'job.pbs'`
-
-  This command has much more options. See: :ref:`monitoring`, and ``qexec --help``.
-
-Submit part of a batch job
---------------------------
-
-Consider the following example (similar to above):
-
-* Each job is a sub-directory of the current path.
-
-* The job has the ``job.pbs`` file to control the job.
-
-* A completed job has the file ``pbs.out``, a job not submitted yet does not contain this file.
-
-To submit all jobs that have not yet been submitted:
-
-.. code-block:: bash
-
-  for f in `find . -mindepth 1 -maxdepth 1 -type d -exec test ! -e '{}/pbs.out' \; -printf '%p '`;
-  do
-    cd $f;
-    qsub job.pbs;
-    cd ..;
-  done
-
-Let us study the command that lists all folders **not** containing a specific file "pbs.out":
-
-.. code-block:: bash
-
-  find . -mindepth 1 -type d -exec test ! -e '{}/pbs.out' \; -print
-
-* List the directory names, using the ``find``-command:
-
-  ``find .``
-    find files/directories from the current directory downwards.
-
-  ``-mindepth 1``
-    limit the search to at least one directory downwards (at least a sub-directory). To list only sub-directories (and not sub-sub-directories, etc) extend with ``-maxdepth 1``.
-
-  ``-type d``
-    limit the result to directories.
-
-  ``-exec``
-    execute a command on the search result.
-
-* List only those directories not containing the file ``pbs.out``, using the ``test``-command:
-
-  ``test``
-    check file types and compare values.
-
-  ``!``
-    list the result for which the expression is false.
-
-  ``-e '{}/pbs.out'``
-    check if the file ``pbs.out`` exists. The ``-e`` option comes from the ``test``-command. The ``{}`` is the way to include the search result from the ``find``-command (in this case the sub-directories.
-
-* List the result:
-
-  ``\;``
-    terminates the ``find``-command.
-
-  ``-print``
-    print the full file name on the standard output, followed by a newline.
-
-.. note::
-
-  The ``qexec``-command can do this automatically:
-
-  .. code-block:: bash
-
-    qexec -i `find . -iname 'job.pbs' | qfilter`
-
-  This command has much more options. See: :ref:`monitoring`, and ``qexec --help``.
 
 Further reading
 ===============

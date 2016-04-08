@@ -4,6 +4,9 @@
 #PBS -o pbs.out
 #PBS -l nodes=1:ppn=1
 
+# change directory to the location of the qsub-command
+cd ${PBS_O_WORKDIR}
+
 # set alias for the Matlab executable of furnace
 # include options to run in the terminal
 matlab="/share/apps/matlab-2010a/bin/matlab -nodisplay -nojvm -singleCompThread"

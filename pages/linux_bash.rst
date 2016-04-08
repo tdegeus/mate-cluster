@@ -11,7 +11,7 @@
 Linux
 #####
 
-Both the Noise and Furnace clusters run on `CentOS <http://www.centos.org>`_, which is a so called Linux Operating System (OS). Other examples of operating systems are Windows or Mac OS. Linux operating systems are also known as "Distributions" because they basically are a collection of software packages, which are "distributed" to the users. Other popular Linux distributions are: Ubuntu, Fedora and openSuse, but there are many more (see for example `distrowatch <http://www.distrowatch.com>`_ for an overview of all distributions).
+Most clusters run on a Linux Operating System (OS). For example the *noise*, *furnace*, and *rng* clusters run on `CentOS <http://www.centos.org>`_. Other examples of operating systems are Windows or Mac OSx. Linux operating systems are also known as "Distributions" because they basically are a collection of software packages, which are "distributed" to the users. Other than CentOS, popular Linux distributions are: Ubuntu, Fedora and openSuse, but there are many more (see for example `distrowatch <http://www.distrowatch.com>`_ for an overview of all distributions).
 
 The (mis)use of the name
 ========================
@@ -27,9 +27,11 @@ Linux file structure
 
 * The top most directory (or root) is called ``/``. Hard-drives, other media, or even remote file systems can be mounted anywhere. For example a USB drive is commonly mounted at ``/media/mystick``. In contrast to Windows where each drive has a different name in the file-tree (e.g. ``C:\``).
 
-* All characters can be used in directory and file names, but it is best not to use spaces or other exotic characters (e.g. ``*``, ``"``, ``'``).
+* All characters can be used in directory and file names, but it is best not to use exotic characters (e.g. ``*``, ``"``, ``'``).
 
-* File names starting with a ``.`` are hidden files, and are not visible by default.
+* File (and directory) names starting with a ``.`` are hidden files, and are not visible by default.
+
+* Files (and directories) have owners and permissions, preventing misuse or accidental removal.
 
 * Each user has his or her own home-folder which is typically located at ``/home/myusername``.
 
@@ -40,7 +42,7 @@ Linux file structure
 The BASH-shell
 ##############
 
-To interact with the Linux operating system a Shell is used. In this command line environment, commands given by the user are interpreted by the Shell. Several Shells exist, each with its own syntax and built-in commands. One of the most popular and default on the MaTe clusters is the Bash-shell.
+To interact with the Linux operating system a Shell is used. In this command line environment, commands given by the user are interpreted by the Shell. Several Shells exist, each with its own syntax and built-in commands. One of the most popular is the Bash-shell.
 
 Before introducing several features of the Bash-shell it is useful to discuss the basic controls. In principle the only form of control is through the keyboard. The exception is copying and pasting (parts) of commands, which is **exclusively** done using the mouse. ``Crtl+c``, ``Crtl+v``, etc. have a different meaning (see below). Specifically, highlighted text is automatically copied to the clipboard. It is pasted using the middle mouse-button. Alternatively, the ``copy`` and ``paste`` command can be reached through the right mouse-button. Several other basic controls are listed below.
 
@@ -98,9 +100,9 @@ Most commands have a manual page. This page is found using
 
   [username@furnace ~]$  man commandname
 
-This opens a simple text-viewer. Using the :math:`\downarrow` / :math:`\uparrow`, ``PageUp`` / ``PageDown``, and the scroll wheel on the mouse one can scroll through the manual page. To close the editor type ``q``. The ``man`` command prompts accepts the same commands as the ``less``-viewer.
+This opens a simple text-viewer. Using the :math:`\downarrow` / :math:`\uparrow`, ``PageUp`` / ``PageDown``, and the scroll wheel on the mouse one can scroll through the manual page. To search the manual use ``/`` followed by your query, and ``n`` to progress through the search results. To close the editor type ``q``. The ``man`` command prompts accepts the same commands as the ``less``-viewer.
 
-Alternatively, a short manual page can often be printed to the screen. This is provided by the command itself, i.e.
+Alternatively (or sometimes exclusively), a (short) manual page can often be printed to the screen. This is provided by the command itself, i.e.
 
 .. code-block:: bash
 
@@ -141,13 +143,15 @@ Command           Description
 ----------------- --------------------------------------------------------------
 :command:`less`   a text-file viewer
 ----------------- --------------------------------------------------------------
+:command:`vi`     a text-file editor
+----------------- --------------------------------------------------------------
 :command:`top`    display Linux tasks
 ----------------- --------------------------------------------------------------
 :command:`ps`     report a process status list
 ----------------- --------------------------------------------------------------
 :command:`which`  shows the full path of (shell) commands
 ----------------- --------------------------------------------------------------
-:command:`chmod`  change file mode bits (permissions)
+:command:`chmod`  change file's permissions
 ================= ==============================================================
 
 .. _sec-bash_cd:
@@ -158,7 +162,7 @@ Command           Description
 .. image:: ../images/file-structure.svg
   :width: 300 px
 
-The change directory (:command:`cd`) command can be used to navigate through the file-tree by changing the current directory. Let us use an example of a file-tree such as displayed above. Typically the terminal will start in the user's home folder, i.e.
+The change directory (:command:`cd`) command can be used to navigate through the file-tree by changing the current directory. Let us use an example of a file-tree such as displayed above. Typically the terminal will start in the user's home folder:
 
 .. code-block:: bash
 
@@ -200,7 +204,7 @@ is equivalent. If we would now like to change the directory to :file:`~/sim/sub2
   [username@furnace sub1]$ cd ../sub2
   [username@furnace sub2]$
 
-Notice that it is convenient to use relative file definitions inside code, as it is not dependent on the file structure. For example if :file:`../sub2/` would have been included in a code, the code is not influenced by changing ``sim`` to ``test``. In contrast, if we would have used an absolute path, the code would fail.
+Notice that it is convenient to use relative file definitions inside code, as they are not dependent on the file structure. For example if :file:`../sub2/` would have been included in a code, the code is not influenced by changing ``sim`` to ``test``. In contrast, if we would have used an absolute path, the code would fail. This is particularly important when running the same code or script on different machines (running on different platforms), such as in the case of a desktop computer and a cluster.
 
 :command:`ls` -- list directory contents
 ----------------------------------------
@@ -231,12 +235,14 @@ would output for example
 
   -rw-rw-r-- 1 exuser exgroup 26K Sep 18 11:57 output.log
 
-  1. permissions
-  2. count
-  3. owner
-  4. size
-  5. time/data modified
-  6. name
+whereby the columns indicate:
+
+1. permissions
+2. count
+3. owner
+4. size
+5. time/data modified
+6. name
 
 Or more specifically
 
@@ -263,6 +269,23 @@ Or more specifically
       [myname@furnace ~] $ chmod u + x output . log
 
    More information is found `online <http://www.tuxfiles.org/linuxhelp/filepermissions.html>`_.
+
+   .. note::
+
+     The permissions can be directly specified (instead of added or removed) using a numerical notation:
+
+     * 4 = r (read)
+     * 2 = w (write)
+     * 1 = x (execute)
+
+     The desired permissions are set by adding the numerical value of those permissions you would like to allow. For example:
+
+     .. code-block:: bash
+
+       [username@furnace ~]$  chmod 764 output.log
+
+       [username@furnace ~]$  ls -lh output.log
+       -rwxrw-r-- 1 exuser exgroup 26K Sep 18 11:57 output.log
 
 2. The number of directories and links inside the item. For a file the counter is always equal to one.
 
@@ -323,7 +346,7 @@ To remove a directory use
 
    [myname@furnace ~] $ rm -r directoryname
 
-Notice that, in principle, removed files cannot be recovered, i.e. there is no such thing as a recycle bin when removing files from the command line. For convenience, wild-cards can be used. One example of a wild-card is ``*``. Simply said, the ``*`` replaces zero or more characters. For example to remove all log files in the :file:`~/sim/sub1` folder:
+Notice that, in principle, removed files cannot be recovered, i.e. there is no such thing as a recycle bin when removing files from the command line. For convenience, wild-cards can be used. One example of a wild-card is ``*``. Simply said, the ``*`` replaces zero or more characters. For example to remove all ``.log`` files in the :file:`~/sim/sub1` folder:
 
 .. code-block:: bash
 
@@ -345,7 +368,7 @@ would remove all the directories beginning with ``sub``, which, in this case wou
 
       [myname@furnace ~] $ rm -r *.*
 
-   since it removes all files and directories up and down the file-tree (includes those that are hidden) to which the user has permissions. Thus, all your files on the computer are permanently lost. The ``.*`` in the wildcard string also matches ``..`` which causes the remove command to also remove higher laying directories. This mistake is typically made by DOS users, where it has a different meaning. In a Linux environment, :command:`rm -r *` is usually the intended command, i.e. empty the current directory.
+   since it removes all files and directories up and down the file-tree (including those that are hidden) to which the user has permissions. Thus, all your files on the computer are permanently lost. The ``.*`` in the wildcard string also matches ``..`` which causes the remove command to also remove higher directories. This mistake is typically made by DOS users, where it has a different meaning. In a Linux environment, :command:`rm -r *` is usually the intended command, i.e. empty the current directory.
 
 Move
 ~~~~
@@ -362,7 +385,7 @@ For example to rename the :file:`output.log` file:
 
    [myname@furnace sub1] $ mv output . log output . txt
 
-To add this file to the :file:`~/sim/sub2` directory:
+To move this file to the :file:`~/sim/sub2` directory:
 
 .. code-block:: bash
 
@@ -388,7 +411,7 @@ For example to find the lines in which error messages are included in the file :
 
    [username@furnace sub1]$  cat output.log | grep -n "error"
 
-The :command:`cat` command outputs the contents of the :file:`output.log` file. The :command:`grep` command intercepts this output and prints the lines matching the pattern ``error`` (including the line numbers, because of the :option:`-n` option).
+The :command:`cat` command outputs the contents of the :file:`output.log` file. The ``|`` intercepts this output and forwards it to the The :command:`grep` command, which and prints the lines matching the pattern ``error`` (including the line numbers, because of the :option:`-n` option).
 
 These lines can be stored to a file :file:`error.log` using
 the command

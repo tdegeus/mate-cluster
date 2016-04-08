@@ -4,6 +4,9 @@
 #PBS -o pbs.out
 #PBS -l nodes=1:ppn=1
 
+# change directory to the location of the qsub-command
+cd ${PBS_O_WORKDIR}
+
 # print the working directory
 pwd
 

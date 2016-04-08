@@ -21,6 +21,22 @@ print a list of jobs in columns (namely: "id", "host" and "pmem")::
   for job in jobs:
     print '{job.id:>6.6s}, {job.host:>3s}, {job.pmem:>5s}'.format(job=job)
 
+This can be automated using::
+
+  # ---------------- without any color definition -----------------
+
+  jobs[0].print_header(...)
+
+  for job in jobs:
+    print job.print_column(...)
+
+  # -------------------- with color definition --------------------
+
+  jobs[0].print_header(...).format(color=gpbs.ColorDefault)
+
+  for job in jobs:
+    print job.print_column(...).format(color=gpbs.ColorDefault)
+
 :copyright:
 
   | T.W.J. de Geus
@@ -757,8 +773,8 @@ Class to store data, and print in an easily readable format.
 
 class Float(Unit):
   r'''
-Custom float class. This class can also be ``None``, such that the conversion
-to a string results in an empty string.
+Custom float class. Compared to the regular floats, this class can also be
+``None``, such that the conversion to a string results in an empty string.
 
 :argument/field:
 
@@ -816,6 +832,22 @@ down        red,strike-through
 free        green,bold
 end         end of style definition
 =========== ========================
+
+:custom:
+
+  To create a custom color-scheme to the following::
+
+    class ColorCustom:
+
+      warning   = ''
+      error     = ''
+      selection = ''
+      down      = ''
+      free      = ''
+      end       = ''
+
+  whereby the string is used to specify the print format.
+  See: `Wikipedia <https://en.wikipedia.org/wiki/ANSI_escape_code>`_
   '''
 
   warning   = '\033[1;31m'
@@ -836,12 +868,12 @@ Define scheme to print without color formatting.
 =========== ========================
 Name        Style
 =========== ========================
-warning     -
-error       -
-selection   -
-down        -
-free        -
-end         -
+warning     N/A
+error       N/A
+selection   N/A
+down        N/A
+free        N/A
+end         N/A
 =========== ========================
   '''
 
@@ -878,11 +910,14 @@ Print the column header, including a separator line.
     * ``key``   (mandatory): the name of the field (see class-constructor),
     * ``width`` (mandatory): the desired output-width,
     * ``head``  (mandatory): the header text,
-    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+    * ``color``            : the color-code (warning,error,selection,down,free).
 
     Note that if a color was specified, print the string using::
 
-      print Item.print_header(...).format(color=...)
+      print Item.print_header(...).format(color=gpbs.ColorDefault)
+      print Item.print_header(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
   **fmt** (``<dict>``)
     A dictionary with the print-format for each field. The ``width`` is
@@ -904,7 +939,7 @@ Print the column header, including a separator line.
     A symbol to form the separator line, for example ``'-'``
     '''
 
-    # initiate output at list, combined to line of text below
+    # initiate output as list, combined to lines of text below
     output = []
 
     # loop over the columns set as argument
@@ -944,37 +979,26 @@ Print the column header, including a separator line.
   # print in columns
   # ----------------------------------------------------------------------------
 
-  def print_column(self,columns,color,fmt,ifs,trunc):
+  def print_column(self,columns,fmt,ifs,trunc):
     r'''
 Print data in columns.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
-    * ``key`` (mandatory): the name of the field (see class-constructor),
+    * ``key``   (mandatory): the name of the field (see class-constructor),
     * ``width`` (mandatory): the desired output-width,
-    * ``color``: the color of the column (see ``<gpbs.Color>``).
+    * ``color``            : the color-code (warning,error,selection,down,free).
 
-  **color** (``<dict>``)
-    A dictionary with a ``lambda`` function for each field that returns two
-    strings to allow color-print. I.e.::
+    Note that if a color was specified, print the string using::
 
-      (prefix,postfix) = color['example']()
-      print (prefix+text+postfix).format(color=...)
+      print Item.print_column(...).format(color=gpbs.ColorDefault)
+      print Item.print_column(...).format(color=gpbs.ColorNone   )
 
-    For the ``...`` replace a color look-up class. Using this module::
-
-      print (prefix+text+postfix).format(color=gpbs.ColorDefault) # default colors
-      print (prefix+text+postfix).format(color=gpbs.ColorNone   ) # no colors
-
-    Example::
-
-      color = {
-        'example' : ('{color.warning}','{color.end}') if self.test else ('','') ,
-      }
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
   **fmt** (``<dict>``)
     A dictionary with the print-format for each field. The ``width`` is
@@ -1005,11 +1029,9 @@ Print data in columns.
       if len(text)<len(self[key]):
         text = text[:-len(trunc)]+trunc
       # add color
-      if 'color' not in column:
-        pre,post = color[key]()
-        text     = pre+text+post
-      elif column['color']:
-        text     = '{color.'+column['color']+'}'+text+'{color.end}'
+      if 'color' in column:
+        if column['color']:
+          text = '{color.'+column['color']+'}'+text+'{color.end}'
       # add column to output
       output += [text]
 
@@ -1172,13 +1194,20 @@ Print job in columns.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
     * ``key``   (mandatory): the name of the field (see class-constructor),
     * ``width`` (mandatory): the desired output-width,
-    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+    * ``color``            : the color-code (warning,error,selection,down,free).
+
+    Note that if a color was specified, print the string using::
+
+      print Job.print_column(...).format(color=gpbs.ColorDefault)
+      print Job.print_column(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -1189,27 +1218,17 @@ Print job in columns.
     The symbol to truncate columns that are printed narrower than their length.
     '''
 
-    # function per field to set color based on values; the usage is as follows
-    # (prefix,postfix) = color[key]
-    # (prefix+text+postfix).format(color=...)
-    color = {
-      'id'          : lambda: ('','') ,
-      'owner'       : lambda: ('','') ,
-      'resnode'     : lambda: ('','') ,
-      'state'       : lambda: ('','') ,
-      'pmem'        : lambda: ('','') ,
-      'cputime'     : lambda: ('','') ,
-      'walltime'    : lambda: ('','') ,
-      'host'        : lambda: ('','') ,
-      'name'        : lambda: ('','') ,
-      'submit_args' : lambda: ('','') ,
-      'memused'     : lambda:
-             ('{color.warning}','{color.end}') if (self.memused>'1gb' and self.pmem==None)
-        else (''               ,''           ) ,
-      'score'       : lambda:
-             ('{color.warning}','{color.end}') if (self.score>1.03 or self.score<0.95)
-        else (''               ,''           ) ,
-    }
+    # get keys in column
+    keys = {col['key']:icol for icol,col in enumerate(columns)}
+
+    # make a copy of "columns", to be able to overwrite stuff
+    columns_c = [{} for col in columns]
+    for icol,col in enumerate(columns):
+      columns_c[icol] = {key:col[key] for key in col}
+
+    # provide warnings (overwrite color)
+    if self.memused>'1gb' and self.pmem==None and 'memused' in keys: columns_c[keys['memused']]['color'] = 'warning'
+    if self.score>1.03    or  self.score<0.95 and 'score'   in keys: columns_c[keys['score'  ]]['color'] = 'warning'
 
     # print format per available field
     fmt = {
@@ -1228,7 +1247,7 @@ Print job in columns.
     }
 
     # print using parent 'Item' class
-    return super(Job,self).print_column(columns,color,fmt,ifs,trunc)
+    return super(Job,self).print_column(columns_c,fmt,ifs,trunc)
 
   # ----------------------------------------------------------------------------
   # print column header
@@ -1240,7 +1259,7 @@ Print column headers, and a header separator line.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
@@ -1248,6 +1267,13 @@ Print column headers, and a header separator line.
     * ``width`` (mandatory): the desired output-width,
     * ``head``  (mandatory): the header text,
     * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+    Note that if a color was specified, print the string using::
+
+      print Job.print_header(...).format(color=gpbs.ColorDefault)
+      print Job.print_header(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -1527,13 +1553,20 @@ Function used to print nodes in columns.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
     * ``key``   (mandatory): the name of the field (see class-constructor),
     * ``width`` (mandatory): the desired output-width,
-    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+    * ``color``            : the color-code (warning,error,selection,down,free).
+
+    Note that if a color was specified, print the string using::
+
+      print Node.print_column(...).format(color=gpbs.ColorDefault)
+      print Node.print_column(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -1544,52 +1577,26 @@ Function used to print nodes in columns.
     The symbol to truncate columns that are printed narrower than their length.
     '''
 
-    # function per field to set color based on values; the usage is as follows
-    # (prefix,postfix) = color[key]
-    # (prefix+text+postfix).format(color=...)
-    color = {
-      'node'        : lambda: ('','') ,
-      'name'        : lambda: ('','') ,
-      'ctype'       : lambda: ('','') ,
-      'jobs'        : lambda: ('','') ,
-      'bytes_in'    : lambda: ('','') ,
-      'bytes_out'   : lambda: ('','') ,
-      'bytes_tot'   : lambda: ('','') ,
-      'load'        : lambda: ('','') ,
-      'cpu_idle'    : lambda: ('','') ,
-      'disk_total'  : lambda: ('','') ,
-      'memt'        : lambda: ('','') ,
-      'memp'        : lambda: ('','') ,
-      'mema'        : lambda: ('','') ,
-      'memu'        : lambda:
-             ('{color.warning}','{color.end}') if self.relmemu>0.8
-        else (''               ,''           ) ,
-      'relmemu'     : lambda:
-             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.relmemu!=None
-        else ('{color.warning}','{color.end}') if self.relmemu>0.8
-        else (''               ,''           ) ,
-      'reldisku'    : lambda:
-             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.reldisku!=None
-        else ('{color.warning}','{color.end}') if self.reldisku>0.7
-        else (''               ,''           ) ,
-      'disk_free'    : lambda:
-             ('{color.warning}','{color.end}') if self.reldisku>0.7
-        else (''               ,''           ) ,
-      'state'       : lambda:
-             ('{color.error}'  ,'{color.end}') if self.state not in ['free','job-exclusive']
-        else (''               ,''           ) ,
-      'ncpu'        : lambda:
-             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive']
-        else (''               ,''           ) ,
-      'cpufree'     : lambda:
-             ('{color.free}'   ,'{color.end}') if self.cpufree>0
-        else ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive']
-        else (''               ,''           ) ,
-      'score'       : lambda:
-             ('{color.down}'   ,'{color.end}') if self.state not in ['free','job-exclusive'] and self.score!=None
-        else ('{color.warning}','{color.end}') if (self.score>1.05 or self.score<0.95)
-        else (''               ,''           ) ,
-    }
+    # get keys in column
+    keys = {col['key']:icol for icol,col in enumerate(columns)}
+
+    # make a copy of "columns", to be able to overwrite stuff
+    columns_c = [{} for col in columns]
+    for icol,col in enumerate(columns):
+      columns_c[icol] = {key:col[key] for key in col}
+
+    # provide warnings (overwrite color)
+    if self.relmemu  > 0.8                        and 'memu'      in keys: columns_c[keys['memu'     ]]['color'] = 'warning'
+    if self.relmemu  > 0.8                        and 'relmemu'   in keys: columns_c[keys['relmemu'  ]]['color'] = 'warning'
+    if self.reldisku > 0.7                        and 'disk_free' in keys: columns_c[keys['disk_free']]['color'] = 'warning'
+    if self.reldisku > 0.7                        and 'reldisku'  in keys: columns_c[keys['reldisku' ]]['color'] = 'warning'
+    if self.cpufree  > 0                          and 'cpufree'   in keys: columns_c[keys['cpufree'  ]]['color'] = 'free'
+    if self.score    > 1.05 or self.score < 0.95  and 'score'     in keys: columns_c[keys['score'    ]]['color'] = 'warning'
+
+    # show not-running node different (overwrite color)
+    if self.state not in ['free','job-exclusive']:
+      for key in keys:
+        columns_c[keys[key]]['color'] = 'down'
 
     # print format per available field
     fmt = {
@@ -1617,7 +1624,7 @@ Function used to print nodes in columns.
     }
 
     # print using parent 'Item' class
-    return super(Node,self).print_column(columns,color,fmt,ifs,trunc)
+    return super(Node,self).print_column(columns_c,fmt,ifs,trunc)
 
   # ----------------------------------------------------------------------------
   # print column header
@@ -1629,7 +1636,7 @@ Print column headers, and a header separator line.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
@@ -1637,6 +1644,13 @@ Print column headers, and a header separator line.
     * ``width`` (mandatory): the desired output-width,
     * ``head``  (mandatory): the header text,
     * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+    Note that if a color was specified, print the string using::
+
+      print Node.print_header(...).format(color=gpbs.ColorDefault)
+      print Node.print_header(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -1762,13 +1776,20 @@ Print user-summary in columns.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
     * ``key``   (mandatory): the name of the field (see class-constructor),
     * ``width`` (mandatory): the desired output-width,
-    * ``color``            : the color of the column (see ``<gpbs.Color>``).
+    * ``color``            : the color-code (warning,error,selection,down,free).
+
+    Note that if a color was specified, print the string using::
+
+      print Owner.print_column(...).format(color=gpbs.ColorDefault)
+      print Owner.print_column(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -1779,20 +1800,16 @@ Print user-summary in columns.
     The symbol to truncate columns that are printed narrower than their length.
     '''
 
-    # function per field to set color based on values; the usage is as follows
-    # (prefix,postfix) = color[key]
-    # (prefix+text+postfix).format(color=...)
-    color = {
-      'owner'       : lambda: ('','') ,
-      'cpus'        : lambda: ('','') ,
-      'memused'     : lambda: ('','') ,
-      'walltime'    : lambda: ('','') ,
-      'cputime'     : lambda: ('','') ,
-      'claimtime'   : lambda: ('','') ,
-      'score'       : lambda:
-             ('{color.warning}','{color.end}') if (self.score>1.01 or self.score<0.99)
-        else (''               ,''           ) ,
-    }
+    # get keys in column
+    keys = {col['key']:icol for icol,col in enumerate(columns)}
+
+    # make a copy of "columns", to be able to overwrite stuff
+    columns_c = [{} for col in columns]
+    for icol,col in enumerate(columns):
+      columns_c[icol] = {key:col[key] for key in col}
+
+    # provide warnings (overwrite color)
+    if self.score>1.03 or self.score<0.95 and 'score' in keys: columns_c[keys['score'  ]]['color'] = 'warning'
 
     # print format per available field
     fmt = {
@@ -1806,7 +1823,7 @@ Print user-summary in columns.
     }
 
     # print using parent 'Item' class
-    return super(Owner,self).print_column(columns,color,fmt,ifs,trunc)
+    return super(Owner,self).print_column(columns_c,fmt,ifs,trunc)
 
   # ----------------------------------------------------------------------------
   # print column header
@@ -1818,7 +1835,7 @@ Print column headers, and a header separator line.
 
 :arguments:
 
-  **columns** (``(``<dict>``,``<dict>``,...)``)
+  **columns** (``(<dict>,<dict>,...)``)
     A list with the print settings per column. For each column the print
     settings are given as dictionary, with the following fields:
 
@@ -1826,6 +1843,13 @@ Print column headers, and a header separator line.
     * ``width`` (mandatory): the desired output-width,
     * ``head``  (mandatory): the header text,
     * ``color``            : the color of the column (see ``<gpbs.Color>``).
+
+    Note that if a color was specified, print the string using::
+
+      print Owner.print_header(...).format(color=gpbs.ColorDefault)
+      print Owner.print_header(...).format(color=gpbs.ColorNone   )
+
+    or a custom-class (see: ``gpbs.ColorDefault``)
 
 :options:
 
@@ -2000,10 +2024,13 @@ converted to a list of compute-nodes.
   # convert the `ganglia` command output to dictionary
   if ganglia is not False:
     # loop over lines: split lines and store in dictionary per node
-    for line in ganglia.split('\n')[:-1]:
-      out = filter(None,line.replace("\t","").split(" "))
-      (name,out) = (out[0],out[1:])
-      dat[name] = {arg:out[i] for (i,arg) in enumerate(args)}
+    for line in ganglia.split('\n'):
+      try:
+        out        = filter(None,line.replace("\t","").split(" "))
+        (name,out) = (out[0],out[1:])
+        dat[name]  = {arg:out[i] for (i,arg) in enumerate(args)}
+      except:
+        pass
   # change name
   ganglia = dat
 
@@ -2140,6 +2167,8 @@ Summary per user.
 class script:
   '''
 Return common PBS-scripts as string. The following scripts are implemented:
+
+* ``simple``: a basic PBS-script that executes (a series of) command(s).
 
 * ``heavyio``: uses a temporary working directory on the compute-node.
   '''

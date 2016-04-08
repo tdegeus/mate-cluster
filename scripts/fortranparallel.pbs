@@ -4,6 +4,9 @@
 #PBS -o pbs.out
 #PBS -l nodes=1:ppn=4
 
+# change directory to the location of the qsub-command
+cd ${PBS_O_WORKDIR}
+
 # set number of CPUs as environment variable
 # the library uses this amount of CPUs
 export OMP_NUM_THREADS=`cat $PBS_NODEFILE | wc -l`

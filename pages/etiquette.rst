@@ -23,7 +23,7 @@ As the cluster is shared by many users extra responsibility is demanded from use
 
   * **Disk-space**: the node cannot write any files, including files of the operating system. The node crashes, all jobs running on it fail.
 
-  * **Network**: all jobs on all nodes slow down considerably, copying operation of any job can fail.
+  * **Network**: all jobs on all nodes slow down considerably, copying operations of all jobs can fail.
 
 Understand your own scripts
 ===========================
@@ -39,22 +39,27 @@ Specify all the resources you need, but specify them as close as possible to you
 
   .. code-block:: bash
 
-    #PBS -l nodes=1:ppn=1:intel
+    #PBS -l nodes=1:ppn=1
 
-  Note: the Intel-nodes are considerably faster than the AMD-nodes. The latter are mostly useful for parallelization or heavy-memory jobs.
+  NB. On *furnace* two types of nodes are available: Intel and AMD. The Intel-nodes are considerably faster than the AMD-nodes. The latter are mostly useful for parallelization or heavy-memory jobs. To request one of the two, use:
+
+  .. code-block:: bash
+
+    #PBS -l nodes=1:ppn=1:intel
+    #PBS -l nodes=1:ppn=1:amd
 
 * Memory:
 
   .. code-block:: bash
 
-    #PBS -l pmem=3gb
-    #PBS -l pvmem=3gb
+    #PBS -l pmem=1gb
+    #PBS -l pvmem=1gb
 
-  The ``pmem`` option gives the scheduler information on the expected memory usage. This way moderate-memory jobs can be used to compensate for heavy-memory jobs on one node. The ``pvmem`` option makes sure that the jobs fails when the memory usage exceeds the memory claimed.
+  The ``pmem`` option gives the scheduler information on the expected memory usage. This way, moderate-memory jobs can be used to compensate for heavy-memory jobs on one node. The ``pvmem`` option makes sure that the jobs fails when the memory usage exceeds the memory claimed.
 
   .. note::
 
-    Always use these options if your job uses more than roughly "3gb" of memory.
+    Always use these options if your job uses more than roughly "1gb" of memory.
 
 Limit network traffic
 =====================
@@ -72,7 +77,7 @@ Software packages that always require this:
 Monitor jobs
 ============
 
-One of the most critical responsibilities is to actively monitor all the user's jobs on the cluster. This avoids killing (part of) the cluster, and helps to *"claim what you use and use what you claim"*. There are several way to do this, for example
+One of the most critical responsibilities is to actively monitor all your jobs on the cluster. This avoids killing (part of) the cluster, and helps to *"claim what you use and use what you claim"*. There are several way to do this, for example
 
 * The :ref:`etiquette-monitor-jobs-myqstat` command.
 
@@ -109,13 +114,13 @@ Each row in the output corresponds to an individual job, in this example only on
 
 * ``Host``: the compute-node on which the job is running.
 
-* ``CPUs``: the amount of CPU-resources reserved by the ``-l`` option (in this example  ``-l nodes=1:ppn=1:intel``).
+* ``CPUs``: the amount of CPU-resources reserved by the ``-l`` option (in this example  ``-l nodes=1:ppn=1``).
 
 * ``Mem``: the amount of memory currently used by the job.
 
-* ``pmem``: the amount of memory requested by the ``-l`` option (in this example ``-l pmem=1gb``).
+* ``pmem``: the amount of memory requested by the ``-l`` option (in this example ``-l pmem=2gb``).
 
-* ``S``: status of the job, can be ``R`` for running or ``Q`` for queued.
+* ``S``: status of the job, can be ``R`` for running, ``Q`` for queued, ``C`` for completed, or ``E`` for erroneous.
 
 * ``Time``: the time that the job has been running (i.e. the "walltime").
 
@@ -125,7 +130,7 @@ From this output to most important things to monitor are:
 
 * The **memory usage**. The amount of memory used by all jobs on the node should never exceed the amount of memory present, otherwise the node is killed. To optimally use the memory:
 
-  * use the ``-l pmem="..."`` option whenever your job uses more than ``3gb`` of memory,
+  * use the ``-l pmem="..."`` option whenever your job uses more than ``1gb`` of memory,
 
   * verify that the actual memory usage does not exceed the requested amount.
 
@@ -149,7 +154,7 @@ For the example above
 
 .. note::
 
-  The ``myqstat`` command is available for all users, and by default in the "path" (i.e. "installed").
+  The ``myqstat`` command is available for all users.
 
 .. _etiquette-monitor-jobs-top:
 
@@ -242,11 +247,9 @@ The rows correspond to individual compute-nodes. The columns denote:
 
   * ``offline``: down for maintenance.
 
-* ``Type``: CPU-type (on ``furnace``: ``amd`` or ``intel``, on ``rng`` the type does not exist).
+* ``Type``: CPU-type (on *furnace*: ``amd`` or ``intel``, on *rng* the type does not exist).
 
 * ``Ctot``: total number of CPUs in the node.
-
-* ``Cused``: number of CPUs in use for jobs.
 
 * ``Cfree``: number of CPUs available for new jobs.
 
@@ -254,13 +257,11 @@ The rows correspond to individual compute-nodes. The columns denote:
 
 * ``Mtot``: total amount of memory in the node.
 
-* ``Mused``: amount of memory in use by jobs of the node.
-
 * ``Mem%``: relative amount of memory used by jobs on the node. If this value reaches 1 the node is killed.
 
 Below the list of nodes an overall summary is available, that can be used to compare the used resources to the total amount of available resources.
 
-This give a lot of important information about the jobs. It **does not** list the amount of hard-disk space still available, or the amount of data sent over the internal network by jobs. Therefore information from the ``ganglia`` command can be included in the output as follows:
+This **does not** list the amount of hard-disk space still available, or the amount of data sent over the internal network by jobs. Therefore information from the ``ganglia`` command can be included in the output as follows:
 
 .. code-block:: none
 
@@ -276,11 +277,13 @@ This list the additional columns:
 
 * ``HDtot``: total amount of disk-space in the node.
 
-* ``HDused``: total amount of disk-space used on the node.
-
 * ``HD%``: ratio of disk-space used on the node. If this value reaches 1, the node is killed (immediately).
 
 * ``Network``: total amount of data sent over the network each second.
+
+.. note::
+
+  This command can be slow as the underlying ``ganglia``-command sometimes has to get the information by logging on to each of the compute-nodes.
 
 Limit disk-usage
 ================
@@ -295,7 +298,7 @@ Move your data from the cluster to your own computer when your jobs are done. Al
 User-data on compute-nodes
 --------------------------
 
-Besides the "home" folder on the head-node, user-data can be located on the hard-disks of the individual compute-nodes. This data can be the temporary data of running jobs, copied to limit network traffic and optimize the job performance (see :ref:`page-queuing-heavyio`). However when jobs have failed *without* copying and removing the temporary data, the temporary data is left behind on the compute-node. This is highly unwanted as it is of no use, frequently forgotten, and disk-space on the compute-nodes is limited. To delete this data:
+Besides the "home" folder on the head-node, user-data can be located on the hard-disks of the individual compute-nodes. This data can be the temporary data of running jobs, copied to limit network traffic and optimize the job performance (see :ref:`page-queuing-heavyio`). However when jobs have failed *without* copying and removing the temporary data, the temporary data is left behind on the compute-node. This is highly unwanted as it is of no use, but frequently forgotten. To delete this data:
 
 * Log on to the compute node by typing
 
@@ -307,7 +310,15 @@ Besides the "home" folder on the head-node, user-data can be located on the hard
 
   .. warning::
 
-     When a user logs in on the compute-node the current folder is always the mounted furnace home folder, i.e. ``/home/username/`` rather than the local ``/state/partition1/username`` folder.
+     When a user logs in on the compute-node the current folder is always the mounted home folder (on the head-node), i.e. ``/home/username/`` rather than the local ``/state/partition1/username`` folder.
+
+  .. note::
+
+    This can be done in one command, for example:
+
+    .. code-block:: bash
+
+      [username@furnace ~]$ ssh compute-0-16 'rm -r /state/partition1/`whoami`/188370'
 
 * Manually logging in to each of the compute-nodes that you have used for running calculations is a time-consuming task. An easier route is to run the following command, which checks each compute-node for the existence of the user folder and its contents:
 
@@ -322,14 +333,6 @@ Besides the "home" folder on the head-node, user-data can be located on the hard
     [username@furnace ~]$ rocks run host "ls /state/partition1/`whoami`" | grep -v "Warning" | grep -v "xauth" | grep -v "No such file or directory"
 
   The output shows any left behind data. If no jobs are running, it should therefore be empty.
-
-  .. warning::
-
-    Please make sure that all files that are no longer in use are removed. For the example above the following command could be used:
-
-    .. code-block:: bash
-
-      [username@furnace ~]$ ssh compute-0-16 'rm -r /state/partition1/`whoami`/188370'
 
 
 

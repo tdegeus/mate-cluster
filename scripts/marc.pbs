@@ -11,21 +11,21 @@
 username=`whoami`
 
 # set the name of the temporary directory on the compute-node as a combination
-# of the username and the job-id assigned by the queuing system
+# of the username and the job-id (assigned by the queuing system)
 computedir="/state/partition1/$username/${PBS_JOBID%%.*}"
 
 # 1. Transfer to node [DO NOT CHANGE]
 # ===================================
 
-# create/empty temp directory
+# create/empty the temporary directory on the compute-node
 if [ ! -d "$computedir" ]; then
    mkdir -p "$computedir"
 else
    rm -rf "${computedir}"/*
 fi
 
-# change current directory to location of the qsub-command
-# (typically in the home directory on the head-node)
+# change current directory to the location of the qsub-command
+# (in the home directory on the head-node)
 cd ${PBS_O_WORKDIR}
 # copy all files/folders in the directory of the qsub-command
 cp -prf * $computedir
@@ -35,10 +35,10 @@ cd $computedir
 # 2. Execute [MODIFY TO YOUR NEED]
 # ================================
 
-# create a file with the hostname in the folder pf the qsub-command
+# create a file with the hostname in the folder of the qsub-command
 echo `hostname` > ${PBS_O_WORKDIR}/computenode.txt
 
-# set alias for the MSC.Marc executable of furnace
+# set alias for the MSC Marc executable of furnace
 marc="/share/apps/marc2005r3i/marc2005r3/tools/run_marc"
 
 # run the simulation
@@ -47,9 +47,9 @@ $marc -q f -v n -j mymarcjob -u myusersub
 # 3. Transfer back to the head-node [DO NOT CHANGE]
 # =================================================
 
-# change to directory to location of the qsub-command (on the head-node)
+# change directory to the location of the qsub-command (on the head-node)
 cd "${PBS_O_WORKDIR}"
-# copy everything from the compute-node
+# copy everything from the temporary directory on the compute-node
 cp -prf "${computedir}"/* .
-# erase the temp directory on compute-node
+# erase the temporary directory from the compute-node
 rm -rf "$computedir"

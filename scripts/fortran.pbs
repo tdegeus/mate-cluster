@@ -4,7 +4,10 @@
 #PBS -o pbs.out
 #PBS -l nodes=1:ppn=1
 
-# compile with GNU compiler (only installed on compute-nodes, where this script runs)
+# change directory to the location of the qsub-command
+cd ${PBS_O_WORKDIR}
+
+# compile with GNU compiler
 # uncomment code below:
 #gfortran -o myprogram mycode.f
 

@@ -33,6 +33,7 @@ degree of customization.
 '''
 
 import gpbs
+import re
 
 # ==============================================================================
 # support function: read the terminal size
@@ -93,7 +94,7 @@ Get the size of the terminal.
 
 def column_width(rows,columns,ifs,fit_screen=True):
   r'''
-Calculate the column width based on the content and the window size.
+Calculate the column width based on the contents and the window size.
 
 :arguments:
 
@@ -231,30 +232,34 @@ the defaults/options.
     # set options/arguments
     # ---------------------
 
+    # NB. Each of this options is stored as a class-field. For example to check
+    #     if "-u" has been specified by the user use:
+    #     ``if self.owner is not None``
+
     opts = [\
-      (('-h','--help'        ),dict(action='store_true'              )),
-      (('-v','--version'     ),dict(action='store_true'              )),
-      ((     '--noheader'    ),dict(action='store_true'              )),
-      (('-U','--user-summary'),dict(action='store_true'              )),
-      (('-N','--node-summary'),dict(action='store_true'              )),
-      ((     '--long'        ),dict(action='store_true'              )),
-      ((     '--debug'       ),dict(action='store_true'              )),
-      ((     '--nocolor'     ),dict(action='store_true'              )),
-      (('-u','--user'        ),dict(nargs='*',type=str               )),
-      (('-w','--exclude-user'),dict(nargs='*',type=str               )),
-      (('-j','--jobname'     ),dict(nargs='+',type=str               )),
-      (('-n','--node'        ),dict(nargs='+',type=str               )),
-      (('-i','--id'          ),dict(nargs='+',type=str               )),
-      (('-t','--time'        ),dict(nargs='+',type=str               )),
-      (('-m','--memory'      ),dict(nargs='+',type=str               )),
-      (('-s','--sort'        ),dict(nargs='+',type=str               )),
-      ((     '--order'       ),dict(nargs=1  ,type=str,default='a'   )),
-      (('-c','--columns'     ),dict(nargs=1  ,type=str               )),
-      (('-a','--add-col'     ),dict(nargs=1  ,type=str,dest='addcol' )),
-      (('-d','--del-col'     ),dict(nargs=1  ,type=str,dest='delcol' )),
-      ((     '--ifs'         ),dict(nargs=1  ,type=str,default='  '  )),
-      ((     '--trunc'       ),dict(nargs=1  ,type=str,default='...' )),
-      (('-f','--full-status' ),dict(nargs='+',type=str               )),
+      (('-h','--help'         ),dict(action='store_true'             )),
+      (('-v','--version'      ),dict(action='store_true'             )),
+      (('-U','--user-summary' ),dict(action='store_true'             )),
+      (('-N','--node-summary' ),dict(action='store_true'             )),
+      ((     '--long'         ),dict(action='store_true'             )),
+      ((     '--debug'        ),dict(action='store_true'             )),
+      ((     '--nocolor'      ),dict(action='store_true'             )),
+      ((     '--noheader'     ),dict(action='store_true'             )),
+      (('-u','--owner'        ),dict(nargs='*',type=str              )),
+      (('-w','--exclude-owner'),dict(nargs='*',type=str              )),
+      (('-j','--name'         ),dict(nargs='+',type=str              )),
+      (('-n','--host'         ),dict(nargs='+',type=str              )),
+      (('-i','--id'           ),dict(nargs='+',type=str              )),
+      (('-t','--walltime'     ),dict(nargs='+',type=str              )),
+      (('-m','--memused'      ),dict(nargs='+',type=str              )),
+      (('-f','--full-status'  ),dict(nargs='+',type=str              )),
+      (('-s','--sort'         ),dict(nargs='+',type=str              )),
+      ((     '--order'        ),dict(nargs=1  ,type=str,default='a'  )),
+      (('-c','--columns'      ),dict(nargs=1  ,type=str              )),
+      (('-a','--add-col'      ),dict(nargs=1  ,type=str,             )),
+      (('-d','--del-col'      ),dict(nargs=1  ,type=str,             )),
+      ((     '--ifs'          ),dict(nargs=1  ,type=str,default='  ' )),
+      ((     '--trunc'        ),dict(nargs=1  ,type=str,default='...')),
     ]
 
     # parse command-line arguments
@@ -276,7 +281,7 @@ the defaults/options.
     # --------------------------------
 
     # change format: list -> str
-    for key in ['columns','order','addcol','delcol']:
+    for key in ['columns','order','add_col','del_col']:
       if args[key] is not None:
         args[key] = args[key][0]
     for key in ['ifs','trunc']:
@@ -290,21 +295,23 @@ the defaults/options.
     # set exclusive options
     excl = [\
       ('user_summary','node_summary'),\
+      ('columns'     ,'add_col'     ),\
+      ('columns'     ,'del_col'     ),\
     ]
     # check exclusive options
-    msg = '"--%s" and "--%s" options are exclusive, consult "myqstat --help"'
+    msg = '"--{0}" and "--{1}" options are exclusive, consult "myqstat --help"'
     for opt in excl:
       if len([True for i in opt if args[i]])>1:
-        raise parser.error(msg%tuple([i.replace('_','-') for i in opt]))
+        raise parser.error(msg.format(*[i.replace('_','-') for i in opt]))
 
     # set defaults, other than assigned by parser
-    for key in ['user','exclude_user']:
+    for key in ['owner','exclude_owner']:
       if args[key] is not None:
         if len(args[key])==0:
           args[key] = [pwd.getpwuid(os.getuid())[0]]
 
     # for filters that are specified but not as regular expressions: convert
-    for field in ['user','exclude_user','jobname','id']:
+    for field in ['owner','exclude_owner','name','id']:
       if args[field] is not None:
         args[field] = [re.compile('^'+i+'$') for i in args[field]]
 
@@ -331,7 +338,6 @@ Print the output for the ``myqstat`` command.
     columns      = {}
     columns['i'] = dict(key='id'         ,head='ID'      ,wmin= 6,rel= 0)
     columns['o'] = dict(key='owner'      ,head='Owner'   ,wmin= 7,rel= 2)
-    columns['u'] = dict(key='owner'      ,head='Owner'   ,wmin= 7,rel= 2)
     columns['n'] = dict(key='name'       ,head='Job name',wmin=11,rel= 9)
     columns['h'] = dict(key='host'       ,head='Host'    ,wmin= 2,rel= 3)
     columns['c'] = dict(key='resnode'    ,head='CPUs'    ,wmin= 6,rel= 5)
@@ -340,53 +346,39 @@ Print the output for the ``myqstat`` command.
     columns['s'] = dict(key='state'      ,head='S'       ,wmin= 1,rel= 1)
     columns['t'] = dict(key='walltime'   ,head='Time'    ,wmin= 4,rel= 6)
     columns['r'] = dict(key='score'      ,head='Score'   ,wmin= 4,rel= 7)
-    columns['a'] = dict(key='submit_args',head='qsub -N' ,wmin=11,rel=10)
+    columns['a'] = dict(key='submit_args',head='qsub'    ,wmin=11,rel=10)
+    # get column name based on alias
+    alias = {columns[a]['key']:a for a in columns}
 
     # read jobs
     jobs = gpbs.myqstat(
       qstat = open('qstat.log','r').read() if self.debug else None,
     )
 
-    # set list with command-line argument aliases [options: -u/-j/-i/-n/-t]
-    alias            = {}
-    alias['user'   ] = 'o'
-    alias['jobname'] = 'n'
-    alias['id'     ] = 'i'
-    alias['node'   ] = 'h'
-    alias['time'   ] = 't'
-    alias['memory' ] = 'm'
-    # reduce the list of jobs by applying the different filters
-    for name in ['user','jobname','id','time','node','memory']:
-      # proceed with filter only if the filter is specified
+    # if filter applied: limit list of jobs to filter
+    for name in ['owner','name','id','walltime','host','memused']:
       if getattr(self,name) is not None:
-        # set color
+        # - set color
         columns[alias[name]]['color'] = 'selection'
-        # initiate to include or not
-        incl = [False for i in jobs]
-        # loop over jobs
-        for (ijob,job) in enumerate(jobs):
-          if name in ['user','jobname','id']:
-            incl[ijob] = any([i.match(job[columns[alias[name]]['key']])   for i in getattr(self,name)])
-          else:
-            incl[ijob] = any([getattr(job,columns[alias[name]]['key'])==i for i in getattr(self,name)])
-        # select jobs
-        jobs = [job for job,i in zip(jobs,incl) if i]
-    # reduce the list of jobs by applying the different filters: exclude argument
-    for key in ['exclude_user']:
+        # - apply filter
+        if name in ['owner','name','id']: jobs = [[job for job in jobs if re.match(item,         job[columns[alias[name]]['key']])] for item in getattr(self,name)]
+        else                            : jobs = [[job for job in jobs if          item==getattr(job,columns[alias[name]]['key']) ] for item in getattr(self,name)]
+        # - select jobs
+        jobs = [ job for sub in jobs for job in sub]
+
+    # if filter applied: exclude from list of jobs
+    for key in ['exclude_owner']:
       name = key.split('exclude_')[1]
-      # proceed with filter only if the filter is specified
       if getattr(self,key) is not None:
-        # set color
+        # - set color
         columns[alias[name]]['color'] = 'selection'
-        # initiate to include or not
+        # - initiate to include or not
         incl = [False for i in jobs]
-        # loop over jobs
+        # - loop over jobs
         for (ijob,job) in enumerate(jobs):
-          if name in ['user','jobname','id']:
-            incl[ijob] = len([i for i in getattr(self,key) if i.match(job[columns[alias[name]]['key']])  ])==0
-          else:
-            incl[ijob] = len([i for i in getattr(self,key) if getattr(job,columns[alias[name]]['key'])==i])==0
-        # select jobs
+          if name in ['owner','name','id']: incl[ijob] = len([i for i in getattr(self,key) if i.match(job[columns[alias[name]]['key']])  ])==0
+          else                            : incl[ijob] = len([i for i in getattr(self,key) if getattr(job,columns[alias[name]]['key'])==i])==0
+        # - select jobs
         jobs = [job for job,i in zip(jobs,incl) if i]
 
     # apply sort to the list of jobs
@@ -401,10 +393,10 @@ Print the output for the ``myqstat`` command.
     # set default column list
     col = ['i','o','n','h','c','m','p','s','t','r']
     # add/remove/overwrite column list
-    if self.addcol:
-      col += [c for c in self.addcol]
-    if self.delcol:
-      rm   = [c for c in self.delcol]
+    if self.add_col:
+      col += [c for c in self.add_col]
+    if self.del_col:
+      rm   = [c for c in self.del_col]
       col  = [c for c in col if c not in rm]
     if self.columns:
       col  = [c for c in self.columns]
@@ -451,7 +443,7 @@ Print the output for the ``myqstat -N`` command.
     columns['x'] = dict(key='reldisku'   ,head='HD%'    ,wmin=5,rel=11)
     columns['b'] = dict(key='bytes_tot'  ,head='Network',wmin=7,rel=12)
 
-    # read node information
+    # read host information
     nodes = gpbs.myqstat_node(
       pbsnodes = open('pbsnodes.log','r').read() if self.debug else None     ,
       ganglia  = open('ganglia.log' ,'r').read() if self.debug else self.long,
@@ -472,10 +464,10 @@ Print the output for the ``myqstat -N`` command.
     if self.long:
       col += ['h','x','b']
     # add/remove/overwrite column list
-    if self.addcol:
-      col += [c for c in self.addcol]
-    if self.delcol:
-      rm   = [c for c in self.delcol]
+    if self.add_col:
+      col += [c for c in self.add_col]
+    if self.del_col:
+      rm   = [c for c in self.del_col]
       col  = [c for c in col if c not in rm]
     if self.columns:
       col  = [c for c in self.columns]
@@ -547,12 +539,11 @@ Print the output for the ``myqstat -U`` command.
 
     # define column settings, based on alias [options: -s/-c]
     columns      = {}
-    columns['o'] = dict(key='owner'      ,head='owner'   ,wmin= 7,rel= 0)
-    columns['u'] = dict(key='owner'      ,head='owner'   ,wmin= 7,rel= 0)
-    columns['c'] = dict(key='cpus'       ,head='cpus'    ,wmin= 3,rel= 1)
-    columns['m'] = dict(key='memused'    ,head='mem'     ,wmin= 5,rel= 2)
-    columns['t'] = dict(key='walltime'   ,head='time'    ,wmin= 5,rel= 3)
-    columns['r'] = dict(key='score'      ,head='score'   ,wmin= 4,rel= 7)
+    columns['o'] = dict(key='owner'      ,head='Owner',wmin= 7,rel= 0)
+    columns['c'] = dict(key='cpus'       ,head='CPUs' ,wmin= 3,rel= 1)
+    columns['m'] = dict(key='memused'    ,head='Mem'  ,wmin= 5,rel= 2)
+    columns['t'] = dict(key='walltime'   ,head='Time' ,wmin= 5,rel= 3)
+    columns['r'] = dict(key='score'      ,head='Score',wmin= 4,rel= 7)
 
     # read node information
     owners = gpbs.myqstat_user(
@@ -572,10 +563,10 @@ Print the output for the ``myqstat -U`` command.
     # set default column list
     col = ['o','c','m','t','r']
     # add/remove/overwrite column list
-    if self.addcol:
-      col += [c for c in self.addcol]
-    if self.delcol:
-      rm   = [c for c in self.delcol]
+    if self.add_col:
+      col += [c for c in self.add_col]
+    if self.del_col:
+      rm   = [c for c in self.del_col]
       col  = [c for c in col if c not in rm]
     if self.columns:
       col  = [c for c in self.columns]
@@ -605,7 +596,7 @@ Print the output for the ``myqstat -U`` command.
 
     import sys
 
-    print '''
+    print('''
 NAME
 
   myqstat - display the formatted job or node information
@@ -623,9 +614,9 @@ DESCRIPTION
 
   The following color coding is used:
 
-    %sSelection%s
+    {select:s}Selection{end:s}
 
-    %sWarning: please provide a better resource claim%s
+    {warning:s}Warning: please provide a better resource claim{end:s}
     - Memory: use "-l pmem=... -l pvmem=..." as the job is using a lot of
               memory.
     - Score : one or more processors is idle a large part of the time (score<1),
@@ -634,68 +625,71 @@ DESCRIPTION
 
     Use the --nocolor option to get output without color-coding.
 
+  Note that whenever regular expression are used, the Python format has to be
+  used.
+
 OPTIONS
 
   General options
-   -h --help               print help
-   -v --version            print version number
+   -h --help                print help
+   -v --version             print version number
 
   Filter options
-   -u --user         [opt] user filter (default `whoami`)
-   -w --exclude-user [opt] user filter (default `whoami`)
-   -j --jobname      [arg] job-name filter
-   -i --id           [arg] job-id filter
-   -t --time         [arg] walltime filter, e.g. ">10d"
-   -m --memory       [arg] memory filter, e.g. ">100mb"
-   -n --node         [arg] host filter, e.g. "10"
+   -u --owner         [opt] owner filter (default `whoami`)
+   -w --exclude-owner [opt] owner filter (default `whoami`)
+   -j --name          [arg] job-name filter
+   -i --id            [arg] job-id filter
+   -t --walltime      [arg] walltime filter, e.g. ">10d"
+   -m --menused       [arg] memory filter, e.g. ">100mb"
+   -n --host          [arg] host filter, e.g. "10"
 
   Ouput options
-   -c --columns      [arg] specify output columns explicitly (see below)
-   -a --add-col      [arg] add columns at the end of the default list
-   -d --del-col      [arg] remove columns from default list
-   -s --sort         [arg] sort the output along a certain column (see below)
-      --order        [arg] sort the output (a)scending or (d)escending
-   -o --output       [arg] output style: (s)hort, (l)ong, (c)omputer readable
-      --noheader           do not display header
-      --nocolor            do not use color coding
-      --ifs                set symbol to separate the columns (default: " ")
-      --trunc              set symbol to truncate information (default: "...")
+   -c --columns       [arg] specify output columns explicitly (see below)
+   -a --add-col       [arg] add columns at the end of the default list
+   -d --del-col       [arg] remove columns from default list
+   -s --sort          [arg] sort the output along a certain column (see below)
+      --order         [arg] sort the output (a)scending or (d)escending
+   -o --output        [arg] output style: (s)hort, (l)ong, (c)omputer readable
+      --noheader            do not display header
+      --nocolor             do not use color coding
+      --ifs                 set symbol to separate the columns (default: " ")
+      --trunc               set symbol to truncate information (default: "...")
 
  Summary options
-   -U --user-summary       summary per user
-   -N --node-summary       summary per node (wrapper around pbsnodes)
-      --long               additional node information (slow, as it scans nodes)
+   -U --user-summary        summary per user
+   -N --node-summary        summary per node (wrapper around pbsnodes)
+      --long                additional node information (slow)
 
   Output columns (default: -c ionhcmpstr)
-   i   id                  -
-   o   owner               -
-   n   job name            -
-   h   host                compute-node number
-   c   cpus                CPU resources claimed
-   m   mem                 memory currently used by the job
-   p   pmem                requested memory
-   s   S                   state (Q=queued, R=running, E=quiting)
-   t   time                walltime (elapsed time since the job has started)
-   r   score               score: CPU-time / ( walltime * #CPUs )
-   a   submit_args         submit arguments
+   i   id                   -
+   o   owner                -
+   n   name                 -
+   h   host                 compute-node number
+   c   cpus                 CPU resources claimed
+   m   mem                  memory currently used by the job
+   p   pmem                 requested memory
+   s   S                    state (Q=queued, R=running, E=quiting)
+   t   walltime             elapsed time since the job has started
+   r   score                score: CPU-time / ( walltime * #CPUs )
+   a   submit_args          submit arguments
 
   Output columns [--node-summary] (default: nstcfrmp)
-   n   node                compute-node number
-   s   state               status (free,job-exclusive,offline,down)
-   t   type                CPU-type (amd,intel)
-   c   Ctot                #CPUs
-   u   Cused               #CPUs in use by jobs
-   f   Cfree               #CPUs free
-   l   score               load (~job score)
-   m   Mtot                physical memory present in the node
-   w   Mused               memory currently used by jobs
-   r   Mrel                ratio of memory used by jobs (>1: swapping, avoid!)
+   n   node                 compute-node number
+   s   state                status (free,job-exclusive,offline,down)
+   t   type                 CPU-type (amd,intel)
+   c   Ctot                 #CPUs
+   u   Cused                #CPUs in use by jobs
+   f   Cfree                #CPUs free
+   l   score                load (~job score)
+   m   Mtot                 physical memory present in the node
+   w   Mused                memory currently used by jobs
+   r   Mrel                 ratio of memory used by jobs (>1: swapping, avoid!)
 
   Output columns [--node-summary --long] (default: nstcfrmphxb)
-   h   HDtot               total amount of disk-space in the node
-   e   HDused              amount of disk-space currently used
-   x   HDratio             ratio of disk-space used by jobs (>1 jobs get killed)
-   b   Network             total network traffic
+   h   HDtot                total amount of disk-space in the node
+   e   HDused               amount of disk-space currently used
+   x   HDratio              ratio of disk-space used (>1 jobs get killed)
+   b   Network              total network traffic
 
   Output columns [--user-summary] (default: ocmtr)
    o   owner                -
@@ -703,12 +697,12 @@ OPTIONS
    a   amd                  total number of AMDs in use by the owner
    i   intel                total number of Intels in use by the owner
    m   mem                  total memory used by the owner
-   t   time                 total walltime of all owner's jobs
+   t   walltime             total walltime of all owner's jobs
    s   score                average score of all owner's jobs
 
 RELEASE
 
-  Version 4.0, April 2015
+  Version 4.1, April 2016
 
 COPYRIGHT
 
@@ -717,10 +711,11 @@ COPYRIGHT
 ACKNOWLEDGEMENT
 
   J. Neggers
-    ''' % (
-      gpbs.ColorDefault.selection   , gpbs.ColorDefault.end ,
-      gpbs.ColorDefault.warning     , gpbs.ColorDefault.end ,
-    )
+    '''.format(
+      select  = gpbs.ColorDefault.selection,
+      end     = gpbs.ColorDefault.end,
+      warning = gpbs.ColorDefault.warning,
+    ))
 
     sys.exit(0)
 
@@ -732,7 +727,7 @@ ACKNOWLEDGEMENT
 
     import sys
 
-    print 'Version 4.0, April 2015'
+    print('Version 4.1, April 2016')
 
     sys.exit(0)
 
