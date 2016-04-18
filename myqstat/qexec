@@ -5,15 +5,31 @@ import commands,os,pwd,sys,re
 import gpbs
 
 # ==============================================================================
+# print version information and exit
+# ==============================================================================
 
-def version():
+def printversion():
   print '''
-Version 0.2
+Version 0.3, April 2016
+
+  - Included verbose option
+  - Updated from new version of gpbs
+
+Version 0.2, December 2015
+
+  - Bugfixes
+
+Version 0.1
+
+  - Initial version
   '''
   sys.exit(0)
 
+# ==============================================================================
+# print help and exit
+# ==============================================================================
 
-def help():
+def printhelp():
   print '''
 NAME
 
@@ -21,7 +37,7 @@ NAME
 
 USAGE
 
-  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-q] [-i input]
+  $ qexec [-c CMD] [-t] [-p PBSOPT] [-n MAX] [-q] [-i input] [-v]
 
 DESCRIPTION
 
@@ -33,38 +49,43 @@ DESCRIPTION
   NB: the job is always submitted from the folder in which the file (PBS-script
       or input-file substituted in the command) is stored.
 
-      For example for "-f sim/test.pbs", the function executes
-      "cd sim; qsub test.pbs; cd .."
+      For example for "-i sim/test.pbs", the function executes
+
+        $ cd sim; qsub test.pbs; cd ..
 
 OPTIONS
 
-  -h --help
-    Print help
+  -h, --help
+    Print help and exit.
 
-  -v --version
-    Print version
+  --version
+    Print version and exit.
 
-  -w --write
+
+  -v, --verbose
+    Verbose operations, ask for conformation.
+
+  -w, --write
     Write the PBS-scripts, do not submit the jobs.
     Ignored options: "-f", "-n", "q", and "-p".
 
-  -n --max=N
-    Maximum number of jobs to run in parallel
+  -n, --max=N
+    Maximum number of jobs to run in parallel.
 
-  -q --current-queue
-    Only check the queue that of the jobs submitted with this script. Otherwise
+  -q, --current-queue
+    Only check the queue that of the jobs submitted by this script. By default
     all the user's jobs are taken into account.
 
-  -i --input=STR
+  -i, --input=STR
     List with input (PBS-)files.
 
-  -c --command=STR
+  -c, --command=STR
     Command to execute (e.g.: "python %s")
 
-  -t --temp
+  -t, --temp
     Use temporary working directory on the compute-node.
 
-  -p --pbsopt=STR
+  -p, --pbsopt=STR [STR]
     Command-line PBS-options. These options overwrite equivalent options
     specified in the PBS-script. Common options:
 
@@ -130,29 +151,28 @@ SEE ALSO
 
 RELEASE
 
-  Version 0.2, December 2015
+  Version 0.3, April 2016
 
 COPYRIGHT
 
-  T.W.J. de Geus
+  T.W.J. de Geus -- tom@geus.me -- www.geus.me
   '''
   sys.exit(0)
 
 # ==============================================================================
-
-# ------------------------------------------------------------------------------
 # parse command-line arguments
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # set options/arguments
 opts = [\
   (('-h','--help'         ),dict(action='store_true'           )),
-  (('-v','--version'      ),dict(action='store_true'           )),
+  ((     '--version'      ),dict(action='store_true'           )),
+  (('-v','--verbose'      ),dict(action='store_true'           )),
   (('-w','--write'        ),dict(action='store_true'           )),
   (('-t','--temp'         ),dict(action='store_true'           )),
   (('-q','--current-queue'),dict(action='store_true'           )),
   (('-c','--command'      ),dict(nargs=1  ,type=str            )),
-  (('-n','--max'          ),dict(nargs=1  ,type=int ,default=72)),
+  (('-n','--max'          ),dict(nargs=1  ,type=int ,default=96)),
   (('-p','--pbsopt'       ),dict(nargs='*',type=str            )),
   (('-i','--input'        ),dict(nargs='+',type=str            )),
 ]
@@ -161,10 +181,8 @@ opts = [\
 # - create parser
 parser = argparse.ArgumentParser(add_help=False)
 for (arg,opt) in opts:
-  if type(arg)==tuple:
-    parser.add_argument(*arg,**opt)
-  else:
-    parser.add_argument(arg,**opt)
+  if type(arg)==tuple: parser.add_argument(*arg,**opt)
+  else               : parser.add_argument( arg,**opt)
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
 # - convert to list
@@ -172,7 +190,7 @@ for key in ['pbsopt','input']:
   if type(args[key])!=list:
     if args[key] is not None:
       args[key] = [args[key]]
-# - convert to single string
+# - concatenate list to string
 for key in ['pbsopt']:
   if args[key] is not None:
     args[key] = ' '.join(args[key])
@@ -186,73 +204,71 @@ if args['write'] and args['command'] is None:
   print 'No command to write to the PBS-script'; sys.exit(1)
 
 # print help and exit
-if args['help']:
-  help()
-if args['version']:
-  version()
+if args['help'   ]: printhelp()
+if args['version']: printversion()
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 # main program
-# ------------------------------------------------------------------------------
+# ==============================================================================
+
+# initiate
+# --------
 
 # initiate list of running jobs: updated with submitted/completed jobs
 running = []
 
 # read the amount of other jobs to take into account
 user   = pwd.getpwuid(os.getuid())[0]
-jobs   = [job for job in gpbs.read_qstat() if job.state in ['R','Q']]
+jobs   = [job for job in gpbs.Read.myqstat() if job.state in ['R','Q']]
 nother = len([job for job in jobs if job.owner==user]) if not args['current_queue'] else 0
 
-# loop over files to submit
-for name in args['input']:
+# loop to verbose/submit
+# ----------------------
 
-  # wait for space to open-up
-  # -------------------------
+if args['verbose']: modes = ['verbose','submit']
+else              : modes = [          'submit']
 
-  if not args['write']:
+for mode in modes:
 
-    # wait until the number of running jobs is smaller than the maximum
-    while (len(running)+nother)>=args['max']:
-      time.sleep(60)
-      jobs    = [job for job in gpbs.read_qstat() if job.state in ['R','Q']]
-      nother  = len([job for job in jobs if job.owner==user and int(job.id) not in running]) if not args['current_queue'] else 0
-      jobs    = [int(job.id) for job in jobs]
-      running = [job for job in running if job in jobs]
+  for name in args['input']:
 
-  # interpret file-input
-  # --------------------
+    # wait for space to open-up
+    if not args['write'] and mode=='submit':
 
-  # get the path and the filename without extension
-  path     = os.path.dirname (os.path.abspath (name))
-  base,ext = os.path.splitext(os.path.basename(name))
+      while (len(running)+nother)>=args['max']:
+        time.sleep(60)
+        jobs    = [job for job in gpbs.Read.myqstat() if job.state in ['R','Q']]
+        nother  = len([job for job in jobs if job.owner==user and int(job.id) not in running]) if not args['current_queue'] else 0
+        jobs    = [int(job.id) for job in jobs]
+        running = [job for job in running if job in jobs]
 
-  # write PBS-script
-  # ----------------
+    # interpret file-input
+    path     = os.path.dirname (os.path.abspath (name))
+    base,ext = os.path.splitext(os.path.basename(name))
 
-  if args['command'] is not None:
-
-    # overwrite extension of the submit script
-    ext = '.pbs'
-    # read PBS-script from library
-    if args['temp']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
-    else           : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
     # write PBS-script
-    open(path+'/'+base+ext,'w').write(script)
+    if args['command'] is not None:
 
-  # submit jobs
-  # -----------
+      ext = '.pbs'
 
-  if not args['write']:
+      if args['temp']: script = gpbs.script.heavyio(pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
+      else           : script = gpbs.script.simple (pbsopt=['-o '+base+'.out'],command=args['command']%os.path.basename(name))
 
-    # combine information for formatted-string below
-    info = {'path':path,'name':name,'base':base,'ext':ext,'pbsopt':args['pbsopt']}
-    # create the commands, optionally with command-line options
-    # (automatically assign a name for the job)
-    if args['pbsopt'] is None            : cmd = 'cd "{path:s}"; qsub -N "{name:s}" "{base:s}{ext:s}"'           .format(**info)
-    elif re.match('-N .*',args['pbsopt']): cmd = 'cd "{path:s}"; qsub {pbsopt:s} "{base:s}{ext:s}"'              .format(**info)
-    else                                 : cmd = 'cd "{path:s}"; qsub {pbsopt:s} -N "{name:s}" "{base:s}{ext:s}"'.format(**info)
-    # submit
-    jid = commands.getoutput(cmd)
-    jid = jid.split('.')[0]
-    # update list with running jobs
-    running.append(int(jid))
+      if   mode=='verbose': print('touch '+path+'/'+base+ext+';'),
+      elif mode=='submit' : open (         path+'/'+base+ext,'w').write(script)
+
+    # submit jobs
+    if not args['write']:
+
+      info = {'path':path,'name':name,'base':base,'ext':ext,'pbsopt':args['pbsopt']}
+
+      if args['pbsopt'] is None            : cmd = 'cd "{path:s}"; qsub -N "{name:s}" "{base:s}{ext:s}"'           .format(**info)
+      elif re.match('-N .*',args['pbsopt']): cmd = 'cd "{path:s}"; qsub {pbsopt:s} "{base:s}{ext:s}"'              .format(**info)
+      else                                 : cmd = 'cd "{path:s}"; qsub {pbsopt:s} -N "{name:s}" "{base:s}{ext:s}"'.format(**info)
+
+      if   mode=='verbose': print(cmd);
+      elif mode=='submit' : jid = commands.getoutput(cmd); running.append(int(jid.split('.')[0]))
+
+  # ask for confirmation
+  if mode=='verbose':
+    if not gpbs.Print.confirm('\nProceed? (y/n)\n'): sys.exit(0)

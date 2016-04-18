@@ -5,18 +5,26 @@ import commands,os,pwd,sys,re
 import gpbs
 
 # ==============================================================================
+# print version information and exit
+# ==============================================================================
 
-def version():
+def printversion():
   print '''
-Version 0.1
+Version 0.1, December 2015
+
+- Initial version.
   '''
   sys.exit(0)
 
-def help():
+# ==============================================================================
+# print help and exit
+# ==============================================================================
+
+def printhelp():
   print '''
 NAME
 
-  qgrep - print lines matching a pattern
+  qgrep - filter lines from running jobs (by comparing to their names).
 
 USAGE
 
@@ -24,15 +32,15 @@ USAGE
 
 DESCRIPTION
 
-  Print lines matching a pattern.
+  Filter lines from running jobs (by comparing to their names).
 
 OPTIONS
 
-  -h --help
-    Print help
+  -h, --help
+    Print help and exit.
 
-  -V --version
-    Print version
+  --version
+    Print version and exit.
 
   -i, --job-id
     Use job-id as matching pattern.
@@ -45,16 +53,12 @@ OPTIONS
 
 EXAMPLE
 
-  $ find . -mindepth 1 -type d | qgrep -v
+  $ qexec -c "python %s" -i sim*.py
+  $ ls sim*.py | qgrep -v
 
-  Breakdown of the command:
-
-    find . -mindepth 1 -type d
-        find all sub-directories in the current directory
-
-    qgrep -v
-        limit the selection to those directories that have a name that is not
-        equal to the id of any of the currently running jobs
+  The first line is an example to submit a number of jobs. To then list all
+  files ``sim*.py`` that are no longer running, the ``qgrep -v`` command is
+  used.
 
 SEE ALSO
 
@@ -66,33 +70,29 @@ RELEASE
 
 COPYRIGHT
 
-  T.W.J. de Geus
+  T.W.J. de Geus -- tom@geus.me -- www.geus.me
   '''
   sys.exit(0)
 
 # ==============================================================================
-
-# ------------------------------------------------------------------------------
 # parse command-line arguments
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # set options/arguments
 opts = [\
-  (('-h','--help'        ),dict(action='store_true'               )),
-  (('-V','--version'     ),dict(action='store_true'               )),
-  (('-v','--invert-match'),dict(action='store_true'               )),
-  (('-i','--job-id'      ),dict(action='store_true'               )),
-  (('-u','--user'        ),dict(nargs='*',type=str                )),
+  (('-h','--help'        ),dict(action='store_true')),
+  (('-V','--version'     ),dict(action='store_true')),
+  (('-v','--invert-match'),dict(action='store_true')),
+  (('-i','--job-id'      ),dict(action='store_true')),
+  (('-u','--user'        ),dict(nargs='*',type=str )),
 ]
 
 # parse command-line arguments
 # - create parser
 parser = argparse.ArgumentParser(add_help=False)
 for (arg,opt) in opts:
-  if type(arg)==tuple:
-    parser.add_argument(*arg,**opt)
-  else:
-    parser.add_argument(arg,**opt)
+  if type(arg)==tuple: parser.add_argument(*arg,**opt)
+  else               : parser.add_argument( arg,**opt)
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
 # - set defaults, other than assigned by parser
@@ -110,17 +110,15 @@ if not sys.stdin.isatty(): lines = [i.strip() for i in sys.stdin.readlines()]
 else                     : lines = []
 
 # print help and exit
-if args['help']:
-  help()
-if args['version']:
-  version()
+if args['help'   ]: printhelp()
+if args['version']: printversion()
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 # main program
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # get list with jobs
-jobs = [job for job in gpbs.read_qstat()]
+jobs = [job for job in gpbs.Read.myqstat()]
 
 # apply filters
 if args['user'] is not None:
@@ -128,8 +126,8 @@ if args['user'] is not None:
     jobs = [job for job in jobs if re.match(name,job.owner)]
 
 # convert to list of strings
-if args['job_id']: patterns = [re.compile('^.*'+job.id+'.*$') for job in jobs]
-else             : patterns = [re.compile('^.*'+job.id+'.*$') for job in jobs]
+if args['job_id']: patterns = [re.compile('^.*'+job.id  +'.*$') for job in jobs]
+else             : patterns = [re.compile('^.*'+job.name+'.*$') for job in jobs]
 
 # initiate match
 match = [False for line in lines]
@@ -149,33 +147,4 @@ if args['invert_match']:
 print '\n'.join([line for line,test in zip(lines,match) if test])
 
 sys.exit(0)
-
-
-
-
-
-
-
-
-
-# # get files to search and extension of the output-file
-# files = args['files']
-# out   = args['out'  ]
-# if out[0]!='.': out = '.'+out
-
-# # get the output-files of all running jobs
-# user  = pwd.getpwuid(os.getuid())[0]
-# host  = socket.gethostname()+':'
-# jobs  = [job.output_path.split(host)[1] for job in gpbs.read_qstat() if job.owner==user]
-
-# # reduce files for running jobs
-# files = [i for i in files if os.path.splitext(os.path.abspath(i))[0]+out not in jobs]
-
-# # reduce files for existing out-files
-# files = [i for i in files if not os.path.isfile(os.path.splitext(os.path.abspath(i))[0]+out)]
-
-# # print output
-# print os.linesep.join(sorted(files))
-
-
 

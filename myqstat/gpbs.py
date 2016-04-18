@@ -1,41 +1,53 @@
 '''
 This module provides functions to read the ``qstat``, ``pbsnodes`` and
-``ganglia`` commands, and store:
+``ganglia`` commands.
 
-* ``myqstat``     : a list of ``<gpbs.Job>``
-* ``myqstat_user``: a list of ``<gpbs.Owner>``
-* ``myqstat_node``: a list of ``<gpbs.Node>``
+:print:
 
-All these classes have the customized functionality to obtain a field as data or
-as string (with a certain formatting default). Consider the following example::
+  To read and print information, use:
 
-  >>> type(job.cputime)
-  <class 'gpbs.Time'>
+  * ``gpbs.Print.myqstat``
+  * ``gpbs.Print.myqstat_user``
+  * ``gpbs.Print.myqstat_node``
 
-  >>> type(job['cputime'])
-  <str>
+:list:
 
-Custom print formatting is also available. Consider the following example to
-print a list of jobs in columns (namely: "id", "host" and "pmem")::
+  To obtain a list with information per job/user/node, use:
 
-  for job in jobs:
-    print '{job.id:>6.6s}, {job.host:>3s}, {job.pmem:>5s}'.format(job=job)
+  * ``gpbs.myqstat``     : a list of ``<gpbs.Job>``
+  * ``gpbs.myqstat_user``: a list of ``<gpbs.Owner>``
+  * ``gpbs.myqstat_node``: a list of ``<gpbs.Node>``
 
-This can be automated using::
+  All these classes have the customized functionality to obtain a field as data or
+  as string (with a certain formatting default). Consider the following example::
 
-  # ---------------- without any color definition -----------------
+    >>> type(job.cputime)
+    <class 'gpbs.Time'>
 
-  jobs[0].print_header(...)
+    >>> type(job['cputime'])
+    <str>
 
-  for job in jobs:
-    print job.print_column(...)
+  Custom print formatting is also available. Consider the following example to
+  print a list of jobs in columns (namely: "id", "host" and "pmem")::
 
-  # -------------------- with color definition --------------------
+    for job in jobs:
+      print '{job.id:>6.6s}, {job.host:>3s}, {job.pmem:>5s}'.format(job=job)
 
-  jobs[0].print_header(...).format(color=gpbs.ColorDefault)
+  This can be automated using::
 
-  for job in jobs:
-    print job.print_column(...).format(color=gpbs.ColorDefault)
+    # without any color definition
+
+    jobs[0].print_header(...)
+
+    for job in jobs:
+      print job.print_column(...)
+
+    # with color definition
+
+    jobs[0].print_header(...).format(color=gpbs.ColorDefault)
+
+    for job in jobs:
+      print job.print_column(...).format(color=gpbs.ColorDefault)
 
 :copyright:
 
@@ -44,7 +56,11 @@ This can be automated using::
   | tom@geus.me
 '''
 
-import re
+import re,os
+
+################################################################################
+# --------------------------- PART 1 - DATA CLASSES ---------------------------
+################################################################################
 
 # ==============================================================================
 # job host(s)
@@ -1227,8 +1243,8 @@ Print job in columns.
       columns_c[icol] = {key:col[key] for key in col}
 
     # provide warnings (overwrite color)
-    if self.memused>'1gb' and self.pmem==None and 'memused' in keys: columns_c[keys['memused']]['color'] = 'warning'
-    if self.score>1.03    or  self.score<0.95 and 'score'   in keys: columns_c[keys['score'  ]]['color'] = 'warning'
+    if ( self.memused>'1gb' and self.pmem==None ) and 'memused' in keys: columns_c[keys['memused']]['color'] = 'warning'
+    if ( self.score>1.03    or  self.score<0.95 ) and 'score'   in keys: columns_c[keys['score'  ]]['color'] = 'warning'
 
     # print format per available field
     fmt = {
@@ -1586,12 +1602,12 @@ Function used to print nodes in columns.
       columns_c[icol] = {key:col[key] for key in col}
 
     # provide warnings (overwrite color)
-    if self.relmemu  > 0.8                        and 'memu'      in keys: columns_c[keys['memu'     ]]['color'] = 'warning'
-    if self.relmemu  > 0.8                        and 'relmemu'   in keys: columns_c[keys['relmemu'  ]]['color'] = 'warning'
-    if self.reldisku > 0.7                        and 'disk_free' in keys: columns_c[keys['disk_free']]['color'] = 'warning'
-    if self.reldisku > 0.7                        and 'reldisku'  in keys: columns_c[keys['reldisku' ]]['color'] = 'warning'
-    if self.cpufree  > 0                          and 'cpufree'   in keys: columns_c[keys['cpufree'  ]]['color'] = 'free'
-    if self.score    > 1.05 or self.score < 0.95  and 'score'     in keys: columns_c[keys['score'    ]]['color'] = 'warning'
+    if ( self.relmemu  > 0.8                       ) and 'memu'      in keys: columns_c[keys['memu'     ]]['color'] = 'warning'
+    if ( self.relmemu  > 0.8                       ) and 'relmemu'   in keys: columns_c[keys['relmemu'  ]]['color'] = 'warning'
+    if ( self.reldisku > 0.7                       ) and 'disk_free' in keys: columns_c[keys['disk_free']]['color'] = 'warning'
+    if ( self.reldisku > 0.7                       ) and 'reldisku'  in keys: columns_c[keys['reldisku' ]]['color'] = 'warning'
+    if ( self.cpufree  > 0                         ) and 'cpufree'   in keys: columns_c[keys['cpufree'  ]]['color'] = 'free'
+    if ( self.score    > 1.05 or self.score < 0.95 ) and 'score'     in keys: columns_c[keys['score'    ]]['color'] = 'warning'
 
     # show not-running node different (overwrite color)
     if self.state not in ['free','job-exclusive']:
@@ -1809,7 +1825,7 @@ Print user-summary in columns.
       columns_c[icol] = {key:col[key] for key in col}
 
     # provide warnings (overwrite color)
-    if self.score>1.03 or self.score<0.95 and 'score' in keys: columns_c[keys['score'  ]]['color'] = 'warning'
+    if ( self.score>1.03 or self.score<0.95 ) and 'score' in keys: columns_c[keys['score'  ]]['color'] = 'warning'
 
     # print format per available field
     fmt = {
@@ -1936,93 +1952,205 @@ Split a string, and convert to a specific data type.
   else:
     return text
 
+# ##############################################################################
+# -------------------- PART 2 - READ/PRINT QSTAT/PBSNODES ---------------------
+# ##############################################################################
+
 # ==============================================================================
-# convert `qstat -f` output
+# read
 # ==============================================================================
 
-def read_qstat(qstat=None):
-  r'''
-Read the output of the ``qstat -f`` command. The output is converted to a list
-of jobs.
+class Read:
 
-:options:
+  # ----------------------------------------------------------------------------
+  # ``qstat -f`` -> list of Job
+  # ----------------------------------------------------------------------------
 
-  **qstat** ([``None``] | ``<str>``)
-    If the input is a string, the jobs are read from it instead of reading the
-    ``qstat -f`` command. Mostly used for debugging.
+  @staticmethod
+  def myqstat():
+    r'''
+Read the output of the ``qstat -f`` command.
+
+.. note::
+
+  If the ``qstat -f`` command fails the function tries to run in debug mode
+  by reading the output from a file ``qstat.log``. A notification is printed
+  that the function runs in debug mode.
 
 :returns:
 
   **jobs** (``<list>``)
     A list with jobs of the ``<gpbs.Job>``-class.
-  '''
+    '''
 
-  # read output `qstat -f` command
-  if qstat is None:
+    # read qstat
+    # ----------
+
+    # read command
     import commands
     (stat,qstat) = commands.getstatusoutput('/opt/torque/bin/qstat -f')
+
+    # command failed, try to run in debug mode
     if stat:
-      raise RuntimeError('Command "qstat -f" failed:\n %s'%qstat)
+      if os.path.isfile('qstat.log'):
+        print('\nRunning in debug mode\n')
+        qstat = open('qstat.log','r').read()
+      else:
+        raise IOError('''
+          ``qstat -f`` command failed.\n
+          To run in debug mode, place the output of the ``qstat -f`` command in
+          a file ``qstat.log`` in the same folder as the gpbs-module. Use::
 
-  # replace hard word-wrap, and split in jobs
-  jobs = qstat.replace('\n\t','')
-  jobs = jobs.split('Job Id:')[1:]
-  # read/convert each job
-  for (ijob,job) in enumerate(jobs):
-    jobs[ijob] = Job(job)
+            $ qstat -f > qstat.log
+        ''')
 
-  return jobs
+    # convert to list of jobs
+    # -----------------------
 
-# ==============================================================================
-# convert `pbsnodes` and `ganglia` output
-# ==============================================================================
+    # replace hard word-wrap, and split in jobs
+    jobs = qstat.replace('\n\t','')
+    jobs = jobs.split('Job Id:')[1:]
 
-def read_pbs(pbsnodes=None,ganglia=False):
-  r'''
-Read the output of the ``pbsnodes`` (and the ``ganglia``) command. The output is
-converted to a list of compute-nodes.
+    # read/convert each job
+    for (ijob,job) in enumerate(jobs):
+      jobs[ijob] = Job(job)
+
+    return jobs
+
+  # ----------------------------------------------------------------------------
+  # ``qstat -f`` -> list of Owner
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def myqstat_user():
+    r'''
+Summary per user.
+
+.. note::
+
+  If the ``qstat -f`` command fails the function tries to run in debug mode
+  by reading the output from a file ``qstat.log``. A notification is printed
+  that the function runs in debug mode.
+
+:returns:
+
+  **owners** (``<list>``)
+    A list with user summary of the ``<gpbs.Owner>``-class.
+    '''
+
+    # read all jobs
+    jobs = Read.myqstat()
+
+    # list all owners that are running jobs
+    owners = set([job.owner for job in jobs])
+
+    # initiate output
+    summary = []
+
+    # calculate total resources per user
+    for owner in owners:
+      # list with all the owner's jobs
+      user = [job for job in jobs if job.owner==owner]
+      # add to summary list
+      summary.append(Owner(
+        owner     = owner,
+        cpus      = sum([job.host                                       for job in user]),
+        memused   = sum([job.memused                                    for job in user]),
+        walltime  = sum([job.walltime                                   for job in user]),
+        cputime   = sum([job.cputime                                    for job in user]),
+        claimtime = sum([Time(float(job.walltime)*float(len(job.host))) for job in user]),
+      ))
+
+    return sorted(summary,key=lambda owner: owner.cpus)
+
+  # ----------------------------------------------------------------------------
+  # ``pbsnodes`` / ``ganglia`` -> list of Node
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def myqstat_node(ganglia=False):
+    r'''
+Read the output of the ``pbsnodes`` (and the ``ganglia``) command.
+
+.. note::
+
+  If the ``pbsnodes`` command fails the function tries to run in debug mode
+  by reading the output from a file ``pbsnodes.log``. A notification is printed
+  that the function runs in debug mode. Likewise for the ``ganglia`` command,
+  the file ``ganglia.log`` is used.
 
 :options:
 
-  pbsnodes ([``None``] | ``<str>``)
-    If the input is a string, the node information is read from it, instead of
-    reading the ``pbsnodes`` command. Mostly used for debugging.
-
-  ganglia ([``None``] | ``False`` | ``<str>``)
-    If set ``False`` the ``ganglia`` command is not read at all. This option is
-    used to speed up, as the ``ganglia`` command is slow. If a ``<str>`` is
-    supplied the ``ganglia`` command is also not read, but the input string is
-    used in stead. Notice that the following command should be used to form the
-    string::
-
-      ganglia disk_total disk_free bytes_in bytes_out cpu_idle
+  **ganglia** ([``False``] | ``True``)
+    If set ``False`` the ``ganglia`` command is not read.
 
 :returns:
 
   nodes (``<list>``)
     A list with compute-nodes of the ``<gpbs.Node>``-class.
-  '''
+    '''
 
-  # read the `pbsnodes` command
-  if pbsnodes is None:
+    debug = False
+
+    # read ``pbsnodes``
+    # -----------------
+
+    # read command
     import commands
     (stat,pbsnodes) = commands.getstatusoutput('/opt/torque/bin/pbsnodes')
-    if stat:
-      raise RuntimeError('Command "pbsnodes" failed:\n %s'%pbsnodes)
-  # split the `pbsnodes` output in different nodes
-  pbsnodes = filter(None,pbsnodes.split('\n\n'))
 
-  # initiate the ganglia options, and the output
-  args = ['disk_total','disk_free','bytes_in','bytes_out','cpu_idle']
-  dat  = {}
-  # read the `ganglia` command
-  if ganglia is None or ganglia==True:
-    import commands
-    (stat,ganglia) = commands.getstatusoutput('ganglia '+' '.join(args))
+    # command failed, run in debug mode
     if stat:
-      raise RuntimeError('Command "ganglia" failed:\n %s'%ganglia)
-  # convert the `ganglia` command output to dictionary
-  if ganglia is not False:
+      if os.path.isfile('pbsnodes.log'):
+        print('\nRunning in debug mode\n')
+        pbsnodes = open('pbsnodes.log','r').read()
+        debug    = True
+      else:
+        raise IOError('''
+          ``pbsnodes`` command failed.\n
+          To run in debug mode, place the output of the ``pbsnodes`` command in
+          a file ``pbsnodes.log`` in the same folder as the gpbs-module. Use::
+
+            $ pbsnodes > pbsnodes.log
+        ''')
+
+    # split the ``pbsnodes`` output in different nodes
+    pbsnodes = filter(None,pbsnodes.split('\n\n'))
+
+    # return list of nodes
+    if not ganglia:
+
+      for (ipbs,pbs) in enumerate(pbsnodes):
+        pbsnodes[ipbs] = Node(pbs)
+
+      return pbsnodes
+
+    # read ``ganglia``
+    # ----------------
+
+    # initiate the ganglia options, and the output
+    args = ['disk_total','disk_free','bytes_in','bytes_out','cpu_idle']
+    dat  = {pbs.split('\n')[0]:{} for pbs in pbsnodes}
+
+    # read command
+    if not debug:
+
+      import commands
+      (stat,ganglia) = commands.getstatusoutput('ganglia '+' '.join(args))
+
+    else:
+
+      if os.path.isfile('ganglia.log'):
+        ganglia = open('ganglia.log','r').read()
+      else:
+        raise IOError('''
+          ``ganglia`` command failed.\n
+          To run in debug mode, place the output of the ``ganglia`` command in
+          a file ``ganglia.log`` in the same folder as the gpbs-module. Use::
+
+            $ ganglia disk_total disk_free bytes_in bytes_out cpu_idle > ganglia.log
+        ''')
+
     # loop over lines: split lines and store in dictionary per node
     for line in ganglia.split('\n'):
       try:
@@ -2031,137 +2159,622 @@ converted to a list of compute-nodes.
         dat[name]  = {arg:out[i] for (i,arg) in enumerate(args)}
       except:
         pass
-  # change name
-  ganglia = dat
 
-  # loop over pbs-output (nodes) and convert to Node class
-  for (ipbs,pbs) in enumerate(pbsnodes):
-    # get node number
-    node = pbs.split('\n')[0]
-    # convert output, with or without ganglia options
+    # change name
+    ganglia = dat
+
+    # loop over pbs-output (nodes) and convert to Node class
+    for (ipbs,pbs) in enumerate(pbsnodes):
+      pbsnodes[ipbs] = Node(pbs,**ganglia[pbs.split('\n')[0]])
+
+    return pbsnodes
+
+# ==============================================================================
+# print
+# ==============================================================================
+
+class Print:
+
+  # ----------------------------------------------------------------------------
+  # support function: prompt user confirmation
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def confirm(message='Proceed\ny/n?\n'):
+    '''
+Prompt the user for confirmation.
+
+:option:
+
+  **message** (``<str>``)
+    Message to prompt.
+
+:return:
+
+  **response** (``True`` | ``False``)
+    The user's answer.
+  '''
+
+    while True:
+
+      user = raw_input(message)
+
+      if not user                     : print 'Please enter y or n.'; continue
+      if user not in ['y','Y','n','N']: print 'Please enter y or n.'; continue
+      if user     in ['y','Y'        ]: return True
+      if user     in ['n','N'        ]: return False
+
+  # ----------------------------------------------------------------------------
+  # support function: read the terminal size
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def getTerminalSize():
+    r'''
+Get the size of the terminal.
+
+:returns:
+
+  lines (``<int>``)
+    Number of lines in the terminal.
+
+  columns (``<int>``)
+    Number of columns in the terminal.
+
+:source:
+
+  `Online forum <http://www.codingtiger.com/questions/linux/
+  How-to-get-console-window-width-in-python.html>`_
+    '''
+
+    import os, struct
+    def ioctl_GWINSZ(fd):
+      import fcntl, termios
+      return struct.unpack("hh", fcntl.ioctl(fd, termios.TIOCGWINSZ, "1234"))
+    # try stdin, stdout, stderr
+    for fd in (0, 1, 2):
+      try:
+        return ioctl_GWINSZ(fd)
+      except:
+        pass
+    # try os.ctermid()
     try:
-      pbsnodes[ipbs] = Node(pbs,**ganglia[node])
+      fd = os.open(os.ctermid(), os.O_RDONLY)
+      try:
+        return ioctl_GWINSZ(fd)
+      finally:
+        os.close(fd)
     except:
-      pbsnodes[ipbs] = Node(pbs)
+      pass
+    # try `stty size`
+    try:
+      return tuple(int(x) for x in os.popen("stty size", "r").read().split())
+    except:
+      pass
+    # try environment variables
+    try:
+      return tuple(int(os.getenv(var)) for var in ("LINES", "COLUMNS"))
+    except:
+      pass
+    # i give up. return default.
+    return (25, 80)
 
-  return pbsnodes
+  # ----------------------------------------------------------------------------
+  # calculate column width based on the contest (and window size)
+  # ----------------------------------------------------------------------------
 
-# ==============================================================================
-# full status
-# ==============================================================================
+  @staticmethod
+  def column_width(rows,columns,ifs,fit_screen=True):
+    r'''
+Calculate the column width based on the contents and the window size.
 
-def myqstat_full(*args):
-  r'''
+:arguments:
+
+  **rows** (``<list>``)
+    The rows with data. This data is referenced to as ``<dict>``. Usually the
+    data is of the ``<gpbs.Job>``, ``<gpbs.Node>``, or ``<gpbs.Owner>``-class.
+
+  **columns** (``(<dict>,<dict>,...)``)
+    List with print settings. Each column has the print settings in a dictionary
+    with the following fields:
+
+    * ``'key'`` : name of the field,
+    * ``'wmin'``: minimum width (otherwise exclude),
+    * ``'rel'`` : relative importance of the column,
+
+    This function creates the ``'width'``.
+
+  **ifs** (``<str>``)
+    Separator used to separate the column.
+
+:options:
+
+  **fit_screen** ([``True``] | ``False``)
+    If set to ``True`` the column width (and the number of columns) is modified
+    such that the output fits the screen.
+
+:returns:
+
+  **columns** (``(<dict>,<dict>,...)``)
+    List with print settings. The ``'width'`` is added.
+    '''
+
+    # calculate field size
+    # --------------------
+
+    # list columns to include
+    include = []
+
+    # calculate the (maximum) width of the header and the body for each column
+    for icol,column in enumerate(columns):
+      # header
+      column['whead'] = len(column['head'])
+      # body (the rows with data)
+      wmax = 0
+      emax = 0
+      for row in rows:
+        wmax = max(wmax,len(row[column['key']]        ))
+        emax = max(emax,len(row[column['key']].strip()))
+      # set column with as maximum of the header/body
+      column['wmax' ] = max(wmax,column['whead'])
+      column['width'] = max(wmax,column['whead'])
+      # check if information is present
+      if emax:
+        include.append(icol)
+
+    # remove empty columns
+    columns = [column for col,column in enumerate(columns) if col in include]
+
+    # return if nothing has to be done
+    if not fit_screen:
+      return columns
+
+    # check if all columns can be included
+    # ------------------------------------
+
+    # get the width needed to print all columns
+    wtot = sum([column['width'] for column in columns])+(len(columns)-1)*len(ifs)
+    # get the width of the current window
+    wwin = Print.getTerminalSize()[1]
+    # if no truncation is needed: skip truncation (equiv. to long output)
+    if ( wtot<wwin ):
+      return columns
+
+    # remove columns if needed
+    # ------------------------
+
+    # set selection list, based on importance of the column
+    cols = {column['rel']:i for i,column in enumerate(columns)}
+    cols = [cols[i] for i in sorted(cols)]
+
+    # leave room for truncation
+    wmax = wwin
+    # continue adding columns with the minimum width until the screen is filled
+    wtot    = 0
+    include = []
+    for col in cols:
+      if ( columns[col]['wmin'] < (wmax-wtot-len(ifs)) ):
+        columns[col]['width'] = columns[col]['wmin']
+        include.append(col)
+        wtot += columns[col]['width']+len(ifs)
+
+    # delete fields that are no longer included, and update the list of fields
+    # in order of importance
+    if len(include)!=len(cols):
+      columns = [column for col,column in enumerate(columns) if col in include]
+
+    # extend each of the columns as far as needed, maximum to the screen width
+    # ------------------------------------------------------------------------
+
+    # set selection list, based on importance of the column
+    cols = {column['rel']:i for i,column in enumerate(columns)}
+    cols = [cols[i] for i in sorted(cols)]
+
+    # extend to columns to fill the view
+    for col in cols:
+      # check the total length
+      wtot = sum([column['width'] for column in columns])+(len(columns)-1)*len(ifs)
+      if wtot>=wwin:
+        break
+      # extend the column
+      columns[col]['width'] = min(columns[col]['wmax'],(columns[col]['width']+wwin-wtot))
+
+    # return final column selection
+    return columns
+
+  # ----------------------------------------------------------------------------
+  # ``myqstat -f ...``
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def myqstat_f(*args):
+    r'''
 Print the output of the ``qstat -f JOBID`` command.
-  '''
 
-  import commands
+:arguments:
 
-  (stat,qstat) = commands.getstatusoutput('/opt/torque/bin/qstat -f '+' '.join(args))
+  **jobid** (``<str>``)
+    The job-identifiers to print.
+    '''
 
-  return qstat
+    import commands
 
-# ==============================================================================
-# list of jobs
-# ==============================================================================
+    (stat,qstat) = commands.getstatusoutput('/opt/torque/bin/qstat -f '+' '.join(args))
 
-def myqstat(qstat=None):
-  r'''
-Read the output of the ``qstat -f`` command.
+    return qstat
 
-:options:
+  # ----------------------------------------------------------------------------
+  # myqstat
+  # ----------------------------------------------------------------------------
 
-  **qstat** ([``None``] | ``<str>``)
-    If the input is a string, the jobs are read from it instead of reading the
-    ``qstat -f`` command. Mostly used for debugging.
+  @staticmethod
+  def myqstat(jobs=None,**kwargs):
+    '''
+Print the output for the ``qstat -f`` command.
 
-:returns:
+:argument:
 
-  **jobs** (``<list>``)
-    A list with jobs of the ``<gpbs.Job>``-class.
-  '''
-
-  return read_qstat(qstat=qstat)
-
-# ==============================================================================
-# list of nodes
-# ==============================================================================
-
-def myqstat_node(pbsnodes=None,ganglia=False):
-  r'''
-Read the output of the ``pbsnodes`` (and the ``ganglia``) command. The output is
-converted to a list of compute-nodes.
+  **jobs** ([``None``] | ``<list>``)
+    Input list of jobs.
 
 :options:
 
-  pbsnodes ([``None``] | ``<str>``)
-    If the input is a string, the node information is read from it, instead of
-    reading the ``pbsnodes`` command. Mostly used for debugging.
+  **owner**         ([``None`` ] | ``[<str>,...]``) Limit to owner(s)
+  **exclude_owner** ([``None`` ] | ``[<str>,...]``) Exclude owner(s)
+  **name**          ([``None`` ] | ``[<str>,...]``) Limit to name(s)
+  **id**            ([``None`` ] | ``[<str>,...]``) Limit to id(s)
+  **host**          ([``None`` ] | ``[<str>,...]``) Limit to host(s)
+  **memused**       ([``None`` ] | ``[<str>,...]``) Limit to memory(ies)
+  **walltime**      ([``None`` ] | ``[<str>,...]``) Limit to walltime(s)
+  **sort**          ([``None`` ] | ``<str>``      ) Sort by column(s)
+  **columns**       ([``None`` ] | ``<str>``      ) Set column(s)
+  **add_col**       ([``None`` ] | ``<str>``      ) Add column(s) to default
+  **del_col**       ([``None`` ] | ``<str>``      ) Delete column(s) from default
+  **ifs**           ([``'  '`` ] | ``<str>``      ) Column separator
+  **trunc**         ([``'...'``] | ``<str>``      ) Truncation symbol
+  **order**         ([``'d'``  ] | ``'a'``        ) Sort order
+  **nocolor**       ([``False``] | ``True``       ) No color print
+  **noheader**      ([``False``] | ``True``       ) No header
+  **long**          ([``False``] | ``True``       ) No truncation
+    '''
 
-  ganglia ([``None``] | ``False`` | ``<str>``)
-    If set ``False`` the ``ganglia`` command is not read at all. This option is
-    used to speed up, as the ``ganglia`` command is slow. If a ``<str>`` is
-    supplied the ``ganglia`` command is also not read, but the input string is
-    used in stead. Notice that the following command should be used to form the
-    string::
+    # set default options
+    kwargs.setdefault('owner'        ,None )
+    kwargs.setdefault('exclude_owner',None )
+    kwargs.setdefault('name'         ,None )
+    kwargs.setdefault('id'           ,None )
+    kwargs.setdefault('host'         ,None )
+    kwargs.setdefault('memused'      ,None )
+    kwargs.setdefault('walltime'     ,None )
+    kwargs.setdefault('sort'         ,None )
+    kwargs.setdefault('columns'      ,None )
+    kwargs.setdefault('add_col'      ,None )
+    kwargs.setdefault('del_col'      ,None )
+    kwargs.setdefault('ifs'          ,'  ' )
+    kwargs.setdefault('trunc'        ,'...')
+    kwargs.setdefault('order'        ,'d'  )
+    kwargs.setdefault('nocolor'      ,False)
+    kwargs.setdefault('noheader'     ,False)
+    kwargs.setdefault('long'         ,False)
 
-      ganglia disk_total disk_free bytes_in bytes_out cpu_idle
+    # define column settings, based on alias [options: -s/-c]
+    columns      = {}
+    columns['i'] = dict(key='id'         ,head='ID'      ,wmin= 6,rel= 0)
+    columns['o'] = dict(key='owner'      ,head='Owner'   ,wmin= 7,rel= 2)
+    columns['n'] = dict(key='name'       ,head='Job name',wmin=11,rel= 9)
+    columns['h'] = dict(key='host'       ,head='Host'    ,wmin= 2,rel= 3)
+    columns['c'] = dict(key='resnode'    ,head='CPUs'    ,wmin= 6,rel= 5)
+    columns['p'] = dict(key='pmem'       ,head='pmem'    ,wmin= 5,rel= 8)
+    columns['m'] = dict(key='memused'    ,head='Mem'     ,wmin= 5,rel= 4)
+    columns['s'] = dict(key='state'      ,head='S'       ,wmin= 1,rel= 1)
+    columns['t'] = dict(key='walltime'   ,head='Time'    ,wmin= 4,rel= 6)
+    columns['r'] = dict(key='score'      ,head='Score'   ,wmin= 4,rel= 7)
+    columns['a'] = dict(key='submit_args',head='qsub'    ,wmin=11,rel=10)
+    # get column name based on alias
+    alias = {columns[a]['key']:a for a in columns}
 
-:returns:
+    # read jobs
+    if jobs is None:
+      jobs = Read.myqstat()
 
-  nodes (``<list>``)
-    A list with compute-nodes of the ``<gpbs.Node>``-class.
-  '''
+    # if filter applied: limit list of jobs to filter
+    for name in ['owner','name','id','walltime','host','memused']:
+      if kwargs[name] is not None:
+        # - set color
+        columns[alias[name]]['color'] = 'selection'
+        # - apply filter
+        if name in ['owner','name','id']: jobs = [[job for job in jobs if re.match(item,         job[columns[alias[name]]['key']])] for item in kwargs[name]]
+        else                            : jobs = [[job for job in jobs if          item==getattr(job,columns[alias[name]]['key']) ] for item in kwargs[name]]
+        # - select jobs
+        jobs = [ job for sub in jobs for job in sub]
 
-  #TODO: summary
+    # if filter applied: exclude from list of jobs
+    for key in ['exclude_owner']:
+      name = key.split('exclude_')[1]
+      if kwargs[key] is not None:
+        # - set color
+        columns[alias[name]]['color'] = 'selection'
+        # - initiate to include or not
+        incl = [False for i in jobs]
+        # - loop over jobs
+        for (ijob,job) in enumerate(jobs):
+          if name in ['owner','name','id']: incl[ijob] = len([i for i in kwargs[key] if re.match(i,         job[columns[alias[name]]['key']])])==0
+          else                            : incl[ijob] = len([i for i in kwargs[key] if          i==getattr(job,columns[alias[name]]['key']) ])==0
+        # - select jobs
+        jobs = [job for job,i in zip(jobs,incl) if i]
 
-  return read_pbs(pbsnodes=pbsnodes,ganglia=ganglia)
+    # apply sort to the list of jobs
+    if kwargs['sort']:
+      for s in kwargs['sort']:
+        jobs = sorted(jobs,key=lambda job: getattr(job,columns[s]['key']))
 
-# ==============================================================================
-# summary per user
-# ==============================================================================
+    # convert the order of jobs
+    if kwargs['order']!='a':
+      jobs = [job for job in jobs[-1::-1]]
 
-def myqstat_user(qstat=None):
-  r'''
-Summary per user.
+    # set default column list
+    col = ['i','o','n','h','c','m','p','s','t','r']
+    # add/remove/overwrite column list
+    if kwargs['add_col']:
+      col += [c for c in kwargs['add_col']]
+    if kwargs['del_col']:
+      rm   = [c for c in kwargs['del_col']]
+      col  = [c for c in col if c not in rm]
+    if kwargs['columns']:
+      col  = [c for c in kwargs['columns']]
+
+    # select columns -> convert to list
+    columns = [columns[c] for c in col]
+
+    # calculate column width
+    columns = Print.column_width(jobs,columns,ifs=kwargs['ifs'],fit_screen=not kwargs['long'])
+
+    # set the colors
+    if kwargs['nocolor']: color = ColorNone
+    else                : color = ColorDefault
+
+    # print output
+    if len(jobs)>0:
+      if not kwargs['noheader']:
+        print jobs[0].print_header(columns,line='=',ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+      for job in jobs:
+        print job.print_column(columns,ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+
+  # ----------------------------------------------------------------------------
+  # myqstat_node
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def myqstat_node(nodes=None,**kwargs):
+    '''
+Print the output for the ``pbsnodes`` (and ``ganglia``) command(s).
+
+:argument:
+
+  **nodes** ([``None``] | ``<list>``)
+    Input list of nodes.
 
 :options:
 
-  **qstat** ([``None``] | ``<str>``)
-    If the input is a string, the jobs are read from it instead of reading the
-    ``qstat -f`` command. Mostly used for debugging.
+  **sort**          ([``None`` ] | ``<str>``) Sort by column(s)
+  **columns**       ([``None`` ] | ``<str>``) Set column(s)
+  **add_col**       ([``None`` ] | ``<str>``) Add column(s) to default
+  **del_col**       ([``None`` ] | ``<str>``) Delete column(s) from default
+  **ifs**           ([``'  '`` ] | ``<str>``) Column separator
+  **trunc**         ([``'...'``] | ``<str>``) Truncation symbol
+  **order**         ([``'d'``  ] | ``'a'``  ) Sort order
+  **nocolor**       ([``False``] | ``True`` ) No color print
+  **noheader**      ([``False``] | ``True`` ) No header
+  **long**          ([``False``] | ``True`` ) No truncation / ganglia
+    '''
 
-:returns:
+    # set default options
+    kwargs.setdefault('sort'    ,None )
+    kwargs.setdefault('columns' ,None )
+    kwargs.setdefault('add_col' ,None )
+    kwargs.setdefault('del_col' ,None )
+    kwargs.setdefault('ifs'     ,'  ' )
+    kwargs.setdefault('trunc'   ,'...')
+    kwargs.setdefault('order'   ,'d'  )
+    kwargs.setdefault('nocolor' ,False)
+    kwargs.setdefault('noheader',False)
+    kwargs.setdefault('long'    ,False)
 
-  **owners** (``<list>``)
-    A list with user summary of the ``<gpbs.Owner>``-class.
-  '''
+    # define column settings, based on alias [options: -s/-c]
+    columns      = {}
+    columns['n'] = dict(key='node'      ,head='Node'   ,wmin=4,rel= 0)
+    columns['s'] = dict(key='state'     ,head='State'  ,wmin=6,rel= 1)
+    columns['t'] = dict(key='ctype'     ,head='Type'   ,wmin=5,rel= 2)
+    columns['c'] = dict(key='ncpu'      ,head='Ctot'   ,wmin=4,rel= 3)
+    columns['f'] = dict(key='cpufree'   ,head='Cfree'  ,wmin=5,rel= 4)
+    columns['m'] = dict(key='memp'      ,head='Mtot'   ,wmin=5,rel= 5)
+    columns['w'] = dict(key='memu'      ,head='Mused'  ,wmin=6,rel= 6)
+    columns['p'] = dict(key='relmemu'   ,head='Mem%'   ,wmin=5,rel= 7)
+    columns['r'] = dict(key='score'     ,head='Score'  ,wmin=4,rel= 8)
+    columns['h'] = dict(key='disk_total',head='HDtot'  ,wmin=6,rel= 9)
+    columns['e'] = dict(key='disk_used' ,head='HDused' ,wmin=6,rel=10)
+    columns['x'] = dict(key='reldisku'  ,head='HD%'    ,wmin=5,rel=11)
+    columns['b'] = dict(key='bytes_tot' ,head='Network',wmin=7,rel=12)
 
-  # read all jobs
-  jobs = read_qstat(qstat=qstat)
+    # read host information
+    if nodes is None:
+      nodes = Read.myqstat_node(kwargs['long'])
 
-  # list all owners that are running jobs
-  owners = set([job.owner for job in jobs])
+    # apply sort to the (remaining) list of nodes
+    if kwargs['sort'] is None:
+      kwargs['sort'] = ['n']
+    for s in kwargs['sort']:
+      nodes = sorted(nodes,key=lambda node: getattr(node,columns[s]['key']))
 
-  # initiate output
-  summary = []
+    # convert the order of nodes
+    if kwargs['order']!='a':
+      nodes = [node for node in nodes[-1::-1]]
 
-  # calculate total resources per user
-  for owner in owners:
-    # list wtth all the owner's jobs
-    user = [job for job in jobs if job.owner==owner]
-    # add to summary list
-    summary.append(Owner(
-      owner     = owner,
-      cpus      = sum([job.host                                       for job in user]),
-      memused   = sum([job.memused                                    for job in user]),
-      walltime  = sum([job.walltime                                   for job in user]),
-      cputime   = sum([job.cputime                                    for job in user]),
-      claimtime = sum([Time(float(job.walltime)*float(len(job.host))) for job in user]),
-    ))
+    # set default column list
+    col = ['n','s','t','c','f','r','m','p']
+    if kwargs['long']:
+      col += ['h','x','b']
+    # add/remove/overwrite column list
+    if kwargs['add_col']:
+      col += [c for c in kwargs['add_col']]
+    if kwargs['del_col']:
+      rm   = [c for c in kwargs['del_col']]
+      col  = [c for c in col if c not in rm]
+    if kwargs['columns']:
+      col  = [c for c in kwargs['columns']]
 
-  return sorted(summary,key=lambda owner: owner.cpus)
+    # select columns -> convert to list
+    columns = [columns[c] for c in col]
 
+    # calculate column width
+    columns = Print.column_width(nodes,columns,ifs=kwargs['ifs'],fit_screen=not kwargs['long'])
+
+    # set the colors
+    if kwargs['nocolor']: color = ColorNone
+    else                : color = ColorDefault
+
+    # print output
+    if len(nodes)>0:
+      if not kwargs['noheader']:
+        print nodes[0].print_header(columns,line='=',ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+      for job in nodes:
+        print job.print_column(columns,ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+
+    # summary
+    # -------
+
+    # total number of CPUs
+    total   = [str(sum([node.ncpu for node in nodes]))]
+    fmt     = '%'+str(len(total[0]))+'d'
+    cfmt    = fmt+' %s'
+    # list CPU-types
+    ctypes  = list(set([node.ctype for node in nodes]))
+    # offline/online/working/free CPUs
+    offline = [fmt%sum([node.ncpu              for node in nodes if node.state not in ['free','job-exclusive']])]
+    online  = [fmt%sum([node.ncpu              for node in nodes if node.state     in ['free','job-exclusive']])]
+    working = [fmt%sum([node.ncpu-node.cpufree for node in nodes if node.state     in ['free','job-exclusive']])]
+    free    = [fmt%sum([node.cpufree           for node in nodes if node.state     in ['free','job-exclusive']])]
+
+    # if more than one CPU-type is present: differentiate between CPU-types
+    if len(ctypes)>1:
+      for ctype in ctypes:
+        total   += [cfmt%(sum([node.ncpu              for node in nodes if node.ctype==ctype                                               ]),ctype)]
+        offline += [cfmt%(sum([node.ncpu              for node in nodes if node.ctype==ctype and node.state not in ['free','job-exclusive']]),ctype)]
+        online  += [cfmt%(sum([node.ncpu              for node in nodes if node.ctype==ctype and node.state     in ['free','job-exclusive']]),ctype)]
+        working += [cfmt%(sum([node.ncpu-node.cpufree for node in nodes if node.ctype==ctype and node.state     in ['free','job-exclusive']]),ctype)]
+        free    += [cfmt%(sum([node.cpufree           for node in nodes if node.ctype==ctype and node.state     in ['free','job-exclusive']]),ctype)]
+
+    # convert to text
+    total   = 'number of CPUs total    : '+total  [0]+(' ( '+' / '.join(total  [1:])+' )' if len(total  )>1 else '')
+    offline = 'number of CPUs offline  : '+offline[0]+(' ( '+' / '.join(offline[1:])+' )' if len(offline)>1 else '')
+    online  = 'number of CPUs online   : '+online [0]+(' ( '+' / '.join(online [1:])+' )' if len(online )>1 else '')
+    working = 'number of CPUs working  : '+working[0]+(' ( '+' / '.join(working[1:])+' )' if len(working)>1 else '')
+    free    = 'number of CPUs free     : '+free   [0]+(' ( '+' / '.join(free   [1:])+' )' if len(free   )>1 else '')
+
+    # print
+    print '-'*len(total)
+    print total
+    print offline
+    print online
+    print working
+    print free
+
+  # ----------------------------------------------------------------------------
+  # myqstat_user
+  # ----------------------------------------------------------------------------
+
+  @staticmethod
+  def myqstat_user(owners=None,**kwargs):
+    '''
+Print the output for the ``myqstat -U`` command.
+
+:argument:
+
+  **owners** ([``None``] | ``<list>``)
+    Input list of owners.
+
+:options:
+
+  **sort**          ([``None`` ] | ``<str>``) Sort by column(s)
+  **columns**       ([``None`` ] | ``<str>``) Set column(s)
+  **add_col**       ([``None`` ] | ``<str>``) Add column(s) to default
+  **del_col**       ([``None`` ] | ``<str>``) Delete column(s) from default
+  **ifs**           ([``'  '`` ] | ``<str>``) Column separator
+  **trunc**         ([``'...'``] | ``<str>``) Truncation symbol
+  **order**         ([``'d'``  ] | ``'a'``  ) Sort order
+  **nocolor**       ([``False``] | ``True`` ) No color print
+  **noheader**      ([``False``] | ``True`` ) No header
+  **long**          ([``False``] | ``True`` ) No truncation
+    '''
+
+    # set default options
+    kwargs.setdefault('sort'    ,None )
+    kwargs.setdefault('columns' ,None )
+    kwargs.setdefault('add_col' ,None )
+    kwargs.setdefault('del_col' ,None )
+    kwargs.setdefault('ifs'     ,'  ' )
+    kwargs.setdefault('trunc'   ,'...')
+    kwargs.setdefault('order'   ,'d'  )
+    kwargs.setdefault('nocolor' ,False)
+    kwargs.setdefault('noheader',False)
+    kwargs.setdefault('long'    ,False)
+
+    # define column settings, based on alias [options: -s/-c]
+    columns      = {}
+    columns['o'] = dict(key='owner'      ,head='Owner',wmin= 7,rel= 0)
+    columns['c'] = dict(key='cpus'       ,head='CPUs' ,wmin= 3,rel= 1)
+    columns['m'] = dict(key='memused'    ,head='Mem'  ,wmin= 5,rel= 2)
+    columns['t'] = dict(key='walltime'   ,head='Time' ,wmin= 5,rel= 3)
+    columns['r'] = dict(key='score'      ,head='Score',wmin= 4,rel= 7)
+
+    # read node information
+    if owners is None:
+      owners = Read.myqstat_user()
+
+    # apply sort to the (remaining) list of nodes
+    if kwargs['sort'] is None:
+      kwargs['sort'] = ['c']
+    for s in kwargs['sort']:
+      owners = sorted(owners,key=lambda owner: getattr(owner,columns[s]['key']))
+
+    # convert the order of owner
+    if kwargs['order']!='a':
+      owners = [owner for owner in owners[-1::-1]]
+
+    # set default column list
+    col = ['o','c','m','t','r']
+    # add/remove/overwrite column list
+    if kwargs['add_col']:
+      col += [c for c in kwargs['add_col']]
+    if kwargs['del_col']:
+      rm   = [c for c in kwargs['del_col']]
+      col  = [c for c in col if c not in rm]
+    if kwargs['columns']:
+      col  = [c for c in kwargs['columns']]
+
+    # select columns -> convert to list
+    columns = [columns[c] for c in col]
+
+    # calculate column width
+    columns = Print.column_width(owners,columns,ifs=kwargs['ifs'],fit_screen=not kwargs['long'])
+
+    # set the colors
+    if kwargs['nocolor']: color = ColorNone
+    else                : color = ColorDefault
+
+    # print output
+    if len(owners)>0:
+      if not kwargs['noheader']:
+        print owners[0].print_header(columns,line='=',ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+      for owner in owners:
+        print owner.print_column(columns,ifs=kwargs['ifs'],trunc=kwargs['trunc']).format(color=color)
+
+
+
+
+
+# ##############################################################################
+# -------------------------- PART 3 - CREATE SCRIPTS --------------------------
 # ##############################################################################
 
 class script:

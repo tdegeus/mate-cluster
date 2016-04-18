@@ -5,15 +5,22 @@ import commands,os,pwd,sys,re,socket
 import gpbs
 
 # ==============================================================================
+# print version information and exit
+# ==============================================================================
 
-def version():
+def printversion():
   print '''
-Version 0.1
+Version 0.1, December 2015
+
+- Initial version
   '''
   sys.exit(0)
 
+# ==============================================================================
+# print help and exit
+# ==============================================================================
 
-def help():
+def printhelp():
   print '''
 NAME
 
@@ -32,18 +39,18 @@ DESCRIPTION
 
 OPTIONS
 
-  -h --help
-    Print help
+  -h, --help
+    Print help and exit.
 
-  -v --version
-    Print version
+  --version
+    Print version and exit.
 
-  -o --out=EXT
-    Specify the extension of the output- file. Default: ".out"
+  -o, --out=EXT
+    Specify the extension of the output- file. Default: ".out".
 
 EXAMPLE
 
-  $ find . -iname 'run.py' | qfind
+  $ find . -iname 'run.py' | qfilter
 
   Breakdown of the command:
 
@@ -51,7 +58,7 @@ EXAMPLE
         find all files "run.py" from the current location downwards, outputs a
         list "path/run.py"
 
-    | qfind
+    | qfilter
         pipe the output of the find command, and remove those files from the
         list for which the file "path/run.out" exists or will be written by
         currently running jobs
@@ -66,15 +73,13 @@ RELEASE
 
 COPYRIGHT
 
-  T.W.J. de Geus
+  T.W.J. de Geus -- tom@geus.me -- www.geus.me
   '''
   sys.exit(0)
 
 # ==============================================================================
-
-# ------------------------------------------------------------------------------
 # parse command-line arguments
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # set options/arguments
 opts = [\
@@ -88,10 +93,8 @@ opts = [\
 # - create parser
 parser = argparse.ArgumentParser(add_help=False)
 for (arg,opt) in opts:
-  if type(arg)==tuple:
-    parser.add_argument(*arg,**opt)
-  else:
-    parser.add_argument(arg,**opt)
+  if type(arg)==tuple: parser.add_argument(*arg,**opt)
+  else               : parser.add_argument( arg,**opt)
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
 # - convert to string
@@ -104,14 +107,12 @@ if not sys.stdin.isatty():
   args['files'] += [i.strip() for i in sys.stdin.readlines()]
 
 # print help and exit
-if args['help']:
-  help()
-if args['version']:
-  version()
+if args['help'   ]: printhelp()
+if args['version']: printversion()
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 # main program
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # get files to search and extension of the output-file
 files = args['files']
@@ -121,7 +122,7 @@ if out[0]!='.': out = '.'+out
 # get the output-files of all running jobs
 user  = pwd.getpwuid(os.getuid())[0]
 host  = socket.gethostname()+':'
-jobs  = [job.output_path.split(host)[1] for job in gpbs.read_qstat() if job.owner==user]
+jobs  = [job.output_path.split(host)[1] for job in gpbs.Read.myqstat() if job.owner==user]
 
 # reduce files for running jobs
 files = [i for i in files if os.path.splitext(os.path.abspath(i))[0]+out not in jobs]

@@ -5,15 +5,27 @@ import commands,os,pwd,sys,re
 import gpbs
 
 # ==============================================================================
+# print version information and exit
+# ==============================================================================
 
-def version():
+def printversion():
   print '''
+Version 0.2, April 2016
+
+  - Used gpbs.Print.myqstat to print
+  - Updated for new version of gpbs
+
 Version 0.1
+
+  - Initial version
   '''
   sys.exit(0)
 
+# ==============================================================================
+# print help and exit
+# ==============================================================================
 
-def help():
+def printhelp():
   print '''
 NAME
 
@@ -25,35 +37,43 @@ USAGE
 
 DESCRIPTION
 
-  Delete a group of PBS-jobs (or all the user's jobs).
+  Delete a group of PBS-jobs (or all of the user's jobs).
 
 OPTIONS
 
   -h, --help
-    Print help
+    Print help and exit.
 
   --version
-    Print version
+    Print version and exit.
 
   -v, --verbose
-    Verbose operations, ask for conformation.
+    Verbose job selection, ask for conformation.
 
   -n, --name=STR
-    Filter by name, may be regular expression (e.g. "dir.*file.ext").
+    Filter by name*.
 
   -i, --id=STR
-    Filter by job-id, may be regular expression.
+    Filter by job-id*.
 
   -s, --state=STR
-    Filter by state, e.g.: 'Q', 'R'.
+    Filter by state, e.g. 'Q', or 'R'.
 
   -t, --tempdir
-    Remove temporary working directory.
+    Remove temporary working directory. This makes an assumption about the
+    directory name, see gpbs.
 
   -c, --copy=DIR
     Copy the data from the temporary directory before deleting the job (and
     removing it, if the option "-t" is also used). If no directory is specified
-    the directory of the output-file is used.
+    the directory of the output-file is used as destination.
+
+REGULAR EXPRESSIONS (*)
+
+  Several options are filtered using regular expressions. Thereby, the Python
+  format has to be used. For example:
+
+    $ qcp --name="dir.*file.ext"
 
 SEE ALSO
 
@@ -61,7 +81,7 @@ SEE ALSO
 
 RELEASE
 
-  Version 0.1, December 2015
+  Version 0.2, April 2016
 
 FEATURES REQUESTED
 
@@ -70,55 +90,14 @@ FEATURES REQUESTED
 
 COPYRIGHT
 
-  T.W.J. de Geus
+  T.W.J. de Geus -- tom@geus.me -- www.geus.me
   '''
 
   sys.exit(0)
 
 # ==============================================================================
-
-# ------------------------------------------------------------------------------
-# prompt user configuration
-# ------------------------------------------------------------------------------
-
-def confirm(prompt):
-  '''
-Prompt the user for confirmation.
-
-:arguments:
-
-  **prompt** (``<str>``)
-    Message to prompt the user.
-
-:return:
-
-  **response** (``True`` | ``False``)
-    The user's answer.
-  '''
-
-  prompt = '%s\ny/n?\n'%prompt
-
-  while True:
-
-    user = raw_input(prompt)
-
-    if not user:
-      print 'please enter y or n.'
-      continue
-
-    if user not in ['y', 'Y', 'n', 'N']:
-      print 'please enter y or n.'
-      continue
-
-    if user == 'y' or user == 'Y':
-      return True
-
-    if user == 'n' or user == 'N':
-      return False
-
-# ------------------------------------------------------------------------------
 # parse command-line arguments
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # set options/arguments
 opts = [\
@@ -140,51 +119,35 @@ for (arg,opt) in opts:
   else               : parser.add_argument( arg,**opt)
 # - execute parser / convert to "<dict>"
 args = vars(parser.parse_args())
-# - convert to string
-for key in ['name','id']:
-  if type(args[key])==list:
-    args[key] = [re.compile('^'+item+'$') for item in args[key]]
-for key in ['state']:
-  if type(args[key])==list:
-    args[key] = [re.compile('^'+item.upper()+'$') for item in args[key]]
 
 # print help and exit
-if args['help']:
-  help()
-if args['version']:
-  version()
+if args['help'   ]: printhelp()
+if args['version']: printversion()
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
 # main program
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # select the jobs
 # ---------------
 
 # read all of the user's jobs
 user = pwd.getpwuid(os.getuid())[0]
-jobs = [job for job in gpbs.read_qstat() if job.owner==user]
+jobs = [job for job in gpbs.Read.myqstat() if job.owner==user]
 
 # filter the jobs by: id, name, state
-if args['id'   ] is not None: jobs =[[job for job in jobs if re.match(item,job.id   )] for item in args['id'   ]]; jobs = [job for sub in jobs for job in sub]
-if args['name' ] is not None: jobs =[[job for job in jobs if re.match(item,job.name )] for item in args['name' ]]; jobs = [job for sub in jobs for job in sub]
-if args['state'] is not None: jobs =[[job for job in jobs if re.match(item,job.state)] for item in args['state']]; jobs = [job for sub in jobs for job in sub]
+if args['id'   ] is not None: jobs = [[job for job in jobs if re.match(item,job.id        )] for item in args['id'   ]]; jobs = [job for sub in jobs for job in sub]
+if args['name' ] is not None: jobs = [[job for job in jobs if re.match(item,job.name      )] for item in args['name' ]]; jobs = [job for sub in jobs for job in sub]
+if args['state'] is not None: jobs = [[job for job in jobs if re.match(item,job.state,re.I)] for item in args['state']]; jobs = [job for sub in jobs for job in sub]
 
 # optionally ask for confirmation
 # -------------------------------
 
 if args['verbose']:
-  # calculate width of the columns to align
-  keys = ['id','owner','name']
-  N    = [0 for key in keys]
-  for ikey,key in enumerate(keys):
-    for job in jobs:
-      N[ikey] = max(N[ikey],len(str(getattr(job,key))))
-  fmt  = '{id:%ds} {owner:%ds} {name:%ds}'%tuple(N)
-  # create message
-  message = 'Delete the following jobs?\n'+'\n'.join([fmt.format(**vars(job)) for job in jobs])
-  if not confirm(message):
-    sys.exit(0)
+
+  gpbs.Print.myqstat(jobs,nocolor=True)
+
+  if not gpbs.Print.confirm('\nDelete these jobs? (y/n)\n'): sys.exit(0)
 
 # delete the jobs
 # ---------------
