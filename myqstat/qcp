@@ -57,7 +57,7 @@ OPTIONS
 REGULAR EXPRESSIONS (*)
 
   Several options are filtered using regular expressions. Thereby, the Python
-  format has to be used. For example::
+  format has to be used. For example:
 
     $ qcp --name="dir.*file.ext"
 

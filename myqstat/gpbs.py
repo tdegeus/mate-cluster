@@ -2483,10 +2483,10 @@ Print the output for the ``qstat -f`` command.
         # - set color
         columns[alias[name]]['color'] = 'selection'
         # - apply filter
-        if name in ['owner','name','id']: jobs = [[job for job in jobs if re.match(item,         job[columns[alias[name]]['key']])] for item in kwargs[name]]
-        else                            : jobs = [[job for job in jobs if          item==getattr(job,columns[alias[name]]['key']) ] for item in kwargs[name]]
+        if name in ['owner','name','id']: jobs = [[job for job in jobs if re.match('^'+item+'$',     job[columns[alias[name]]['key']])] for item in kwargs[name]]
+        else                            : jobs = [[job for job in jobs if              item==getattr(job,columns[alias[name]]['key']) ] for item in kwargs[name]]
         # - select jobs
-        jobs = [ job for sub in jobs for job in sub]
+        jobs = [job for sub in jobs for job in sub]
 
     # if filter applied: exclude from list of jobs
     for key in ['exclude_owner']:
@@ -2498,8 +2498,8 @@ Print the output for the ``qstat -f`` command.
         incl = [False for i in jobs]
         # - loop over jobs
         for (ijob,job) in enumerate(jobs):
-          if name in ['owner','name','id']: incl[ijob] = len([i for i in kwargs[key] if re.match(i,         job[columns[alias[name]]['key']])])==0
-          else                            : incl[ijob] = len([i for i in kwargs[key] if          i==getattr(job,columns[alias[name]]['key']) ])==0
+          if name in ['owner','name','id']: incl[ijob] = len([i for i in kwargs[key] if re.match('^'+i+'$',         job[columns[alias[name]]['key']])])==0
+          else                            : incl[ijob] = len([i for i in kwargs[key] if              i==getattr(job,columns[alias[name]]['key']) ])==0
         # - select jobs
         jobs = [job for job,i in zip(jobs,incl) if i]
 
