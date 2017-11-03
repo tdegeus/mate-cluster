@@ -58,9 +58,10 @@ Acknowledgment
 
 Over time the following people have contributed to the content as presented here:
 
-* Bart Vossen
-* Franz Bormann
-* Jan Neggers
 * Jeroen van Beeck
+* Franz Bormann
 * Tom de Geus
+* Jan Neggers
+* Bart Vossen
+
 

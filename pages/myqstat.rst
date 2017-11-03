@@ -167,65 +167,73 @@ Let us study the command that lists all folders **not** containing a specific fi
 Custom scripts
 ==============
 
-.. topic:: Use default versions on MaTe-clusters
+.. contents:: **Outline**
+  :local:
+  :depth: 3
+  :backlinks: top
 
-  All scripts below are available on the MaTe-clusters in the ``/share/apps/extra/bin``-folder. They can be readily used by including the following line in the ``~/.bashrc``:
+Downloads
+---------
 
-  .. code-block:: bash
+* :download:`gpbs.py <../myqstat/gpbs.py>`
+* :download:`myqstat <../myqstat/myqstat>`
+* :download:`qdelall <../myqstat/qdelall>`
+* :download:`qexec <../myqstat/qexec>`
+* :download:`qfilter <../myqstat/qfilter>`
+* :download:`qcp <../myqstat/qcp>`
 
-    export PATH=/share/apps/extra/bin:$PATH
+Use default versions on MaTe-clusters
+-------------------------------------
 
-  **NB** this includes selecting the (newer) Python installation in ``/share/apps/extra`` over the default Python-executable
+All scripts below are available on the MaTe-clusters in the ``/share/apps/extra/bin``-folder. They can be readily used by including the following line in the ``~/.bashrc``:
 
-.. topic:: "Installation" for custom use
+.. code-block:: bash
 
-  Downloads:
+  export PATH=/share/apps/extra/bin:$PATH
 
-  * :download:`gpbs.py <../myqstat/gpbs.py>`
-  * :download:`myqstat <../myqstat/myqstat>`
-  * :download:`qdelall <../myqstat/qdelall>`
-  * :download:`qexec <../myqstat/qexec>`
-  * :download:`qfilter <../myqstat/qfilter>`
-  * :download:`qcp <../myqstat/qcp>`
+**NB** this includes selecting the (newer) Python installation in ``/share/apps/extra`` over the default Python-executable
 
-  All of the shell-scripts below are written in Python, but can be used as any shell-script. However, they all depend on the (custom) :command:`gpbs`-module. This module must be made available before the scripts can be used. The steps below "install" :command:`myqstat`, the same steps hold for the other scripts.
+"Installation" for custom use
+-----------------------------
 
-  1.  Store the file :command:`myqstat` somewhere, and make sure that it is executable. For example:
+All of the shell-scripts below are written in Python, but can be used as any shell-script. However, they all depend on the (custom) :command:`gpbs`-module. This module must be made available before the scripts can be used. The steps below "install" :command:`myqstat`, the same steps hold for the other scripts.
 
-      .. code-block:: bash
+1.  Store the file :command:`myqstat` somewhere, and make sure that it is executable. For example:
 
-        [user@pc     ] $ scp myqstat user@furnace:~/bin/
-        [user@pc     ] $ ssh user@furnace
-        [user@furnace] $ cd ~/bin
-        [user@furnace] $ chmod u+x myqstat
+    .. code-block:: bash
 
-  2.  Make sure that the folder in which :command:`myqstat` is in the ``PATH`` in which Bash looks for executables. Following the above example:
+      [user@pc     ] $ scp myqstat user@furnace:~/bin/
+      [user@pc     ] $ ssh user@furnace
+      [user@furnace] $ cd ~/bin
+      [user@furnace] $ chmod u+x myqstat
 
-      .. code-block:: bash
+2.  Make sure that the folder in which :command:`myqstat` is in the ``PATH`` in which Bash looks for executables. Following the above example:
 
-        [user@furnace] $ export PATH=$HOME/bin:$PATH
+    .. code-block:: bash
 
-      To avoid having to do this more than once, add this line to the ``~/.bashrc`` file, which is executed upon login.
+      [user@furnace] $ export PATH=$HOME/bin:$PATH
 
-  3.  Store ``gpbs.py`` in the same folder as :command:`myqstat`, or otherwise make sure that Python can find it in the ``PYTHONPATH``. For example:
+    To avoid having to do this more than once, add this line to the ``~/.bashrc`` file, which is executed upon login.
 
-      .. code-block:: bash
+3.  Store ``gpbs.py`` in the same folder as :command:`myqstat`, or otherwise make sure that Python can find it in the ``PYTHONPATH``. For example:
 
-        [user@furnace] $ export PYTHONPATH=$HOME/bin:$PYTHONPATH
+    .. code-block:: bash
 
-      To avoid having to do this more than once, add this line to the ``~/.bashrc`` file.
+      [user@furnace] $ export PYTHONPATH=$HOME/bin:$PYTHONPATH
 
-  The command can now be used. Try:
+    To avoid having to do this more than once, add this line to the ``~/.bashrc`` file.
 
-  .. code-block:: bash
+The command can now be used. Try:
 
-    [user@furnace] $ myqstat --help
+.. code-block:: bash
 
-  or
+  [user@furnace] $ myqstat --help
 
-  .. code-block:: bash
+or
 
-    [user@furnace] $ myqstat
+.. code-block:: bash
+
+  [user@furnace] $ myqstat
 
 .. _monitoring_myqstat:
 
@@ -346,17 +354,7 @@ Implementation details
 myqstat
 =======
 
-By calling ``Main()`` the command-line argument parser is invoked. This parser
-deals with all the input options, and at the end of the ``__init__()`` function
-calls one of the following functions, before exiting:
-
-* ``help``        : acts on ``myqstat -h``
-* ``version``     : acts on ``myqstat -v``
-* ``myqstat``     : acts on ``myqstat``
-* ``myqstat_node``: acts on ``myqstat -N``
-* ``myqstat_user``: acts on ``myqstat -U``
-
-The latter three functions use the :command:`gpbs`-module to read, convert, and print the data of the relevant commands. The local ``getTerminalSize`` and ``column_width`` functions are used to adapt the output to the size available in the current window.
+Handles the command-line options and print the cluster's states using ``gpbs.py``.
 
 gpbs.py
 =======
@@ -366,16 +364,23 @@ gpbs.py
   :depth: 1
   :backlinks: top
 
-Main interface
---------------
-
-The main interaction with the :command:`gpbs`-module is with the following functions.
+Automatic formatted print
+-------------------------
 
 .. autosummary::
 
-    gpbs.myqstat
-    gpbs.myqstat_node
-    gpbs.myqstat_user
+    gpbs.Print.myqstat
+    gpbs.Print.myqstat_node
+    gpbs.Print.myqstat_user
+
+Read to list
+------------
+
+.. autosummary::
+
+    gpbs.Read.myqstat
+    gpbs.Read.myqstat_node
+    gpbs.Read.myqstat_user
 
 These function respectively output lists of the ``<gpbs.Job>``, ``<gpbs.Node>``,
 or ``<gpbs.Owner>`` class. Each item has fields that are strings, integers, but
@@ -398,8 +403,8 @@ as string (with a certain formatting default). Consider the following example:
   >>> type(job['cputime'])
   <str>
 
-Formatted print
----------------
+Customized formatted print
+--------------------------
 
 The ``<gpbs.Job>``, ``<gpbs.Node>``, and ``<gpbs.Owner>`` classes have three
 methods to print information, as follows
@@ -519,16 +524,17 @@ Store with unit and/or ``None``
     gpbs.Data
     gpbs.Float
 
-Read output
-"""""""""""
+Main interface
+""""""""""""""
 
 .. autosummary::
 
-    gpbs.read_qstat
-    gpbs.read_pbs
-    gpbs.myqstat
-    gpbs.myqstat_node
-    gpbs.myqstat_user
+    gpbs.Read.myqstat
+    gpbs.Read.myqstat_node
+    gpbs.Read.myqstat_user
+    gpbs.Print.myqstat
+    gpbs.Print.myqstat_node
+    gpbs.Print.myqstat_user
 
 Module details
 """"""""""""""
